@@ -7,3 +7,5 @@ dist/
 *~
 *.tix
 *.project
+.cabal-sandbox
+cabal.sandbox.config
