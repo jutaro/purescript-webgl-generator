@@ -15,11 +15,12 @@ import IDL.Printer
 main :: IO ()
 main = getArgs >>= getFilepath >>= readFile >>= runParser
 
+noIdlError :: String
+noIdlError = "WebGL generator requires input IDL file"
+
 getFilepath :: [String] -> IO String
 getFilepath (fp:_) = return fp
-getFilepath _ = do
-    putStrLn $ "Generator requires input IDL file"
-    exitSuccess
+getFilepath _ = putStrLn noIdlError >> exitSuccess
 
 runParser :: String -> IO ()
 runParser body =
