@@ -1,6 +1,5 @@
 module Main (main) where
 
-import System.Console.GetOpt (usageInfo)
 import System.Environment (getArgs)
 import System.Exit (exitSuccess)
 import Debug.Trace (trace)

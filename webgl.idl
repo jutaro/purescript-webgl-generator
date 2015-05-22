@@ -1,3 +1,4 @@
+
     /* ClearBufferMask */
     const GLenum DEPTH_BUFFER_BIT               = 0x00000100;
     const GLenum STENCIL_BUFFER_BIT             = 0x00000400;
@@ -444,7 +445,7 @@
 /*    void bufferData(GLenum target, GLsizeiptr size, GLenum usage);
     void bufferData(GLenum target, ArrayBufferView data, GLenum usage);*/
     void bufferData(GLenum target, ArrayBuffer data, GLenum usage);
-/*    void bufferSubData(GLenum target, GLintptr offset, ArrayBufferView data);*/
+    void bufferSubData(GLenum target, GLintptr offset, ArrayBufferView data);
     void bufferSubData(GLenum target, GLintptr offset, ArrayBuffer data);
 
     GLenum checkFramebufferStatus(GLenum target);
