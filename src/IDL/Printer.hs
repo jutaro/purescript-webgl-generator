@@ -3,7 +3,7 @@ module IDL.Printer (ppPureScriptFFI) where
 import Data.List (nubBy, nub)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint
-       (sep, ($$), hcat, punctuate, semi, braces, empty, parens, nest,
+       (sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
        (<>), integer, (<+>), text, vcat, ($+$), Doc)
 
 import IDL.AST
@@ -107,39 +107,31 @@ ppTypeSig f
   where
     hasGenericReturnType = typeName (methodRetType f) `elem` ["any", "object"]
 
-ppFuncBodyInner :: Decl -> [Arg] -> Doc
-ppFuncBodyInner f (_:tl) =
-    text "return" <+> text "function"
-        <> parens (if null tl
-                    then empty
-                    else text (argName (head tl)))
-        $$ braces (nest 2 (ppFuncBodyInner f tl)) <> semi
-ppFuncBodyInner f []
-    | hasNoReturnVal =
-        text "gl." <> text (methodName f) <> parens
-            (hcat (punctuate (text ",") (map (text . argName) (methodArgs f)))) <>  semi
-    | otherwise =
-        text "var res = gl." <> text (methodName f) <> parens
-            (hcat (punctuate (text ",") (map (text . argName) (methodArgs f)))) <>  semi
-        $$ text "if (res === undefined){"
-        $$ text "  throw \"Undefined in " <+> text (methodName f) <> text "\"}" <> semi
-        $$ text "return res" <> semi
-  where hasNoReturnVal = typeName (methodRetType f) == "void"
+ppMethod :: Decl -> Doc
+ppMethod f =
+    prefixWebgl <> text (methodName f) <> parens (ppArgs methodArgs f) <> semi
 
-ppFuncBodyOuter :: Decl -> [Arg] -> Doc
-ppFuncBodyOuter f args =
-    nest 2 (text "function" <+> text (methodName f) <> text "_" <>
-        (parens (if null (methodArgs f)
-                    then empty
-                    else text (argName (head (methodArgs f))))))
-        $$ braces (nest 2 (ppFuncBodyInner f (methodArgs f))) <> semi
+ppImplBody :: Decl -> Doc
+ppImplBody f =
+    func <+> text (implName f) <> parens (ppArgs funcArgs f) <+> lbrace $+$
+    nest 2 (ret <+> func <+> parens empty <+> lbrace) $+$
+    nest 4 (ret <+> ppMethod f) $+$
+    nest 2 rbrace <> semi $+$
+    rbrace
+  where
+    func = text "function"
+    ret = text "return"
 
-ppFunc :: Decl -> Doc
-ppFunc f =
-    text "foreign import" <+> text (methodName f) <> text "_" $$
-        nest 2 (javascriptQuotes (ppFuncBodyOuter f (methodArgs f)) $$
-                nest 2 (ppTypeSig f))
-            $$ blankLine
+ppArgs :: (Decl -> [Arg]) -> Decl -> Doc
+ppArgs f = hcat . punctuate (text ", ") . map (text . argName) . f
+
+ppImpl :: Decl -> Doc
+ppImpl f =
+    text "foreign import" <+> text (implName f) <+>
+    jsBlock $+$ nest 2 (ppImplBody f) $+$ jsBlock <+>
+    ppTypeSig f $+$ blankLine
+  where
+    jsBlock = text "\"\"\""
 
 ppTypeDecl :: Type -> Doc
 ppTypeDecl d = text "foreign import data" <+> text (typeName d) <+> text ":: *"
@@ -157,17 +149,26 @@ ppPureScriptFFI idl = header $+$ blankLine
 
     constants = vcat [ppConstant c | c <- idl , isEnum c]
 
-    methods = vcat $ map ppFunc $ nubBy (\t1 t2-> methodName t1 == methodName t2)
+    methods = vcat $ map ppImpl $ nubBy (\t1 t2-> methodName t1 == methodName t2)
                     [c | c <- idl , isUsableFunc c]
 
-javascriptQuotes :: Doc -> Doc
-javascriptQuotes p = text "\"\"\"" <> p <> text "\"\"\""
-
 extractTypes :: Decl -> [Type]
-extractTypes Function{methodRetType = t1, methodArgs = args} = t1 : map argType args
+extractTypes f@Function{methodRetType = t1} = t1 : map argType (funcArgs f)
 extractTypes Attribute{attType = t1} = [t1]
 extractTypes _ = []
 
 isUsableFunc :: Decl -> Bool
 isUsableFunc i =
     isFunction i && and (map (isNothing . typeCondPara . argType) (methodArgs i))
+
+implName :: Decl -> String
+implName f = methodName f ++ "Impl"
+
+funcArgs :: Decl -> [Arg]
+funcArgs f = webglContext : methodArgs f
+
+webglContext :: Arg
+webglContext = Arg (Type "WebglContext" False Nothing) "webgl"
+
+prefixWebgl :: Doc
+prefixWebgl = text (argName webglContext) <> text "."
