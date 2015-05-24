@@ -1,12 +1,29 @@
 module IDL.Printer (ppPureScriptFFI) where
 
-import Data.List (nubBy, nub, sort)
+import Data.List (nubBy, sort)
 import Data.Maybe (isNothing)
-import Text.PrettyPrint
-       (brackets, char, space, sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
-       (<>), integer, (<+>), text, vcat, ($+$), Doc)
+import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, space,
+  hcat, punctuate, semi, lbrace, rbrace, empty, parens, nest, integer, text,
+  vcat)
 
 import IDL.AST
+
+ppPureScriptFFI :: Idl -> Doc
+ppPureScriptFFI idl =
+        header    $+$ blankLine
+    $+$ typeDecls $+$ blankLine
+    $+$ constants $+$ blankLine
+    $+$ methods   $+$ blankLine
+  where
+    -- TODO: these need some heavy cleanup
+    header = vcat . map text $ moduleHeader ++ [""] ++ typedefs
+    typeDecls = vcat $ map ppTypeDecl $ sort $ nubBy (\t1 t2-> typeName t1 == typeName t2)
+                    [t  | d <- idl, t <- extractTypes d, not ((typeName t) `elem` webglTypes)]
+    constants = vcat [ppConstant c | c <- idl , isEnum c]
+    methods = vcat $ map ppFuncImpl $ nubBy (\t1 t2-> methodName t1 == methodName t2)
+                    [c | c <- idl , isUsableFunc c]
+
+-- predefined strings
 
 moduleHeader :: [String]
 moduleHeader =
@@ -69,18 +86,7 @@ webglTypes =
     , "void"
     ]
 
-blankLine :: Doc
-blankLine = text ""
-
-toPurescriptType :: Type -> Doc
-toPurescriptType Type { typeName = name, typeIsArray = isArray }
-    | name == "void"        = toType "Unit"
-    | name == "boolean"     = toType "Boolean"
-    | name == "DOMString"   = toType "String"
-    | name == "ArrayBuffer" = toType "Float32Array"
-    | otherwise             = toType name
-  where
-    toType = if isArray then brackets . text else text
+-- component pretty-printers
 
 ppConstant :: Decl -> Doc
 ppConstant Enum { enumName = n, enumValue = v } =
@@ -93,7 +99,7 @@ ppTypeSig f
     | hasGenericReturnType =
         text ":: forall eff a." <+> argList <+> effMonad (char 'a')
     | otherwise =
-        text ":: forall eff." <+> argList <+> effMonad (toPurescriptType $ methodRetType f)
+        text ":: forall eff." <+> argList <+> effMonad (ppType $ methodRetType f)
   where
     hasGenericReturnType =
       typeName (methodRetType f) `elem` ["any", "object"]
@@ -102,14 +108,14 @@ ppTypeSig f
     argList =
       text "Fn" <>
       text (show . length $ funcArgs f) <+>
-      hcat (punctuate space (map (toPurescriptType . argType) (funcArgs f)))
+      hcat (punctuate space (map (ppType . argType) (funcArgs f)))
 
 ppMethod :: Decl -> Doc
 ppMethod f =
     prefixWebgl <> text (methodName f) <> parens (ppArgs methodArgs f) <> semi
 
-ppImplBody :: Decl -> Doc
-ppImplBody f =
+ppFuncImplBody :: Decl -> Doc
+ppFuncImplBody f =
     func <+> text (implName f) <> parens (ppArgs funcArgs f) <+> lbrace $+$
     nest 2 (ret <+> func <+> parens empty <+> lbrace) $+$
     nest 4 (ret <+> ppMethod f) $+$
@@ -122,10 +128,10 @@ ppImplBody f =
 ppArgs :: (Decl -> [Arg]) -> Decl -> Doc
 ppArgs f = hcat . punctuate (text ", ") . map (text . argName) . f
 
-ppImpl :: Decl -> Doc
-ppImpl f =
+ppFuncImpl :: Decl -> Doc
+ppFuncImpl f =
     text "foreign import" <+> text (implName f) <+>
-    jsBlock $+$ nest 2 (ppImplBody f) $+$ jsBlock <+>
+    jsBlock $+$ nest 2 (ppFuncImplBody f) $+$ jsBlock <+>
     ppTypeSig f $+$ blankLine
   where
     jsBlock = text "\"\"\""
@@ -133,22 +139,20 @@ ppImpl f =
 ppTypeDecl :: Type -> Doc
 ppTypeDecl d = text "foreign import data" <+> text (typeName d) <+> text ":: *"
 
-ppPureScriptFFI :: Idl -> Doc
-ppPureScriptFFI idl =
-        header    $+$ blankLine
-    $+$ typeDecls $+$ blankLine
-    $+$ constants $+$ blankLine
-    $+$ methods   $+$ blankLine
+ppType :: Type -> Doc
+ppType Type { typeName = name, typeIsArray = isArray }
+    | name == "void"        = toType "Unit"
+    | name == "boolean"     = toType "Boolean"
+    | name == "DOMString"   = toType "String"
+    | name == "ArrayBuffer" = toType "Float32Array"
+    | otherwise             = toType name
   where
-    header = vcat . map text $ moduleHeader ++ [""] ++ typedefs
+    toType = if isArray then brackets . text else text
 
-    typeDecls = vcat $ map ppTypeDecl $ sort $ nubBy (\t1 t2-> typeName t1 == typeName t2)
-                    [t  | d <- idl, t <- extractTypes d, not ((typeName t) `elem` webglTypes)]
+-- helpers
 
-    constants = vcat [ppConstant c | c <- idl , isEnum c]
-
-    methods = vcat $ map ppImpl $ nubBy (\t1 t2-> methodName t1 == methodName t2)
-                    [c | c <- idl , isUsableFunc c]
+blankLine :: Doc
+blankLine = text ""
 
 extractTypes :: Decl -> [Type]
 extractTypes f@Function{methodRetType = t1} = t1 : map argType (funcArgs f)
