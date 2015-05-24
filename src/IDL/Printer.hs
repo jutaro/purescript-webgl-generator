@@ -84,10 +84,8 @@ toPurescriptType Type { typeName = name, typeIsArray = isArray }
 
 ppConstant :: Decl -> Doc
 ppConstant Enum { enumName = n, enumValue = v } =
-    typeDef $+$ valuDef $+$ blankLine
+    text constName <+> text "=" $$ nest 48 (integer v)
   where
-    typeDef = text constName <+> text ":: Number"
-    valuDef = text constName <+> text "=" <+> integer v
     constName = '_' : n
 
 ppTypeSig :: Decl -> Doc
