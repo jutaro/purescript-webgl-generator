@@ -3,7 +3,7 @@ module IDL.Printer (ppPureScriptFFI) where
 import Data.List (nubBy, nub, sort)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint
-       (char, space, sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
+       (brackets, char, space, sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
        (<>), integer, (<+>), text, vcat, ($+$), Doc)
 
 import IDL.AST
@@ -73,12 +73,14 @@ blankLine :: Doc
 blankLine = text ""
 
 toPurescriptType :: Type -> Doc
-toPurescriptType Type { typeName = t }
-    | t == "void"        = text "Unit"
-    | t == "boolean"     = text "Boolean"
-    | t == "DOMString"   = text "String"
-    | t == "ArrayBuffer" = text "Float32Array"
-    | otherwise          = text t
+toPurescriptType Type { typeName = name, typeIsArray = isArray }
+    | name == "void"        = toType "Unit"
+    | name == "boolean"     = toType "Boolean"
+    | name == "DOMString"   = toType "String"
+    | name == "ArrayBuffer" = toType "Float32Array"
+    | otherwise             = toType name
+  where
+    toType = if isArray then brackets . text else text
 
 ppConstant :: Decl -> Doc
 ppConstant Enum { enumName = n, enumValue = v } =
