@@ -39,6 +39,9 @@ data Type
       }
   deriving (Eq,Show)
 
+instance Ord Type where
+  compare x y = compare (typeName x) (typeName y)
+
 data Arg
   = Arg
       { argType :: Type

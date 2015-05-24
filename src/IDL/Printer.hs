@@ -1,9 +1,9 @@
 module IDL.Printer (ppPureScriptFFI) where
 
-import Data.List (nubBy, nub)
+import Data.List (nubBy, nub, sort)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint
-       (sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
+       (char, space, sep, ($$), hcat, punctuate, semi, comma, lbrace, rbrace, empty, parens, nest,
        (<>), integer, (<+>), text, vcat, ($+$), Doc)
 
 import IDL.AST
@@ -91,21 +91,18 @@ ppConstant Enum { enumName = n, enumValue = v } =
 ppTypeSig :: Decl -> Doc
 ppTypeSig f
     | hasGenericReturnType =
-        text ":: forall eff ret." <+>
-        sep ((punctuate (text "->") (map (toPurescriptType . argType) (methodArgs f)))
-                ++ [(if null (methodArgs f)
-                        then empty
-                        else text "->") <+> parens (
-                        text "Eff (webgl :: WebGl | eff) ret")])
-    | otherwise = text ":: forall eff." <+>
-        sep ((punctuate (text "->") (map (toPurescriptType . argType) (methodArgs f)))
-                ++ [(if null (methodArgs f)
-                        then empty
-                        else text "->") <+> parens (
-                        text "Eff (webgl :: WebGl | eff)" <+>
-                        toPurescriptType (methodRetType f))])
+        text ":: forall eff a." <+> argList <+> effMonad (char 'a')
+    | otherwise =
+        text ":: forall eff." <+> argList <+> effMonad (toPurescriptType $ methodRetType f)
   where
-    hasGenericReturnType = typeName (methodRetType f) `elem` ["any", "object"]
+    hasGenericReturnType =
+      typeName (methodRetType f) `elem` ["any", "object"]
+    effMonad doc =
+      parens $ text "Eff (canvas :: Canvas | eff)" <+> doc
+    argList =
+      text "Fn" <>
+      text (show . length $ funcArgs f) <+>
+      hcat (punctuate space (map (toPurescriptType . argType) (funcArgs f)))
 
 ppMethod :: Decl -> Doc
 ppMethod f =
@@ -120,7 +117,7 @@ ppImplBody f =
     rbrace
   where
     func = text "function"
-    ret = text "return"
+    ret  = text "return"
 
 ppArgs :: (Decl -> [Arg]) -> Decl -> Doc
 ppArgs f = hcat . punctuate (text ", ") . map (text . argName) . f
@@ -137,14 +134,15 @@ ppTypeDecl :: Type -> Doc
 ppTypeDecl d = text "foreign import data" <+> text (typeName d) <+> text ":: *"
 
 ppPureScriptFFI :: Idl -> Doc
-ppPureScriptFFI idl = header $+$ blankLine
-    $+$ text "-- *TypeDecls" $+$ typeDecls $+$ blankLine
-    $+$ text "-- *Constants" $+$ constants $+$ blankLine
-    $+$ text "-- *Methods"   $+$ methods
+ppPureScriptFFI idl =
+        header    $+$ blankLine
+    $+$ typeDecls $+$ blankLine
+    $+$ constants $+$ blankLine
+    $+$ methods   $+$ blankLine
   where
     header = vcat . map text $ moduleHeader ++ [""] ++ typedefs
 
-    typeDecls = vcat $ map ppTypeDecl $ nubBy (\t1 t2-> typeName t1 == typeName t2)
+    typeDecls = vcat $ map ppTypeDecl $ sort $ nubBy (\t1 t2-> typeName t1 == typeName t2)
                     [t  | d <- idl, t <- extractTypes d, not ((typeName t) `elem` webglTypes)]
 
     constants = vcat [ppConstant c | c <- idl , isEnum c]
@@ -168,7 +166,7 @@ funcArgs :: Decl -> [Arg]
 funcArgs f = webglContext : methodArgs f
 
 webglContext :: Arg
-webglContext = Arg (Type "WebglContext" False Nothing) "webgl"
+webglContext = Arg (Type "WebGLContext" False Nothing) "webgl"
 
 prefixWebgl :: Doc
 prefixWebgl = text (argName webglContext) <> text "."
