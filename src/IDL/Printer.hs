@@ -21,7 +21,7 @@ ppPureScriptFFI idl =
                     [t  | d <- idl, t <- extractTypes d, not ((typeName t) `elem` webglTypes)]
     constants = vcat [ppConstant c | c <- idl , isEnum c]
     methods = vcat $ map ppFuncImpl $ nubBy (\t1 t2-> methodName t1 == methodName t2)
-                    [c | c <- idl , isUsableFunc c]
+                    [c | c <- idl , isFunction c]
 
 -- predefined strings
 
@@ -158,11 +158,6 @@ extractTypes :: Decl -> [Type]
 extractTypes f@Function{methodRetType = t1} = t1 : map argType (funcArgs f)
 extractTypes Attribute{attType = t1} = [t1]
 extractTypes _ = []
-
-isUsableFunc :: Decl -> Bool
-isUsableFunc i =
-    isFunction i &&
-    and (map (isNothing . typeCondPara . argType) $ methodArgs i)
 
 implName :: Decl -> String
 implName f = methodName f ++ "Impl"
