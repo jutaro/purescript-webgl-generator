@@ -9,3 +9,6 @@ dist/
 *.project
 .cabal-sandbox
 cabal.sandbox.config
+node_modules/
+bower_components/
+.psci/
