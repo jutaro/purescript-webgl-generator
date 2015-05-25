@@ -1,19 +1,19 @@
-name: purescript-webgl-generator
-version: 0.1.0.0
-cabal-version: >=1.10
+name: purescript-webgl-raw
+version: 0.0.1.0
+cabal-version: >= 1.10
 build-type: Simple
 license: GPL-2
 license-file: LICENSE
-maintainer: jnf@arcor.de
+maintainer: jon@childr.es (originally jnf@arcor.de)
 category: Development
-author: Jürgen (Jutaro) Nicklisch-Franken
-data-dir: ""
+author: Jon Childress (branched from Jürgen (Jutaro) Nicklisch-Franken)
+synopsis: generates PureScript by parsing the Khronos WebGL specification
 
-executable purescript-webgl-generator
+executable purescript-webgl-raw
   main-is: Main.hs
   buildable: True
   default-language: Haskell2010
-  hs-source-dirs: src
+  hs-source-dirs: generator
   other-modules: IDL.AST IDL.Parser IDL.Printer
 
   build-depends:  base         == 4.*,
