@@ -1,10 +1,11 @@
 # purescript-webgl-raw
 
 This package consists of two pieces:
-1. a Haskell generator, which parses the Khronos WebGL specification to create
-2. the PureScript source, which contains the wrapped WebGL methods
 
-The files in `src` should only be modified by modifying the generator.
+1. a Haskell generator, which parses the Khronos WebGL specification to create...
+2. the PureScript wrapper of the WebGL methods
+
+The files in `src` should only be edited by modifying the generator.
 
 ## Generator
 
@@ -27,15 +28,15 @@ into the PureScript module:
 > docs/WebGL-1.0.3.idl > src/Graphics/WebGL/Raw.purs
 ```
 
-## PureScript
+## Graphics.WebGL.Raw
 
-`Graphics.WebGL.Raw` is intended as the lowest-possible-level wrapping of the
-WebGL API for PureScript. It is not intended for use outside of the
+The generated library is intended as the lowest-possible-level wrapping of
+the WebGL API for PureScript. It is not intended for use outside of the
 `purescript-webgl-unsafe` package, which provides a type-safe (but not
 error-checked) wrapper around the raw methods.
 
-To build the `Graphics.WebGL.Raw` module, ensure you have a recent version of
-Node and `npm` installed, and then:
+To build `Graphics.WebGL.Raw`, ensure you have a recent version of Node
+and `npm` installed, and then:
 
 ```sh
 > npm install
@@ -46,6 +47,6 @@ Node and `npm` installed, and then:
 ## Credits
 
 This package is built upon the amazing amounts of hard work done by [Jurgen
-Nicklisch-Franken][2], from whom this package is branched.
+Nicklisch-Franken][2], from whom this package is forked.
 
   [2]: https://github.com/jutaro
