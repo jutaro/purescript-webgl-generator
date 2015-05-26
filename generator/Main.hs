@@ -24,6 +24,6 @@ getFilepath _ = putStrLn noIdlError >> exitSuccess
 
 runParser :: String -> IO ()
 runParser body =
-    case PP.runParser idlParser () "" body of
+    case PP.runParser parseIdl () "" body of
       Left err  -> mapM_ (putStrLn . PP.messageString) (PP.errorMessages err)
       Right idl -> putStr . render $ ppPureScriptFFI idl

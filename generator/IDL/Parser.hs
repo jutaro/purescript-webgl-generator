@@ -1,7 +1,8 @@
-module IDL.Parser (idlParser) where
+module IDL.Parser (parseIdl) where
 
 import Control.Monad (liftM)
 import Data.Functor.Identity (Identity(..))
+import Data.List (nub)
 
 import qualified Text.Parsec.Token                      as PP
 import qualified Text.Parsec                            as PP
@@ -13,8 +14,6 @@ import IDL.AST
 
 type Parse a = PP.Parsec String () a
 
-trace _ b = b
-
 symbol'     = PP.symbol     lexer
 whiteSpace' = PP.whiteSpace lexer
 identifier' = PP.identifier lexer
@@ -24,22 +23,79 @@ parens'     = PP.parens     lexer
 brackets'   = PP.brackets   lexer
 angles'     = PP.angles     lexer
 
-idlParser :: Parse Idl
-idlParser =
-    PP.manyTill decls PP.eof PP.<?> "expecting idl"
-  where
-    decls = do
-        whiteSpace'
-        d <- declParser
-        trace ("decl: " ++ show d) (return d)
+webglTypes :: [String]
+webglTypes =
+    [ "ArrayBuffer"
+    , "DOMString"
+    , "Float32Array"
+    , "FloatArray"
+    , "GLbitfield"
+    , "GLboolean"
+    , "GLbyte"
+    , "GLclampf"
+    , "GLenum"
+    , "GLfloat"
+    , "GLint"
+    , "GLintptr"
+    , "GLshort"
+    , "GLsizei"
+    , "GLsizeiptr"
+    , "GLubyte"
+    , "GLuint"
+    , "GLushort"
+    , "HTMLCanvasElement"
+    , "Int32Array"
+    , "any"
+    , "boolean"
+    , "object"
+    , "sequence"
+    , "void"
+    ]
 
 lexer :: PP.GenTokenParser String u Identity
 lexer = PP.makeTokenParser PP.emptyDef
 
+parseIdl :: Parse IDL
+parseIdl =
+    parseDecls >>=
+    return . foldr partition emptyIdl >>=
+    return . cleanup
+
+-- helpers
+
+partition :: Decl -> IDL -> IDL
+partition e@Enum{} idl = idl
+    { enums = e : enums idl
+    }
+partition c@Comment{} idl = idl
+    { comments = c : comments idl
+    }
+partition f@Function{} idl = idl
+    { functions = f : functions idl
+    , types = methodRetType f : map argType (methodArgs f) ++ types idl
+    }
+partition a@Attribute{} idl = idl
+    { attributes = a : attributes idl
+    , types = attrType a : types idl
+    }
+
+cleanup :: IDL -> IDL
+cleanup idl = IDL
+    { enums = nub $ enums idl
+    , comments = nub $ comments idl
+    , functions = nub $ functions idl
+    , attributes = nub $ attributes idl
+    , types = nub . filter (\t -> typeName t `notElem` webglTypes) $ types idl
+    }
+
 -- parsers
 
-declParser :: Parse Decl
-declParser = decl PP.<?> "expecting decl"
+parseDecls :: Parse [Decl]
+parseDecls =
+    PP.manyTill (whiteSpace' >> parseDecl) PP.eof PP.<?> "expecting idl"
+
+parseDecl :: Parse Decl
+parseDecl = decl PP.<?> "expecting decl"
   where
     decl = PP.try parseConst   PP.<|>
            PP.try parseComment PP.<|>
@@ -89,9 +145,9 @@ parseAttr = do
     name <- identifier'
     semi'
     return Attribute
-      { attIsReadonly = isReadonly
-      , attType       = typ
-      , attName       = name
+      { attrIsReadonly = isReadonly
+      , attrType       = typ
+      , attrName       = name
       }
 
 parseType :: Parse Type

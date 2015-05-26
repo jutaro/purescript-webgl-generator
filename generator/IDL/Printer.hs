@@ -1,27 +1,24 @@
 module IDL.Printer (ppPureScriptFFI) where
 
-import Data.List (nubBy, sort)
+import Data.List (sort)
 import Data.Maybe (isNothing)
-import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, space,
-  hcat, punctuate, semi, lbrace, rbrace, empty, parens, nest, integer, text,
+import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
+  hcat, integer, lbrace, nest, parens, punctuate, rbrace, semi, space, text,
   vcat)
 
 import IDL.AST
 
-ppPureScriptFFI :: Idl -> Doc
+ppPureScriptFFI :: IDL -> Doc
 ppPureScriptFFI idl =
         header    $+$ blankLine
     $+$ typeDecls $+$ blankLine
     $+$ constants $+$ blankLine
     $+$ methods   $+$ blankLine
   where
-    -- TODO: these need some heavy cleanup
     header = vcat . map text $ moduleHeader ++ [""] ++ typedefs
-    typeDecls = vcat $ map ppTypeDecl $ sort $ nubBy (\t1 t2-> typeName t1 == typeName t2)
-                    [t  | d <- idl, t <- extractTypes d, not ((typeName t) `elem` webglTypes)]
-    constants = vcat [ppConstant c | c <- idl , isEnum c]
-    methods = vcat $ map ppFuncImpl $ nubBy (\t1 t2-> methodName t1 == methodName t2)
-                    [c | c <- idl , isFunction c]
+    typeDecls = vcat . map ppTypeDecl . sort $ types idl
+    constants = vcat . map ppConstant $ enums idl
+    methods = vcat . map ppFuncImpl $ functions idl
 
 -- predefined strings
 
@@ -33,57 +30,29 @@ moduleHeader =
     , "module Graphics.WebGL.Raw where"
     , ""
     , "import Control.Monad.Eff"
-    , "import Control.Monad.Eff.WebGL"
     , "import Data.ArrayBuffer.Types"
     , "import Data.TypedArray"
     ]
 
 typedefs :: [String]
 typedefs =
-    [ "type GLenum     = Number"
-    , "type GLboolean  = Boolean"
-    , "type GLbitfield = Number"
-    , "type GLbyte     = Number"
-    , "type GLshort    = Number"
-    , "type GLint      = Number"
-    , "type GLsizei    = Number"
-    , "type GLintptr   = Number"
-    , "type GLsizeiptr = Number"
-    , "type GLubyte    = Number"
-    , "type GLushort   = Number"
-    , "type GLuint     = Number"
-    , "type GLfloat    = Number"
-    , "type GLclampf   = Number"
-    , "type FloatArray = Float32Array"
-    ]
-
-webglTypes :: [String]
-webglTypes =
-    [ "ArrayBuffer"
-    , "DOMString"
-    , "Float32Array"
-    , "FloatArray"
-    , "GLbitfield"
-    , "GLboolean"
-    , "GLbyte"
-    , "GLclampf"
-    , "GLenum"
-    , "GLfloat"
-    , "GLint"
-    , "GLintptr"
-    , "GLshort"
-    , "GLsizei"
-    , "GLsizeiptr"
-    , "GLubyte"
-    , "GLuint"
-    , "GLushort"
-    , "HTMLCanvasElement"
-    , "Int32Array"
-    , "any"
-    , "boolean"
-    , "object"
-    , "sequence"
-    , "void"
+    [ "type ArrayBuffer = Float32Array"
+    , "type DOMString   = String"
+    , "type FloatArray  = Float32Array"
+    , "type GLbitfield  = Number"
+    , "type GLboolean   = Boolean"
+    , "type GLbyte      = Number"
+    , "type GLclampf    = Number"
+    , "type GLenum      = Number"
+    , "type GLfloat     = Number"
+    , "type GLint       = Number"
+    , "type GLintptr    = Number"
+    , "type GLshort     = Number"
+    , "type GLsizei     = Number"
+    , "type GLsizeiptr  = Number"
+    , "type GLubyte     = Number"
+    , "type GLuint      = Number"
+    , "type GLushort    = Number"
     ]
 
 -- component pretty-printers
@@ -143,8 +112,6 @@ ppType :: Type -> Doc
 ppType Type { typeName = name, typeIsArray = isArray }
     | name == "void"        = toType "Unit"
     | name == "boolean"     = toType "Boolean"
-    | name == "DOMString"   = toType "String"
-    | name == "ArrayBuffer" = toType "Float32Array"
     | otherwise             = toType name
   where
     toType = if isArray then brackets . text else text
@@ -153,11 +120,6 @@ ppType Type { typeName = name, typeIsArray = isArray }
 
 blankLine :: Doc
 blankLine = text ""
-
-extractTypes :: Decl -> [Type]
-extractTypes f@Function{methodRetType = t1} = t1 : map argType (funcArgs f)
-extractTypes Attribute{attType = t1} = [t1]
-extractTypes _ = []
 
 implName :: Decl -> String
 implName f = methodName f ++ "Impl"

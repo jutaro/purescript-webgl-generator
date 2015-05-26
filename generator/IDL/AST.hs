@@ -1,14 +1,13 @@
 module IDL.AST where
 
-type Idl = [Decl]
-
-isEnum :: Decl -> Bool
-isEnum Enum{} = True
-isEnum _      = False
-
-isFunction :: Decl -> Bool
-isFunction Function{} = True
-isFunction _          = False
+data IDL = IDL
+    { enums      :: [Decl]
+    , comments   :: [Decl]
+    , functions  :: [Decl]
+    , attributes :: [Decl]
+    , types      :: [Type]
+    }
+  deriving Show
 
 data Decl
   = Enum
@@ -25,26 +24,37 @@ data Decl
       , methodRaises  :: Maybe String
       }
   | Attribute
-      { attIsReadonly :: Bool
-      , attType       :: Type
-      , attName       :: String
+      { attrIsReadonly :: Bool
+      , attrType       :: Type
+      , attrName       :: String
       }
-  deriving (Eq,Show)
+  deriving Show
 
-data Type
-  = Type
-      { typeName     :: String
-      , typeIsArray  :: Bool
-      , typeCondPara :: Maybe String
-      }
-  deriving (Eq,Show)
+instance Eq Decl where
+  x@Enum{} == y@Enum{} = enumName x == enumName y
+  x@Comment{} == y@Comment{} = comment x == comment y
+  x@Function{} == y@Function{} = methodName x == methodName y
+  x@Attribute{} == y@Attribute{} = attrName x == attrName y
+  _ == _ = False
+
+data Type = Type
+    { typeName     :: String
+    , typeIsArray  :: Bool
+    , typeCondPara :: Maybe String
+    }
+  deriving Show
+
+instance Eq Type where
+  x == y = typeName x == typeName y
 
 instance Ord Type where
   compare x y = compare (typeName x) (typeName y)
 
-data Arg
-  = Arg
-      { argType :: Type
-      , argName :: String
-      }
-  deriving (Eq,Show)
+data Arg = Arg
+    { argType :: Type
+    , argName :: String
+    }
+  deriving Show
+
+emptyIdl :: IDL
+emptyIdl = IDL [] [] [] [] []
