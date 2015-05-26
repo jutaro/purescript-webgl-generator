@@ -4,25 +4,28 @@
 module Graphics.WebGL.Raw where
 
 import Control.Monad.Eff
-import Control.Monad.Eff.WebGL
 import Data.ArrayBuffer.Types
 import Data.TypedArray
+import Data.Function
 
-type GLenum     = Number
-type GLboolean  = Boolean
-type GLbitfield = Number
-type GLbyte     = Number
-type GLshort    = Number
-type GLint      = Number
-type GLsizei    = Number
-type GLintptr   = Number
-type GLsizeiptr = Number
-type GLubyte    = Number
-type GLushort   = Number
-type GLuint     = Number
-type GLfloat    = Number
-type GLclampf   = Number
-type FloatArray = Float32Array
+type DOMString   = String
+type FloatArray  = Float32Array
+type GLbitfield  = Number
+type GLboolean   = Boolean
+type GLbyte      = Number
+type GLclampf    = Number
+type GLenum      = Number
+type GLfloat     = Number
+type GLint       = Number
+type GLintptr    = Number
+type GLshort     = Number
+type GLsizei     = Number
+type GLsizeiptr  = Number
+type GLubyte     = Number
+type GLuint      = Number
+type GLushort    = Number
+
+foreign import data WebGL :: !
 
 foreign import data ArrayBufferView :: *
 foreign import data HTMLImageElement :: *
@@ -39,306 +42,905 @@ foreign import data WebGLShader :: *
 foreign import data WebGLTexture :: *
 foreign import data WebGLUniformLocation :: *
 
-_DEPTH_BUFFER_BIT =                             256
-_STENCIL_BUFFER_BIT =                           1024
-_COLOR_BUFFER_BIT =                             16384
-_POINTS =                                       0
-_LINES =                                        1
-_LINE_LOOP =                                    2
-_LINE_STRIP =                                   3
-_TRIANGLES =                                    4
-_TRIANGLE_STRIP =                               5
-_TRIANGLE_FAN =                                 6
-_ZERO =                                         0
-_ONE =                                          1
-_SRC_COLOR =                                    768
-_ONE_MINUS_SRC_COLOR =                          769
-_SRC_ALPHA =                                    770
-_ONE_MINUS_SRC_ALPHA =                          771
-_DST_ALPHA =                                    772
-_ONE_MINUS_DST_ALPHA =                          773
-_DST_COLOR =                                    774
-_ONE_MINUS_DST_COLOR =                          775
-_SRC_ALPHA_SATURATE =                           776
-_FUNC_ADD =                                     32774
-_BLEND_EQUATION =                               32777
-_BLEND_EQUATION_RGB =                           32777
-_BLEND_EQUATION_ALPHA =                         34877
-_FUNC_SUBTRACT =                                32778
-_FUNC_REVERSE_SUBTRACT =                        32779
-_BLEND_DST_RGB =                                32968
-_BLEND_SRC_RGB =                                32969
-_BLEND_DST_ALPHA =                              32970
-_BLEND_SRC_ALPHA =                              32971
-_CONSTANT_COLOR =                               32769
-_ONE_MINUS_CONSTANT_COLOR =                     32770
-_CONSTANT_ALPHA =                               32771
-_ONE_MINUS_CONSTANT_ALPHA =                     32772
-_BLEND_COLOR =                                  32773
-_ARRAY_BUFFER =                                 34962
-_ELEMENT_ARRAY_BUFFER =                         34963
-_ARRAY_BUFFER_BINDING =                         34964
-_ELEMENT_ARRAY_BUFFER_BINDING =                 34965
-_STREAM_DRAW =                                  35040
-_STATIC_DRAW =                                  35044
-_DYNAMIC_DRAW =                                 35048
-_BUFFER_SIZE =                                  34660
-_BUFFER_USAGE =                                 34661
-_CURRENT_VERTEX_ATTRIB =                        34342
-_FRONT =                                        1028
-_BACK =                                         1029
-_FRONT_AND_BACK =                               1032
-_TEXTURE_2D =                                   3553
-_CULL_FACE =                                    2884
-_BLEND =                                        3042
-_DITHER =                                       3024
-_STENCIL_TEST =                                 2960
-_DEPTH_TEST =                                   2929
-_SCISSOR_TEST =                                 3089
-_POLYGON_OFFSET_FILL =                          32823
-_SAMPLE_ALPHA_TO_COVERAGE =                     32926
-_SAMPLE_COVERAGE =                              32928
-_NO_ERROR =                                     0
-_INVALID_ENUM =                                 1280
-_INVALID_VALUE =                                1281
-_INVALID_OPERATION =                            1282
-_OUT_OF_MEMORY =                                1285
-_CW =                                           2304
-_CCW =                                          2305
-_LINE_WIDTH =                                   2849
-_ALIASED_POINT_SIZE_RANGE =                     33901
-_ALIASED_LINE_WIDTH_RANGE =                     33902
-_CULL_FACE_MODE =                               2885
-_FRONT_FACE =                                   2886
-_DEPTH_RANGE =                                  2928
-_DEPTH_WRITEMASK =                              2930
-_DEPTH_CLEAR_VALUE =                            2931
-_DEPTH_FUNC =                                   2932
-_STENCIL_CLEAR_VALUE =                          2961
-_STENCIL_FUNC =                                 2962
-_STENCIL_FAIL =                                 2964
-_STENCIL_PASS_DEPTH_FAIL =                      2965
-_STENCIL_PASS_DEPTH_PASS =                      2966
-_STENCIL_REF =                                  2967
-_STENCIL_VALUE_MASK =                           2963
-_STENCIL_WRITEMASK =                            2968
-_STENCIL_BACK_FUNC =                            34816
-_STENCIL_BACK_FAIL =                            34817
-_STENCIL_BACK_PASS_DEPTH_FAIL =                 34818
-_STENCIL_BACK_PASS_DEPTH_PASS =                 34819
-_STENCIL_BACK_REF =                             36003
-_STENCIL_BACK_VALUE_MASK =                      36004
-_STENCIL_BACK_WRITEMASK =                       36005
-_VIEWPORT =                                     2978
-_SCISSOR_BOX =                                  3088
-_COLOR_CLEAR_VALUE =                            3106
-_COLOR_WRITEMASK =                              3107
-_UNPACK_ALIGNMENT =                             3317
-_PACK_ALIGNMENT =                               3333
-_MAX_TEXTURE_SIZE =                             3379
-_MAX_VIEWPORT_DIMS =                            3386
-_SUBPIXEL_BITS =                                3408
-_RED_BITS =                                     3410
-_GREEN_BITS =                                   3411
-_BLUE_BITS =                                    3412
-_ALPHA_BITS =                                   3413
-_DEPTH_BITS =                                   3414
-_STENCIL_BITS =                                 3415
-_POLYGON_OFFSET_UNITS =                         10752
-_POLYGON_OFFSET_FACTOR =                        32824
-_TEXTURE_BINDING_2D =                           32873
-_SAMPLE_BUFFERS =                               32936
-_SAMPLES =                                      32937
-_SAMPLE_COVERAGE_VALUE =                        32938
-_SAMPLE_COVERAGE_INVERT =                       32939
-_NUM_COMPRESSED_TEXTURE_FORMATS =               34466
-_COMPRESSED_TEXTURE_FORMATS =                   34467
-_DONT_CARE =                                    4352
-_FASTEST =                                      4353
-_NICEST =                                       4354
-_GENERATE_MIPMAP_HINT =                         33170
-_BYTE =                                         5120
-_UNSIGNED_BYTE =                                5121
-_SHORT =                                        5122
-_UNSIGNED_SHORT =                               5123
-_INT =                                          5124
-_UNSIGNED_INT =                                 5125
-_FLOAT =                                        5126
-_DEPTH_COMPONENT =                              6402
-_ALPHA =                                        6406
-_RGB =                                          6407
-_RGBA =                                         6408
-_LUMINANCE =                                    6409
-_LUMINANCE_ALPHA =                              6410
-_UNSIGNED_SHORT_4_4_4_4 =                       32819
-_UNSIGNED_SHORT_5_5_5_1 =                       32820
-_UNSIGNED_SHORT_5_6_5 =                         33635
-_FRAGMENT_SHADER =                              35632
-_VERTEX_SHADER =                                35633
-_MAX_VERTEX_ATTRIBS =                           34921
-_MAX_VERTEX_UNIFORM_VECTORS =                   36347
-_MAX_VARYING_VECTORS =                          36348
-_MAX_COMBINED_TEXTURE_IMAGE_UNITS =             35661
-_MAX_VERTEX_TEXTURE_IMAGE_UNITS =               35660
-_MAX_TEXTURE_IMAGE_UNITS =                      34930
-_MAX_FRAGMENT_UNIFORM_VECTORS =                 36349
-_SHADER_TYPE =                                  35663
-_DELETE_STATUS =                                35712
-_LINK_STATUS =                                  35714
-_VALIDATE_STATUS =                              35715
-_ATTACHED_SHADERS =                             35717
-_ACTIVE_UNIFORMS =                              35718
-_ACTIVE_UNIFORM_MAX_LENGTH =                    35719
-_ACTIVE_ATTRIBUTES =                            35721
-_ACTIVE_ATTRIBUTE_MAX_LENGTH =                  35722
-_SHADING_LANGUAGE_VERSION =                     35724
-_CURRENT_PROGRAM =                              35725
-_NEVER =                                        512
-_LESS =                                         513
-_EQUAL =                                        514
-_LEQUAL =                                       515
-_GREATER =                                      516
-_NOTEQUAL =                                     517
-_GEQUAL =                                       518
-_ALWAYS =                                       519
-_KEEP =                                         7680
-_REPLACE =                                      7681
-_INCR =                                         7682
-_DECR =                                         7683
-_INVERT =                                       5386
-_INCR_WRAP =                                    34055
-_DECR_WRAP =                                    34056
-_VENDOR =                                       7936
-_RENDERER =                                     7937
-_VERSION =                                      7938
-_NEAREST =                                      9728
-_LINEAR =                                       9729
-_NEAREST_MIPMAP_NEAREST =                       9984
-_LINEAR_MIPMAP_NEAREST =                        9985
-_NEAREST_MIPMAP_LINEAR =                        9986
-_LINEAR_MIPMAP_LINEAR =                         9987
-_TEXTURE_MAG_FILTER =                           10240
-_TEXTURE_MIN_FILTER =                           10241
-_TEXTURE_WRAP_S =                               10242
-_TEXTURE_WRAP_T =                               10243
-_TEXTURE =                                      5890
-_TEXTURE_CUBE_MAP =                             34067
-_TEXTURE_BINDING_CUBE_MAP =                     34068
-_TEXTURE_CUBE_MAP_POSITIVE_X =                  34069
-_TEXTURE_CUBE_MAP_NEGATIVE_X =                  34070
-_TEXTURE_CUBE_MAP_POSITIVE_Y =                  34071
-_TEXTURE_CUBE_MAP_NEGATIVE_Y =                  34072
-_TEXTURE_CUBE_MAP_POSITIVE_Z =                  34073
-_TEXTURE_CUBE_MAP_NEGATIVE_Z =                  34074
-_MAX_CUBE_MAP_TEXTURE_SIZE =                    34076
-_TEXTURE0 =                                     33984
-_TEXTURE1 =                                     33985
-_TEXTURE2 =                                     33986
-_TEXTURE3 =                                     33987
-_TEXTURE4 =                                     33988
-_TEXTURE5 =                                     33989
-_TEXTURE6 =                                     33990
-_TEXTURE7 =                                     33991
-_TEXTURE8 =                                     33992
-_TEXTURE9 =                                     33993
-_TEXTURE10 =                                    33994
-_TEXTURE11 =                                    33995
-_TEXTURE12 =                                    33996
-_TEXTURE13 =                                    33997
-_TEXTURE14 =                                    33998
-_TEXTURE15 =                                    33999
-_TEXTURE16 =                                    34000
-_TEXTURE17 =                                    34001
-_TEXTURE18 =                                    34002
-_TEXTURE19 =                                    34003
-_TEXTURE20 =                                    34004
-_TEXTURE21 =                                    34005
-_TEXTURE22 =                                    34006
-_TEXTURE23 =                                    34007
-_TEXTURE24 =                                    34008
-_TEXTURE25 =                                    34009
-_TEXTURE26 =                                    34010
-_TEXTURE27 =                                    34011
-_TEXTURE28 =                                    34012
-_TEXTURE29 =                                    34013
-_TEXTURE30 =                                    34014
-_TEXTURE31 =                                    34015
-_ACTIVE_TEXTURE =                               34016
-_REPEAT =                                       10497
-_CLAMP_TO_EDGE =                                33071
-_MIRRORED_REPEAT =                              33648
-_FLOAT_VEC2 =                                   35664
-_FLOAT_VEC3 =                                   35665
-_FLOAT_VEC4 =                                   35666
-_INT_VEC2 =                                     35667
-_INT_VEC3 =                                     35668
-_INT_VEC4 =                                     35669
-_BOOL =                                         35670
-_BOOL_VEC2 =                                    35671
-_BOOL_VEC3 =                                    35672
-_BOOL_VEC4 =                                    35673
-_FLOAT_MAT2 =                                   35674
-_FLOAT_MAT3 =                                   35675
-_FLOAT_MAT4 =                                   35676
-_SAMPLER_2D =                                   35678
-_SAMPLER_CUBE =                                 35680
-_VERTEX_ATTRIB_ARRAY_ENABLED =                  34338
-_VERTEX_ATTRIB_ARRAY_SIZE =                     34339
-_VERTEX_ATTRIB_ARRAY_STRIDE =                   34340
-_VERTEX_ATTRIB_ARRAY_TYPE =                     34341
-_VERTEX_ATTRIB_ARRAY_NORMALIZED =               34922
-_VERTEX_ATTRIB_ARRAY_POINTER =                  34373
-_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING =           34975
-_COMPILE_STATUS =                               35713
-_INFO_LOG_LENGTH =                              35716
-_SHADER_SOURCE_LENGTH =                         35720
-_LOW_FLOAT =                                    36336
-_MEDIUM_FLOAT =                                 36337
-_HIGH_FLOAT =                                   36338
-_LOW_INT =                                      36339
-_MEDIUM_INT =                                   36340
-_HIGH_INT =                                     36341
-_FRAMEBUFFER =                                  36160
-_RENDERBUFFER =                                 36161
-_RGBA4 =                                        32854
-_RGB5_A1 =                                      32855
-_RGB565 =                                       36194
-_DEPTH_COMPONENT16 =                            33189
-_STENCIL_INDEX =                                6401
-_STENCIL_INDEX8 =                               36168
-_DEPTH_STENCIL =                                34041
-_RENDERBUFFER_WIDTH =                           36162
-_RENDERBUFFER_HEIGHT =                          36163
-_RENDERBUFFER_INTERNAL_FORMAT =                 36164
-_RENDERBUFFER_RED_SIZE =                        36176
-_RENDERBUFFER_GREEN_SIZE =                      36177
-_RENDERBUFFER_BLUE_SIZE =                       36178
-_RENDERBUFFER_ALPHA_SIZE =                      36179
-_RENDERBUFFER_DEPTH_SIZE =                      36180
-_RENDERBUFFER_STENCIL_SIZE =                    36181
-_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE =           36048
-_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME =           36049
-_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL =         36050
+_DEPTH_BUFFER_BIT :: GLenum
+_DEPTH_BUFFER_BIT = 256
+
+_STENCIL_BUFFER_BIT :: GLenum
+_STENCIL_BUFFER_BIT = 1024
+
+_COLOR_BUFFER_BIT :: GLenum
+_COLOR_BUFFER_BIT = 16384
+
+_POINTS :: GLenum
+_POINTS = 0
+
+_LINES :: GLenum
+_LINES = 1
+
+_LINE_LOOP :: GLenum
+_LINE_LOOP = 2
+
+_LINE_STRIP :: GLenum
+_LINE_STRIP = 3
+
+_TRIANGLES :: GLenum
+_TRIANGLES = 4
+
+_TRIANGLE_STRIP :: GLenum
+_TRIANGLE_STRIP = 5
+
+_TRIANGLE_FAN :: GLenum
+_TRIANGLE_FAN = 6
+
+_ZERO :: GLenum
+_ZERO = 0
+
+_ONE :: GLenum
+_ONE = 1
+
+_SRC_COLOR :: GLenum
+_SRC_COLOR = 768
+
+_ONE_MINUS_SRC_COLOR :: GLenum
+_ONE_MINUS_SRC_COLOR = 769
+
+_SRC_ALPHA :: GLenum
+_SRC_ALPHA = 770
+
+_ONE_MINUS_SRC_ALPHA :: GLenum
+_ONE_MINUS_SRC_ALPHA = 771
+
+_DST_ALPHA :: GLenum
+_DST_ALPHA = 772
+
+_ONE_MINUS_DST_ALPHA :: GLenum
+_ONE_MINUS_DST_ALPHA = 773
+
+_DST_COLOR :: GLenum
+_DST_COLOR = 774
+
+_ONE_MINUS_DST_COLOR :: GLenum
+_ONE_MINUS_DST_COLOR = 775
+
+_SRC_ALPHA_SATURATE :: GLenum
+_SRC_ALPHA_SATURATE = 776
+
+_FUNC_ADD :: GLenum
+_FUNC_ADD = 32774
+
+_BLEND_EQUATION :: GLenum
+_BLEND_EQUATION = 32777
+
+_BLEND_EQUATION_RGB :: GLenum
+_BLEND_EQUATION_RGB = 32777
+
+_BLEND_EQUATION_ALPHA :: GLenum
+_BLEND_EQUATION_ALPHA = 34877
+
+_FUNC_SUBTRACT :: GLenum
+_FUNC_SUBTRACT = 32778
+
+_FUNC_REVERSE_SUBTRACT :: GLenum
+_FUNC_REVERSE_SUBTRACT = 32779
+
+_BLEND_DST_RGB :: GLenum
+_BLEND_DST_RGB = 32968
+
+_BLEND_SRC_RGB :: GLenum
+_BLEND_SRC_RGB = 32969
+
+_BLEND_DST_ALPHA :: GLenum
+_BLEND_DST_ALPHA = 32970
+
+_BLEND_SRC_ALPHA :: GLenum
+_BLEND_SRC_ALPHA = 32971
+
+_CONSTANT_COLOR :: GLenum
+_CONSTANT_COLOR = 32769
+
+_ONE_MINUS_CONSTANT_COLOR :: GLenum
+_ONE_MINUS_CONSTANT_COLOR = 32770
+
+_CONSTANT_ALPHA :: GLenum
+_CONSTANT_ALPHA = 32771
+
+_ONE_MINUS_CONSTANT_ALPHA :: GLenum
+_ONE_MINUS_CONSTANT_ALPHA = 32772
+
+_BLEND_COLOR :: GLenum
+_BLEND_COLOR = 32773
+
+_ARRAY_BUFFER :: GLenum
+_ARRAY_BUFFER = 34962
+
+_ELEMENT_ARRAY_BUFFER :: GLenum
+_ELEMENT_ARRAY_BUFFER = 34963
+
+_ARRAY_BUFFER_BINDING :: GLenum
+_ARRAY_BUFFER_BINDING = 34964
+
+_ELEMENT_ARRAY_BUFFER_BINDING :: GLenum
+_ELEMENT_ARRAY_BUFFER_BINDING = 34965
+
+_STREAM_DRAW :: GLenum
+_STREAM_DRAW = 35040
+
+_STATIC_DRAW :: GLenum
+_STATIC_DRAW = 35044
+
+_DYNAMIC_DRAW :: GLenum
+_DYNAMIC_DRAW = 35048
+
+_BUFFER_SIZE :: GLenum
+_BUFFER_SIZE = 34660
+
+_BUFFER_USAGE :: GLenum
+_BUFFER_USAGE = 34661
+
+_CURRENT_VERTEX_ATTRIB :: GLenum
+_CURRENT_VERTEX_ATTRIB = 34342
+
+_FRONT :: GLenum
+_FRONT = 1028
+
+_BACK :: GLenum
+_BACK = 1029
+
+_FRONT_AND_BACK :: GLenum
+_FRONT_AND_BACK = 1032
+
+_TEXTURE_2D :: GLenum
+_TEXTURE_2D = 3553
+
+_CULL_FACE :: GLenum
+_CULL_FACE = 2884
+
+_BLEND :: GLenum
+_BLEND = 3042
+
+_DITHER :: GLenum
+_DITHER = 3024
+
+_STENCIL_TEST :: GLenum
+_STENCIL_TEST = 2960
+
+_DEPTH_TEST :: GLenum
+_DEPTH_TEST = 2929
+
+_SCISSOR_TEST :: GLenum
+_SCISSOR_TEST = 3089
+
+_POLYGON_OFFSET_FILL :: GLenum
+_POLYGON_OFFSET_FILL = 32823
+
+_SAMPLE_ALPHA_TO_COVERAGE :: GLenum
+_SAMPLE_ALPHA_TO_COVERAGE = 32926
+
+_SAMPLE_COVERAGE :: GLenum
+_SAMPLE_COVERAGE = 32928
+
+_NO_ERROR :: GLenum
+_NO_ERROR = 0
+
+_INVALID_ENUM :: GLenum
+_INVALID_ENUM = 1280
+
+_INVALID_VALUE :: GLenum
+_INVALID_VALUE = 1281
+
+_INVALID_OPERATION :: GLenum
+_INVALID_OPERATION = 1282
+
+_OUT_OF_MEMORY :: GLenum
+_OUT_OF_MEMORY = 1285
+
+_CW :: GLenum
+_CW = 2304
+
+_CCW :: GLenum
+_CCW = 2305
+
+_LINE_WIDTH :: GLenum
+_LINE_WIDTH = 2849
+
+_ALIASED_POINT_SIZE_RANGE :: GLenum
+_ALIASED_POINT_SIZE_RANGE = 33901
+
+_ALIASED_LINE_WIDTH_RANGE :: GLenum
+_ALIASED_LINE_WIDTH_RANGE = 33902
+
+_CULL_FACE_MODE :: GLenum
+_CULL_FACE_MODE = 2885
+
+_FRONT_FACE :: GLenum
+_FRONT_FACE = 2886
+
+_DEPTH_RANGE :: GLenum
+_DEPTH_RANGE = 2928
+
+_DEPTH_WRITEMASK :: GLenum
+_DEPTH_WRITEMASK = 2930
+
+_DEPTH_CLEAR_VALUE :: GLenum
+_DEPTH_CLEAR_VALUE = 2931
+
+_DEPTH_FUNC :: GLenum
+_DEPTH_FUNC = 2932
+
+_STENCIL_CLEAR_VALUE :: GLenum
+_STENCIL_CLEAR_VALUE = 2961
+
+_STENCIL_FUNC :: GLenum
+_STENCIL_FUNC = 2962
+
+_STENCIL_FAIL :: GLenum
+_STENCIL_FAIL = 2964
+
+_STENCIL_PASS_DEPTH_FAIL :: GLenum
+_STENCIL_PASS_DEPTH_FAIL = 2965
+
+_STENCIL_PASS_DEPTH_PASS :: GLenum
+_STENCIL_PASS_DEPTH_PASS = 2966
+
+_STENCIL_REF :: GLenum
+_STENCIL_REF = 2967
+
+_STENCIL_VALUE_MASK :: GLenum
+_STENCIL_VALUE_MASK = 2963
+
+_STENCIL_WRITEMASK :: GLenum
+_STENCIL_WRITEMASK = 2968
+
+_STENCIL_BACK_FUNC :: GLenum
+_STENCIL_BACK_FUNC = 34816
+
+_STENCIL_BACK_FAIL :: GLenum
+_STENCIL_BACK_FAIL = 34817
+
+_STENCIL_BACK_PASS_DEPTH_FAIL :: GLenum
+_STENCIL_BACK_PASS_DEPTH_FAIL = 34818
+
+_STENCIL_BACK_PASS_DEPTH_PASS :: GLenum
+_STENCIL_BACK_PASS_DEPTH_PASS = 34819
+
+_STENCIL_BACK_REF :: GLenum
+_STENCIL_BACK_REF = 36003
+
+_STENCIL_BACK_VALUE_MASK :: GLenum
+_STENCIL_BACK_VALUE_MASK = 36004
+
+_STENCIL_BACK_WRITEMASK :: GLenum
+_STENCIL_BACK_WRITEMASK = 36005
+
+_VIEWPORT :: GLenum
+_VIEWPORT = 2978
+
+_SCISSOR_BOX :: GLenum
+_SCISSOR_BOX = 3088
+
+_COLOR_CLEAR_VALUE :: GLenum
+_COLOR_CLEAR_VALUE = 3106
+
+_COLOR_WRITEMASK :: GLenum
+_COLOR_WRITEMASK = 3107
+
+_UNPACK_ALIGNMENT :: GLenum
+_UNPACK_ALIGNMENT = 3317
+
+_PACK_ALIGNMENT :: GLenum
+_PACK_ALIGNMENT = 3333
+
+_MAX_TEXTURE_SIZE :: GLenum
+_MAX_TEXTURE_SIZE = 3379
+
+_MAX_VIEWPORT_DIMS :: GLenum
+_MAX_VIEWPORT_DIMS = 3386
+
+_SUBPIXEL_BITS :: GLenum
+_SUBPIXEL_BITS = 3408
+
+_RED_BITS :: GLenum
+_RED_BITS = 3410
+
+_GREEN_BITS :: GLenum
+_GREEN_BITS = 3411
+
+_BLUE_BITS :: GLenum
+_BLUE_BITS = 3412
+
+_ALPHA_BITS :: GLenum
+_ALPHA_BITS = 3413
+
+_DEPTH_BITS :: GLenum
+_DEPTH_BITS = 3414
+
+_STENCIL_BITS :: GLenum
+_STENCIL_BITS = 3415
+
+_POLYGON_OFFSET_UNITS :: GLenum
+_POLYGON_OFFSET_UNITS = 10752
+
+_POLYGON_OFFSET_FACTOR :: GLenum
+_POLYGON_OFFSET_FACTOR = 32824
+
+_TEXTURE_BINDING_2D :: GLenum
+_TEXTURE_BINDING_2D = 32873
+
+_SAMPLE_BUFFERS :: GLenum
+_SAMPLE_BUFFERS = 32936
+
+_SAMPLES :: GLenum
+_SAMPLES = 32937
+
+_SAMPLE_COVERAGE_VALUE :: GLenum
+_SAMPLE_COVERAGE_VALUE = 32938
+
+_SAMPLE_COVERAGE_INVERT :: GLenum
+_SAMPLE_COVERAGE_INVERT = 32939
+
+_NUM_COMPRESSED_TEXTURE_FORMATS :: GLenum
+_NUM_COMPRESSED_TEXTURE_FORMATS = 34466
+
+_COMPRESSED_TEXTURE_FORMATS :: GLenum
+_COMPRESSED_TEXTURE_FORMATS = 34467
+
+_DONT_CARE :: GLenum
+_DONT_CARE = 4352
+
+_FASTEST :: GLenum
+_FASTEST = 4353
+
+_NICEST :: GLenum
+_NICEST = 4354
+
+_GENERATE_MIPMAP_HINT :: GLenum
+_GENERATE_MIPMAP_HINT = 33170
+
+_BYTE :: GLenum
+_BYTE = 5120
+
+_UNSIGNED_BYTE :: GLenum
+_UNSIGNED_BYTE = 5121
+
+_SHORT :: GLenum
+_SHORT = 5122
+
+_UNSIGNED_SHORT :: GLenum
+_UNSIGNED_SHORT = 5123
+
+_INT :: GLenum
+_INT = 5124
+
+_UNSIGNED_INT :: GLenum
+_UNSIGNED_INT = 5125
+
+_FLOAT :: GLenum
+_FLOAT = 5126
+
+_DEPTH_COMPONENT :: GLenum
+_DEPTH_COMPONENT = 6402
+
+_ALPHA :: GLenum
+_ALPHA = 6406
+
+_RGB :: GLenum
+_RGB = 6407
+
+_RGBA :: GLenum
+_RGBA = 6408
+
+_LUMINANCE :: GLenum
+_LUMINANCE = 6409
+
+_LUMINANCE_ALPHA :: GLenum
+_LUMINANCE_ALPHA = 6410
+
+_UNSIGNED_SHORT_4_4_4_4 :: GLenum
+_UNSIGNED_SHORT_4_4_4_4 = 32819
+
+_UNSIGNED_SHORT_5_5_5_1 :: GLenum
+_UNSIGNED_SHORT_5_5_5_1 = 32820
+
+_UNSIGNED_SHORT_5_6_5 :: GLenum
+_UNSIGNED_SHORT_5_6_5 = 33635
+
+_FRAGMENT_SHADER :: GLenum
+_FRAGMENT_SHADER = 35632
+
+_VERTEX_SHADER :: GLenum
+_VERTEX_SHADER = 35633
+
+_MAX_VERTEX_ATTRIBS :: GLenum
+_MAX_VERTEX_ATTRIBS = 34921
+
+_MAX_VERTEX_UNIFORM_VECTORS :: GLenum
+_MAX_VERTEX_UNIFORM_VECTORS = 36347
+
+_MAX_VARYING_VECTORS :: GLenum
+_MAX_VARYING_VECTORS = 36348
+
+_MAX_COMBINED_TEXTURE_IMAGE_UNITS :: GLenum
+_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 35661
+
+_MAX_VERTEX_TEXTURE_IMAGE_UNITS :: GLenum
+_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 35660
+
+_MAX_TEXTURE_IMAGE_UNITS :: GLenum
+_MAX_TEXTURE_IMAGE_UNITS = 34930
+
+_MAX_FRAGMENT_UNIFORM_VECTORS :: GLenum
+_MAX_FRAGMENT_UNIFORM_VECTORS = 36349
+
+_SHADER_TYPE :: GLenum
+_SHADER_TYPE = 35663
+
+_DELETE_STATUS :: GLenum
+_DELETE_STATUS = 35712
+
+_LINK_STATUS :: GLenum
+_LINK_STATUS = 35714
+
+_VALIDATE_STATUS :: GLenum
+_VALIDATE_STATUS = 35715
+
+_ATTACHED_SHADERS :: GLenum
+_ATTACHED_SHADERS = 35717
+
+_ACTIVE_UNIFORMS :: GLenum
+_ACTIVE_UNIFORMS = 35718
+
+_ACTIVE_UNIFORM_MAX_LENGTH :: GLenum
+_ACTIVE_UNIFORM_MAX_LENGTH = 35719
+
+_ACTIVE_ATTRIBUTES :: GLenum
+_ACTIVE_ATTRIBUTES = 35721
+
+_ACTIVE_ATTRIBUTE_MAX_LENGTH :: GLenum
+_ACTIVE_ATTRIBUTE_MAX_LENGTH = 35722
+
+_SHADING_LANGUAGE_VERSION :: GLenum
+_SHADING_LANGUAGE_VERSION = 35724
+
+_CURRENT_PROGRAM :: GLenum
+_CURRENT_PROGRAM = 35725
+
+_NEVER :: GLenum
+_NEVER = 512
+
+_LESS :: GLenum
+_LESS = 513
+
+_EQUAL :: GLenum
+_EQUAL = 514
+
+_LEQUAL :: GLenum
+_LEQUAL = 515
+
+_GREATER :: GLenum
+_GREATER = 516
+
+_NOTEQUAL :: GLenum
+_NOTEQUAL = 517
+
+_GEQUAL :: GLenum
+_GEQUAL = 518
+
+_ALWAYS :: GLenum
+_ALWAYS = 519
+
+_KEEP :: GLenum
+_KEEP = 7680
+
+_REPLACE :: GLenum
+_REPLACE = 7681
+
+_INCR :: GLenum
+_INCR = 7682
+
+_DECR :: GLenum
+_DECR = 7683
+
+_INVERT :: GLenum
+_INVERT = 5386
+
+_INCR_WRAP :: GLenum
+_INCR_WRAP = 34055
+
+_DECR_WRAP :: GLenum
+_DECR_WRAP = 34056
+
+_VENDOR :: GLenum
+_VENDOR = 7936
+
+_RENDERER :: GLenum
+_RENDERER = 7937
+
+_VERSION :: GLenum
+_VERSION = 7938
+
+_NEAREST :: GLenum
+_NEAREST = 9728
+
+_LINEAR :: GLenum
+_LINEAR = 9729
+
+_NEAREST_MIPMAP_NEAREST :: GLenum
+_NEAREST_MIPMAP_NEAREST = 9984
+
+_LINEAR_MIPMAP_NEAREST :: GLenum
+_LINEAR_MIPMAP_NEAREST = 9985
+
+_NEAREST_MIPMAP_LINEAR :: GLenum
+_NEAREST_MIPMAP_LINEAR = 9986
+
+_LINEAR_MIPMAP_LINEAR :: GLenum
+_LINEAR_MIPMAP_LINEAR = 9987
+
+_TEXTURE_MAG_FILTER :: GLenum
+_TEXTURE_MAG_FILTER = 10240
+
+_TEXTURE_MIN_FILTER :: GLenum
+_TEXTURE_MIN_FILTER = 10241
+
+_TEXTURE_WRAP_S :: GLenum
+_TEXTURE_WRAP_S = 10242
+
+_TEXTURE_WRAP_T :: GLenum
+_TEXTURE_WRAP_T = 10243
+
+_TEXTURE :: GLenum
+_TEXTURE = 5890
+
+_TEXTURE_CUBE_MAP :: GLenum
+_TEXTURE_CUBE_MAP = 34067
+
+_TEXTURE_BINDING_CUBE_MAP :: GLenum
+_TEXTURE_BINDING_CUBE_MAP = 34068
+
+_TEXTURE_CUBE_MAP_POSITIVE_X :: GLenum
+_TEXTURE_CUBE_MAP_POSITIVE_X = 34069
+
+_TEXTURE_CUBE_MAP_NEGATIVE_X :: GLenum
+_TEXTURE_CUBE_MAP_NEGATIVE_X = 34070
+
+_TEXTURE_CUBE_MAP_POSITIVE_Y :: GLenum
+_TEXTURE_CUBE_MAP_POSITIVE_Y = 34071
+
+_TEXTURE_CUBE_MAP_NEGATIVE_Y :: GLenum
+_TEXTURE_CUBE_MAP_NEGATIVE_Y = 34072
+
+_TEXTURE_CUBE_MAP_POSITIVE_Z :: GLenum
+_TEXTURE_CUBE_MAP_POSITIVE_Z = 34073
+
+_TEXTURE_CUBE_MAP_NEGATIVE_Z :: GLenum
+_TEXTURE_CUBE_MAP_NEGATIVE_Z = 34074
+
+_MAX_CUBE_MAP_TEXTURE_SIZE :: GLenum
+_MAX_CUBE_MAP_TEXTURE_SIZE = 34076
+
+_TEXTURE0 :: GLenum
+_TEXTURE0 = 33984
+
+_TEXTURE1 :: GLenum
+_TEXTURE1 = 33985
+
+_TEXTURE2 :: GLenum
+_TEXTURE2 = 33986
+
+_TEXTURE3 :: GLenum
+_TEXTURE3 = 33987
+
+_TEXTURE4 :: GLenum
+_TEXTURE4 = 33988
+
+_TEXTURE5 :: GLenum
+_TEXTURE5 = 33989
+
+_TEXTURE6 :: GLenum
+_TEXTURE6 = 33990
+
+_TEXTURE7 :: GLenum
+_TEXTURE7 = 33991
+
+_TEXTURE8 :: GLenum
+_TEXTURE8 = 33992
+
+_TEXTURE9 :: GLenum
+_TEXTURE9 = 33993
+
+_TEXTURE10 :: GLenum
+_TEXTURE10 = 33994
+
+_TEXTURE11 :: GLenum
+_TEXTURE11 = 33995
+
+_TEXTURE12 :: GLenum
+_TEXTURE12 = 33996
+
+_TEXTURE13 :: GLenum
+_TEXTURE13 = 33997
+
+_TEXTURE14 :: GLenum
+_TEXTURE14 = 33998
+
+_TEXTURE15 :: GLenum
+_TEXTURE15 = 33999
+
+_TEXTURE16 :: GLenum
+_TEXTURE16 = 34000
+
+_TEXTURE17 :: GLenum
+_TEXTURE17 = 34001
+
+_TEXTURE18 :: GLenum
+_TEXTURE18 = 34002
+
+_TEXTURE19 :: GLenum
+_TEXTURE19 = 34003
+
+_TEXTURE20 :: GLenum
+_TEXTURE20 = 34004
+
+_TEXTURE21 :: GLenum
+_TEXTURE21 = 34005
+
+_TEXTURE22 :: GLenum
+_TEXTURE22 = 34006
+
+_TEXTURE23 :: GLenum
+_TEXTURE23 = 34007
+
+_TEXTURE24 :: GLenum
+_TEXTURE24 = 34008
+
+_TEXTURE25 :: GLenum
+_TEXTURE25 = 34009
+
+_TEXTURE26 :: GLenum
+_TEXTURE26 = 34010
+
+_TEXTURE27 :: GLenum
+_TEXTURE27 = 34011
+
+_TEXTURE28 :: GLenum
+_TEXTURE28 = 34012
+
+_TEXTURE29 :: GLenum
+_TEXTURE29 = 34013
+
+_TEXTURE30 :: GLenum
+_TEXTURE30 = 34014
+
+_TEXTURE31 :: GLenum
+_TEXTURE31 = 34015
+
+_ACTIVE_TEXTURE :: GLenum
+_ACTIVE_TEXTURE = 34016
+
+_REPEAT :: GLenum
+_REPEAT = 10497
+
+_CLAMP_TO_EDGE :: GLenum
+_CLAMP_TO_EDGE = 33071
+
+_MIRRORED_REPEAT :: GLenum
+_MIRRORED_REPEAT = 33648
+
+_FLOAT_VEC2 :: GLenum
+_FLOAT_VEC2 = 35664
+
+_FLOAT_VEC3 :: GLenum
+_FLOAT_VEC3 = 35665
+
+_FLOAT_VEC4 :: GLenum
+_FLOAT_VEC4 = 35666
+
+_INT_VEC2 :: GLenum
+_INT_VEC2 = 35667
+
+_INT_VEC3 :: GLenum
+_INT_VEC3 = 35668
+
+_INT_VEC4 :: GLenum
+_INT_VEC4 = 35669
+
+_BOOL :: GLenum
+_BOOL = 35670
+
+_BOOL_VEC2 :: GLenum
+_BOOL_VEC2 = 35671
+
+_BOOL_VEC3 :: GLenum
+_BOOL_VEC3 = 35672
+
+_BOOL_VEC4 :: GLenum
+_BOOL_VEC4 = 35673
+
+_FLOAT_MAT2 :: GLenum
+_FLOAT_MAT2 = 35674
+
+_FLOAT_MAT3 :: GLenum
+_FLOAT_MAT3 = 35675
+
+_FLOAT_MAT4 :: GLenum
+_FLOAT_MAT4 = 35676
+
+_SAMPLER_2D :: GLenum
+_SAMPLER_2D = 35678
+
+_SAMPLER_CUBE :: GLenum
+_SAMPLER_CUBE = 35680
+
+_VERTEX_ATTRIB_ARRAY_ENABLED :: GLenum
+_VERTEX_ATTRIB_ARRAY_ENABLED = 34338
+
+_VERTEX_ATTRIB_ARRAY_SIZE :: GLenum
+_VERTEX_ATTRIB_ARRAY_SIZE = 34339
+
+_VERTEX_ATTRIB_ARRAY_STRIDE :: GLenum
+_VERTEX_ATTRIB_ARRAY_STRIDE = 34340
+
+_VERTEX_ATTRIB_ARRAY_TYPE :: GLenum
+_VERTEX_ATTRIB_ARRAY_TYPE = 34341
+
+_VERTEX_ATTRIB_ARRAY_NORMALIZED :: GLenum
+_VERTEX_ATTRIB_ARRAY_NORMALIZED = 34922
+
+_VERTEX_ATTRIB_ARRAY_POINTER :: GLenum
+_VERTEX_ATTRIB_ARRAY_POINTER = 34373
+
+_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING :: GLenum
+_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 34975
+
+_COMPILE_STATUS :: GLenum
+_COMPILE_STATUS = 35713
+
+_INFO_LOG_LENGTH :: GLenum
+_INFO_LOG_LENGTH = 35716
+
+_SHADER_SOURCE_LENGTH :: GLenum
+_SHADER_SOURCE_LENGTH = 35720
+
+_LOW_FLOAT :: GLenum
+_LOW_FLOAT = 36336
+
+_MEDIUM_FLOAT :: GLenum
+_MEDIUM_FLOAT = 36337
+
+_HIGH_FLOAT :: GLenum
+_HIGH_FLOAT = 36338
+
+_LOW_INT :: GLenum
+_LOW_INT = 36339
+
+_MEDIUM_INT :: GLenum
+_MEDIUM_INT = 36340
+
+_HIGH_INT :: GLenum
+_HIGH_INT = 36341
+
+_FRAMEBUFFER :: GLenum
+_FRAMEBUFFER = 36160
+
+_RENDERBUFFER :: GLenum
+_RENDERBUFFER = 36161
+
+_RGBA4 :: GLenum
+_RGBA4 = 32854
+
+_RGB5_A1 :: GLenum
+_RGB5_A1 = 32855
+
+_RGB565 :: GLenum
+_RGB565 = 36194
+
+_DEPTH_COMPONENT16 :: GLenum
+_DEPTH_COMPONENT16 = 33189
+
+_STENCIL_INDEX :: GLenum
+_STENCIL_INDEX = 6401
+
+_STENCIL_INDEX8 :: GLenum
+_STENCIL_INDEX8 = 36168
+
+_DEPTH_STENCIL :: GLenum
+_DEPTH_STENCIL = 34041
+
+_RENDERBUFFER_WIDTH :: GLenum
+_RENDERBUFFER_WIDTH = 36162
+
+_RENDERBUFFER_HEIGHT :: GLenum
+_RENDERBUFFER_HEIGHT = 36163
+
+_RENDERBUFFER_INTERNAL_FORMAT :: GLenum
+_RENDERBUFFER_INTERNAL_FORMAT = 36164
+
+_RENDERBUFFER_RED_SIZE :: GLenum
+_RENDERBUFFER_RED_SIZE = 36176
+
+_RENDERBUFFER_GREEN_SIZE :: GLenum
+_RENDERBUFFER_GREEN_SIZE = 36177
+
+_RENDERBUFFER_BLUE_SIZE :: GLenum
+_RENDERBUFFER_BLUE_SIZE = 36178
+
+_RENDERBUFFER_ALPHA_SIZE :: GLenum
+_RENDERBUFFER_ALPHA_SIZE = 36179
+
+_RENDERBUFFER_DEPTH_SIZE :: GLenum
+_RENDERBUFFER_DEPTH_SIZE = 36180
+
+_RENDERBUFFER_STENCIL_SIZE :: GLenum
+_RENDERBUFFER_STENCIL_SIZE = 36181
+
+_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE :: GLenum
+_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE = 36048
+
+_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME :: GLenum
+_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 36049
+
+_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL :: GLenum
+_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = 36050
+
+_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE :: GLenum
 _FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 36051
-_COLOR_ATTACHMENT0 =                            36064
-_DEPTH_ATTACHMENT =                             36096
-_STENCIL_ATTACHMENT =                           36128
-_DEPTH_STENCIL_ATTACHMENT =                     33306
-_NONE =                                         0
-_FRAMEBUFFER_COMPLETE =                         36053
-_FRAMEBUFFER_INCOMPLETE_ATTACHMENT =            36054
-_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT =    36055
-_FRAMEBUFFER_INCOMPLETE_DIMENSIONS =            36057
-_FRAMEBUFFER_UNSUPPORTED =                      36061
-_FRAMEBUFFER_BINDING =                          36006
-_RENDERBUFFER_BINDING =                         36007
-_MAX_RENDERBUFFER_SIZE =                        34024
-_INVALID_FRAMEBUFFER_OPERATION =                1286
-_UNPACK_FLIP_Y_WEBGL =                          37440
-_UNPACK_PREMULTIPLY_ALPHA_WEBGL =               37441
-_CONTEXT_LOST_WEBGL =                           37442
-_UNPACK_COLORSPACE_CONVERSION_WEBGL =           37443
-_BROWSER_DEFAULT_WEBGL =                        37444
+
+_COLOR_ATTACHMENT0 :: GLenum
+_COLOR_ATTACHMENT0 = 36064
+
+_DEPTH_ATTACHMENT :: GLenum
+_DEPTH_ATTACHMENT = 36096
+
+_STENCIL_ATTACHMENT :: GLenum
+_STENCIL_ATTACHMENT = 36128
+
+_DEPTH_STENCIL_ATTACHMENT :: GLenum
+_DEPTH_STENCIL_ATTACHMENT = 33306
+
+_NONE :: GLenum
+_NONE = 0
+
+_FRAMEBUFFER_COMPLETE :: GLenum
+_FRAMEBUFFER_COMPLETE = 36053
+
+_FRAMEBUFFER_INCOMPLETE_ATTACHMENT :: GLenum
+_FRAMEBUFFER_INCOMPLETE_ATTACHMENT = 36054
+
+_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT :: GLenum
+_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = 36055
+
+_FRAMEBUFFER_INCOMPLETE_DIMENSIONS :: GLenum
+_FRAMEBUFFER_INCOMPLETE_DIMENSIONS = 36057
+
+_FRAMEBUFFER_UNSUPPORTED :: GLenum
+_FRAMEBUFFER_UNSUPPORTED = 36061
+
+_FRAMEBUFFER_BINDING :: GLenum
+_FRAMEBUFFER_BINDING = 36006
+
+_RENDERBUFFER_BINDING :: GLenum
+_RENDERBUFFER_BINDING = 36007
+
+_MAX_RENDERBUFFER_SIZE :: GLenum
+_MAX_RENDERBUFFER_SIZE = 34024
+
+_INVALID_FRAMEBUFFER_OPERATION :: GLenum
+_INVALID_FRAMEBUFFER_OPERATION = 1286
+
+_UNPACK_FLIP_Y_WEBGL :: GLenum
+_UNPACK_FLIP_Y_WEBGL = 37440
+
+_UNPACK_PREMULTIPLY_ALPHA_WEBGL :: GLenum
+_UNPACK_PREMULTIPLY_ALPHA_WEBGL = 37441
+
+_CONTEXT_LOST_WEBGL :: GLenum
+_CONTEXT_LOST_WEBGL = 37442
+
+_UNPACK_COLORSPACE_CONVERSION_WEBGL :: GLenum
+_UNPACK_COLORSPACE_CONVERSION_WEBGL = 37443
+
+_BROWSER_DEFAULT_WEBGL :: GLenum
+_BROWSER_DEFAULT_WEBGL = 37444
 
 foreign import getContextAttributesImpl """
   function getContextAttributesImpl(webgl) {
@@ -346,7 +948,7 @@ foreign import getContextAttributesImpl """
       return webgl.getContextAttributes();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLContextAttributes)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLContextAttributes)
 
 foreign import isContextLostImpl """
   function isContextLostImpl(webgl) {
@@ -354,7 +956,7 @@ foreign import isContextLostImpl """
       return webgl.isContextLost();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) Boolean)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Boolean)
 
 foreign import getSupportedExtensionsImpl """
   function getSupportedExtensionsImpl(webgl) {
@@ -362,7 +964,7 @@ foreign import getSupportedExtensionsImpl """
       return webgl.getSupportedExtensions();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) [String])
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) [DOMString])
 
 foreign import getExtensionImpl """
   function getExtensionImpl(webgl, name) {
@@ -370,7 +972,7 @@ foreign import getExtensionImpl """
       return webgl.getExtension(name);
     };
   }
-""" :: forall eff a. Fn2 WebGLContext String (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn2 WebGLContext DOMString (Eff (webgl :: WebGL | eff) a)
 
 foreign import activeTextureImpl """
   function activeTextureImpl(webgl, texture) {
@@ -378,7 +980,7 @@ foreign import activeTextureImpl """
       return webgl.activeTexture(texture);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import attachShaderImpl """
   function attachShaderImpl(webgl, program, shader) {
@@ -386,7 +988,7 @@ foreign import attachShaderImpl """
       return webgl.attachShader(program, shader);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bindAttribLocationImpl """
   function bindAttribLocationImpl(webgl, program, index, name) {
@@ -394,7 +996,7 @@ foreign import bindAttribLocationImpl """
       return webgl.bindAttribLocation(program, index, name);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLProgram GLuint String (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLProgram GLuint DOMString (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bindBufferImpl """
   function bindBufferImpl(webgl, target, buffer) {
@@ -402,7 +1004,7 @@ foreign import bindBufferImpl """
       return webgl.bindBuffer(target, buffer);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum WebGLBuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bindFramebufferImpl """
   function bindFramebufferImpl(webgl, target, framebuffer) {
@@ -410,7 +1012,7 @@ foreign import bindFramebufferImpl """
       return webgl.bindFramebuffer(target, framebuffer);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum WebGLFramebuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bindRenderbufferImpl """
   function bindRenderbufferImpl(webgl, target, renderbuffer) {
@@ -418,7 +1020,7 @@ foreign import bindRenderbufferImpl """
       return webgl.bindRenderbuffer(target, renderbuffer);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum WebGLRenderbuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bindTextureImpl """
   function bindTextureImpl(webgl, target, texture) {
@@ -426,7 +1028,7 @@ foreign import bindTextureImpl """
       return webgl.bindTexture(target, texture);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum WebGLTexture (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import blendColorImpl """
   function blendColorImpl(webgl, red, green, blue, alpha) {
@@ -434,7 +1036,7 @@ foreign import blendColorImpl """
       return webgl.blendColor(red, green, blue, alpha);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import blendEquationImpl """
   function blendEquationImpl(webgl, mode) {
@@ -442,7 +1044,7 @@ foreign import blendEquationImpl """
       return webgl.blendEquation(mode);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import blendEquationSeparateImpl """
   function blendEquationSeparateImpl(webgl, modeRGB, modeAlpha) {
@@ -450,7 +1052,7 @@ foreign import blendEquationSeparateImpl """
       return webgl.blendEquationSeparate(modeRGB, modeAlpha);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import blendFuncImpl """
   function blendFuncImpl(webgl, sfactor, dfactor) {
@@ -458,7 +1060,7 @@ foreign import blendFuncImpl """
       return webgl.blendFunc(sfactor, dfactor);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import blendFuncSeparateImpl """
   function blendFuncSeparateImpl(webgl, srcRGB, dstRGB, srcAlpha, dstAlpha) {
@@ -466,7 +1068,7 @@ foreign import blendFuncSeparateImpl """
       return webgl.blendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bufferDataImpl """
   function bufferDataImpl(webgl, target, data, usage) {
@@ -474,7 +1076,7 @@ foreign import bufferDataImpl """
       return webgl.bufferData(target, data, usage);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum Float32Array GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum Float32Array GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import bufferSubDataImpl """
   function bufferSubDataImpl(webgl, target, offset, data) {
@@ -482,7 +1084,7 @@ foreign import bufferSubDataImpl """
       return webgl.bufferSubData(target, offset, data);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLintptr ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLintptr ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import checkFramebufferStatusImpl """
   function checkFramebufferStatusImpl(webgl, target) {
@@ -490,7 +1092,7 @@ foreign import checkFramebufferStatusImpl """
       return webgl.checkFramebufferStatus(target);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) GLenum)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLenum)
 
 foreign import clearImpl """
   function clearImpl(webgl, mask) {
@@ -498,7 +1100,7 @@ foreign import clearImpl """
       return webgl.clear(mask);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLbitfield (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLbitfield (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import clearColorImpl """
   function clearColorImpl(webgl, red, green, blue, alpha) {
@@ -506,7 +1108,7 @@ foreign import clearColorImpl """
       return webgl.clearColor(red, green, blue, alpha);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import clearDepthImpl """
   function clearDepthImpl(webgl, depth) {
@@ -514,7 +1116,7 @@ foreign import clearDepthImpl """
       return webgl.clearDepth(depth);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLclampf (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLclampf (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import clearStencilImpl """
   function clearStencilImpl(webgl, s) {
@@ -522,7 +1124,7 @@ foreign import clearStencilImpl """
       return webgl.clearStencil(s);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import colorMaskImpl """
   function colorMaskImpl(webgl, red, green, blue, alpha) {
@@ -530,7 +1132,7 @@ foreign import colorMaskImpl """
       return webgl.colorMask(red, green, blue, alpha);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLboolean GLboolean GLboolean GLboolean (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLboolean GLboolean GLboolean GLboolean (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import compileShaderImpl """
   function compileShaderImpl(webgl, shader) {
@@ -538,7 +1140,7 @@ foreign import compileShaderImpl """
       return webgl.compileShader(shader);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import copyTexImage2DImpl """
   function copyTexImage2DImpl(webgl, target, level, internalformat, x, y, width, height, border) {
@@ -546,7 +1148,7 @@ foreign import copyTexImage2DImpl """
       return webgl.copyTexImage2D(target, level, internalformat, x, y, width, height, border);
     };
   }
-""" :: forall eff. Fn9 WebGLContext GLenum GLint GLenum GLint GLint GLsizei GLsizei GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn9 WebGLContext GLenum GLint GLenum GLint GLint GLsizei GLsizei GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import copyTexSubImage2DImpl """
   function copyTexSubImage2DImpl(webgl, target, level, xoffset, yoffset, x, y, width, height) {
@@ -554,7 +1156,7 @@ foreign import copyTexSubImage2DImpl """
       return webgl.copyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
     };
   }
-""" :: forall eff. Fn9 WebGLContext GLenum GLint GLint GLint GLint GLint GLsizei GLsizei (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn9 WebGLContext GLenum GLint GLint GLint GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import createBufferImpl """
   function createBufferImpl(webgl) {
@@ -562,7 +1164,7 @@ foreign import createBufferImpl """
       return webgl.createBuffer();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLBuffer)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLBuffer)
 
 foreign import createFramebufferImpl """
   function createFramebufferImpl(webgl) {
@@ -570,7 +1172,7 @@ foreign import createFramebufferImpl """
       return webgl.createFramebuffer();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLFramebuffer)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLFramebuffer)
 
 foreign import createProgramImpl """
   function createProgramImpl(webgl) {
@@ -578,7 +1180,7 @@ foreign import createProgramImpl """
       return webgl.createProgram();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLProgram)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLProgram)
 
 foreign import createRenderbufferImpl """
   function createRenderbufferImpl(webgl) {
@@ -586,7 +1188,7 @@ foreign import createRenderbufferImpl """
       return webgl.createRenderbuffer();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLRenderbuffer)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLRenderbuffer)
 
 foreign import createShaderImpl """
   function createShaderImpl(webgl, type) {
@@ -594,7 +1196,7 @@ foreign import createShaderImpl """
       return webgl.createShader(type);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) WebGLShader)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) WebGLShader)
 
 foreign import createTextureImpl """
   function createTextureImpl(webgl) {
@@ -602,7 +1204,7 @@ foreign import createTextureImpl """
       return webgl.createTexture();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLTexture)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLTexture)
 
 foreign import cullFaceImpl """
   function cullFaceImpl(webgl, mode) {
@@ -610,7 +1212,7 @@ foreign import cullFaceImpl """
       return webgl.cullFace(mode);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteBufferImpl """
   function deleteBufferImpl(webgl, buffer) {
@@ -618,7 +1220,7 @@ foreign import deleteBufferImpl """
       return webgl.deleteBuffer(buffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteFramebufferImpl """
   function deleteFramebufferImpl(webgl, framebuffer) {
@@ -626,7 +1228,7 @@ foreign import deleteFramebufferImpl """
       return webgl.deleteFramebuffer(framebuffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteProgramImpl """
   function deleteProgramImpl(webgl, program) {
@@ -634,7 +1236,7 @@ foreign import deleteProgramImpl """
       return webgl.deleteProgram(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteRenderbufferImpl """
   function deleteRenderbufferImpl(webgl, renderbuffer) {
@@ -642,7 +1244,7 @@ foreign import deleteRenderbufferImpl """
       return webgl.deleteRenderbuffer(renderbuffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteShaderImpl """
   function deleteShaderImpl(webgl, shader) {
@@ -650,7 +1252,7 @@ foreign import deleteShaderImpl """
       return webgl.deleteShader(shader);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import deleteTextureImpl """
   function deleteTextureImpl(webgl, texture) {
@@ -658,7 +1260,7 @@ foreign import deleteTextureImpl """
       return webgl.deleteTexture(texture);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import depthFuncImpl """
   function depthFuncImpl(webgl, func) {
@@ -666,7 +1268,7 @@ foreign import depthFuncImpl """
       return webgl.depthFunc(func);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import depthMaskImpl """
   function depthMaskImpl(webgl, flag) {
@@ -674,7 +1276,7 @@ foreign import depthMaskImpl """
       return webgl.depthMask(flag);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLboolean (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLboolean (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import depthRangeImpl """
   function depthRangeImpl(webgl, zNear, zFar) {
@@ -682,7 +1284,7 @@ foreign import depthRangeImpl """
       return webgl.depthRange(zNear, zFar);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLclampf GLclampf (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import detachShaderImpl """
   function detachShaderImpl(webgl, program, shader) {
@@ -690,7 +1292,7 @@ foreign import detachShaderImpl """
       return webgl.detachShader(program, shader);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import disableImpl """
   function disableImpl(webgl, cap) {
@@ -698,7 +1300,7 @@ foreign import disableImpl """
       return webgl.disable(cap);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import disableVertexAttribArrayImpl """
   function disableVertexAttribArrayImpl(webgl, index) {
@@ -706,7 +1308,7 @@ foreign import disableVertexAttribArrayImpl """
       return webgl.disableVertexAttribArray(index);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import drawArraysImpl """
   function drawArraysImpl(webgl, mode, first, count) {
@@ -714,7 +1316,7 @@ foreign import drawArraysImpl """
       return webgl.drawArrays(mode, first, count);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLint GLsizei (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLint GLsizei (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import drawElementsImpl """
   function drawElementsImpl(webgl, mode, count, type, offset) {
@@ -722,7 +1324,7 @@ foreign import drawElementsImpl """
       return webgl.drawElements(mode, count, type, offset);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLsizei GLenum GLintptr (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLsizei GLenum GLintptr (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import enableImpl """
   function enableImpl(webgl, cap) {
@@ -730,7 +1332,7 @@ foreign import enableImpl """
       return webgl.enable(cap);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import enableVertexAttribArrayImpl """
   function enableVertexAttribArrayImpl(webgl, index) {
@@ -738,7 +1340,7 @@ foreign import enableVertexAttribArrayImpl """
       return webgl.enableVertexAttribArray(index);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import finishImpl """
   function finishImpl(webgl) {
@@ -746,7 +1348,7 @@ foreign import finishImpl """
       return webgl.finish();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import flushImpl """
   function flushImpl(webgl) {
@@ -754,7 +1356,7 @@ foreign import flushImpl """
       return webgl.flush();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import framebufferRenderbufferImpl """
   function framebufferRenderbufferImpl(webgl, target, attachment, renderbuffertarget, renderbuffer) {
@@ -762,7 +1364,7 @@ foreign import framebufferRenderbufferImpl """
       return webgl.framebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum WebGLRenderbuffer (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import framebufferTexture2DImpl """
   function framebufferTexture2DImpl(webgl, target, attachment, textarget, texture, level) {
@@ -770,7 +1372,7 @@ foreign import framebufferTexture2DImpl """
       return webgl.framebufferTexture2D(target, attachment, textarget, texture, level);
     };
   }
-""" :: forall eff. Fn6 WebGLContext GLenum GLenum GLenum WebGLTexture GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn6 WebGLContext GLenum GLenum GLenum WebGLTexture GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import frontFaceImpl """
   function frontFaceImpl(webgl, mode) {
@@ -778,7 +1380,7 @@ foreign import frontFaceImpl """
       return webgl.frontFace(mode);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import generateMipmapImpl """
   function generateMipmapImpl(webgl, target) {
@@ -786,7 +1388,7 @@ foreign import generateMipmapImpl """
       return webgl.generateMipmap(target);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import getActiveAttribImpl """
   function getActiveAttribImpl(webgl, program, index) {
@@ -794,7 +1396,7 @@ foreign import getActiveAttribImpl """
       return webgl.getActiveAttrib(program, index);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (canvas :: Canvas | eff) WebGLActiveInfo)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
 
 foreign import getActiveUniformImpl """
   function getActiveUniformImpl(webgl, program, index) {
@@ -802,7 +1404,7 @@ foreign import getActiveUniformImpl """
       return webgl.getActiveUniform(program, index);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (canvas :: Canvas | eff) WebGLActiveInfo)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
 
 foreign import getAttachedShadersImpl """
   function getAttachedShadersImpl(webgl, program) {
@@ -810,7 +1412,7 @@ foreign import getAttachedShadersImpl """
       return webgl.getAttachedShaders(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) [WebGLShader])
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) [WebGLShader])
 
 foreign import getAttribLocationImpl """
   function getAttribLocationImpl(webgl, program, name) {
@@ -818,7 +1420,7 @@ foreign import getAttribLocationImpl """
       return webgl.getAttribLocation(program, name);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram String (Eff (canvas :: Canvas | eff) GLint)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) GLint)
 
 foreign import getParameterImpl """
   function getParameterImpl(webgl, pname) {
@@ -826,7 +1428,7 @@ foreign import getParameterImpl """
       return webgl.getParameter(pname);
     };
   }
-""" :: forall eff a. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getBufferParameterImpl """
   function getBufferParameterImpl(webgl, target, pname) {
@@ -834,7 +1436,7 @@ foreign import getBufferParameterImpl """
       return webgl.getBufferParameter(target, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getErrorImpl """
   function getErrorImpl(webgl) {
@@ -842,7 +1444,7 @@ foreign import getErrorImpl """
       return webgl.getError();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) GLenum)
+""" :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) GLenum)
 
 foreign import getFramebufferAttachmentParameterImpl """
   function getFramebufferAttachmentParameterImpl(webgl, target, attachment, pname) {
@@ -850,7 +1452,7 @@ foreign import getFramebufferAttachmentParameterImpl """
       return webgl.getFramebufferAttachmentParameter(target, attachment, pname);
     };
   }
-""" :: forall eff a. Fn4 WebGLContext GLenum GLenum GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getProgramParameterImpl """
   function getProgramParameterImpl(webgl, program, pname) {
@@ -858,7 +1460,7 @@ foreign import getProgramParameterImpl """
       return webgl.getProgramParameter(program, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getProgramInfoLogImpl """
   function getProgramInfoLogImpl(webgl, program) {
@@ -866,7 +1468,7 @@ foreign import getProgramInfoLogImpl """
       return webgl.getProgramInfoLog(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) String)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) DOMString)
 
 foreign import getRenderbufferParameterImpl """
   function getRenderbufferParameterImpl(webgl, target, pname) {
@@ -874,7 +1476,7 @@ foreign import getRenderbufferParameterImpl """
       return webgl.getRenderbufferParameter(target, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getShaderParameterImpl """
   function getShaderParameterImpl(webgl, shader, pname) {
@@ -882,7 +1484,7 @@ foreign import getShaderParameterImpl """
       return webgl.getShaderParameter(shader, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext WebGLShader GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext WebGLShader GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getShaderInfoLogImpl """
   function getShaderInfoLogImpl(webgl, shader) {
@@ -890,7 +1492,7 @@ foreign import getShaderInfoLogImpl """
       return webgl.getShaderInfoLog(shader);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) String)
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
 
 foreign import getShaderSourceImpl """
   function getShaderSourceImpl(webgl, shader) {
@@ -898,7 +1500,7 @@ foreign import getShaderSourceImpl """
       return webgl.getShaderSource(shader);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) String)
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
 
 foreign import getTexParameterImpl """
   function getTexParameterImpl(webgl, target, pname) {
@@ -906,7 +1508,7 @@ foreign import getTexParameterImpl """
       return webgl.getTexParameter(target, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getUniformImpl """
   function getUniformImpl(webgl, program, location) {
@@ -914,7 +1516,7 @@ foreign import getUniformImpl """
       return webgl.getUniform(program, location);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext WebGLProgram WebGLUniformLocation (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext WebGLProgram WebGLUniformLocation (Eff (webgl :: WebGL | eff) a)
 
 foreign import getUniformLocationImpl """
   function getUniformLocationImpl(webgl, program, name) {
@@ -922,7 +1524,7 @@ foreign import getUniformLocationImpl """
       return webgl.getUniformLocation(program, name);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLProgram String (Eff (canvas :: Canvas | eff) WebGLUniformLocation)
+""" :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) WebGLUniformLocation)
 
 foreign import getVertexAttribImpl """
   function getVertexAttribImpl(webgl, index, pname) {
@@ -930,7 +1532,7 @@ foreign import getVertexAttribImpl """
       return webgl.getVertexAttrib(index, pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext GLuint GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) a)
 
 foreign import getVertexAttribOffsetImpl """
   function getVertexAttribOffsetImpl(webgl, index, pname) {
@@ -938,7 +1540,7 @@ foreign import getVertexAttribOffsetImpl """
       return webgl.getVertexAttribOffset(index, pname);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint GLenum (Eff (canvas :: Canvas | eff) GLsizeiptr)
+""" :: forall eff. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) GLsizeiptr)
 
 foreign import hintImpl """
   function hintImpl(webgl, target, mode) {
@@ -946,7 +1548,7 @@ foreign import hintImpl """
       return webgl.hint(target, mode);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import isBufferImpl """
   function isBufferImpl(webgl, buffer) {
@@ -954,7 +1556,7 @@ foreign import isBufferImpl """
       return webgl.isBuffer(buffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isEnabledImpl """
   function isEnabledImpl(webgl, cap) {
@@ -962,7 +1564,7 @@ foreign import isEnabledImpl """
       return webgl.isEnabled(cap);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isFramebufferImpl """
   function isFramebufferImpl(webgl, framebuffer) {
@@ -970,7 +1572,7 @@ foreign import isFramebufferImpl """
       return webgl.isFramebuffer(framebuffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isProgramImpl """
   function isProgramImpl(webgl, program) {
@@ -978,7 +1580,7 @@ foreign import isProgramImpl """
       return webgl.isProgram(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isRenderbufferImpl """
   function isRenderbufferImpl(webgl, renderbuffer) {
@@ -986,7 +1588,7 @@ foreign import isRenderbufferImpl """
       return webgl.isRenderbuffer(renderbuffer);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isShaderImpl """
   function isShaderImpl(webgl, shader) {
@@ -994,7 +1596,7 @@ foreign import isShaderImpl """
       return webgl.isShader(shader);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import isTextureImpl """
   function isTextureImpl(webgl, texture) {
@@ -1002,7 +1604,7 @@ foreign import isTextureImpl """
       return webgl.isTexture(texture);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (canvas :: Canvas | eff) GLboolean)
+""" :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) GLboolean)
 
 foreign import lineWidthImpl """
   function lineWidthImpl(webgl, width) {
@@ -1010,7 +1612,7 @@ foreign import lineWidthImpl """
       return webgl.lineWidth(width);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import linkProgramImpl """
   function linkProgramImpl(webgl, program) {
@@ -1018,7 +1620,7 @@ foreign import linkProgramImpl """
       return webgl.linkProgram(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import pixelStoreiImpl """
   function pixelStoreiImpl(webgl, pname, param) {
@@ -1026,7 +1628,7 @@ foreign import pixelStoreiImpl """
       return webgl.pixelStorei(pname, param);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import polygonOffsetImpl """
   function polygonOffsetImpl(webgl, factor, units) {
@@ -1034,7 +1636,7 @@ foreign import polygonOffsetImpl """
       return webgl.polygonOffset(factor, units);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import readPixelsImpl """
   function readPixelsImpl(webgl, x, y, width, height, format, type, pixels) {
@@ -1042,7 +1644,7 @@ foreign import readPixelsImpl """
       return webgl.readPixels(x, y, width, height, format, type, pixels);
     };
   }
-""" :: forall eff. Fn8 WebGLContext GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn8 WebGLContext GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import renderbufferStorageImpl """
   function renderbufferStorageImpl(webgl, target, internalformat, width, height) {
@@ -1050,7 +1652,7 @@ foreign import renderbufferStorageImpl """
       return webgl.renderbufferStorage(target, internalformat, width, height);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLsizei GLsizei (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import sampleCoverageImpl """
   function sampleCoverageImpl(webgl, value, invert) {
@@ -1058,7 +1660,7 @@ foreign import sampleCoverageImpl """
       return webgl.sampleCoverage(value, invert);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLclampf GLboolean (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLclampf GLboolean (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import scissorImpl """
   function scissorImpl(webgl, x, y, width, height) {
@@ -1066,7 +1668,7 @@ foreign import scissorImpl """
       return webgl.scissor(x, y, width, height);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import shaderSourceImpl """
   function shaderSourceImpl(webgl, shader, source) {
@@ -1074,7 +1676,7 @@ foreign import shaderSourceImpl """
       return webgl.shaderSource(shader, source);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLShader String (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLShader DOMString (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilFuncImpl """
   function stencilFuncImpl(webgl, func, ref, mask) {
@@ -1082,7 +1684,7 @@ foreign import stencilFuncImpl """
       return webgl.stencilFunc(func, ref, mask);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLint GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilFuncSeparateImpl """
   function stencilFuncSeparateImpl(webgl, face, func, ref, mask) {
@@ -1090,7 +1692,7 @@ foreign import stencilFuncSeparateImpl """
       return webgl.stencilFuncSeparate(face, func, ref, mask);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLint GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilMaskImpl """
   function stencilMaskImpl(webgl, mask) {
@@ -1098,7 +1700,7 @@ foreign import stencilMaskImpl """
       return webgl.stencilMask(mask);
     };
   }
-""" :: forall eff. Fn2 WebGLContext GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilMaskSeparateImpl """
   function stencilMaskSeparateImpl(webgl, face, mask) {
@@ -1106,7 +1708,7 @@ foreign import stencilMaskSeparateImpl """
       return webgl.stencilMaskSeparate(face, mask);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLenum GLuint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLenum GLuint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilOpImpl """
   function stencilOpImpl(webgl, fail, zfail, zpass) {
@@ -1114,7 +1716,7 @@ foreign import stencilOpImpl """
       return webgl.stencilOp(fail, zfail, zpass);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import stencilOpSeparateImpl """
   function stencilOpSeparateImpl(webgl, face, fail, zfail, zpass) {
@@ -1122,7 +1724,7 @@ foreign import stencilOpSeparateImpl """
       return webgl.stencilOpSeparate(face, fail, zfail, zpass);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import texImage2DImpl """
   function texImage2DImpl(webgl, target, level, internalformat, width, height, border, format, type, pixels) {
@@ -1130,7 +1732,7 @@ foreign import texImage2DImpl """
       return webgl.texImage2D(target, level, internalformat, width, height, border, format, type, pixels);
     };
   }
-""" :: forall eff. Fn10 WebGLContext GLenum GLint GLenum GLsizei GLsizei GLint GLenum GLenum ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn10 WebGLContext GLenum GLint GLenum GLsizei GLsizei GLint GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import texParameterfImpl """
   function texParameterfImpl(webgl, target, pname, param) {
@@ -1138,7 +1740,7 @@ foreign import texParameterfImpl """
       return webgl.texParameterf(target, pname, param);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import texParameteriImpl """
   function texParameteriImpl(webgl, target, pname, param) {
@@ -1146,7 +1748,7 @@ foreign import texParameteriImpl """
       return webgl.texParameteri(target, pname, param);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLenum GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import texSubImage2DImpl """
   function texSubImage2DImpl(webgl, target, level, xoffset, yoffset, width, height, format, type, pixels) {
@@ -1154,7 +1756,7 @@ foreign import texSubImage2DImpl """
       return webgl.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
     };
   }
-""" :: forall eff. Fn10 WebGLContext GLenum GLint GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn10 WebGLContext GLenum GLint GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform1fImpl """
   function uniform1fImpl(webgl, location, x) {
@@ -1162,7 +1764,7 @@ foreign import uniform1fImpl """
       return webgl.uniform1f(location, x);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform1fvImpl """
   function uniform1fvImpl(webgl, location, v) {
@@ -1170,7 +1772,7 @@ foreign import uniform1fvImpl """
       return webgl.uniform1fv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform1iImpl """
   function uniform1iImpl(webgl, location, x) {
@@ -1178,7 +1780,7 @@ foreign import uniform1iImpl """
       return webgl.uniform1i(location, x);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform1ivImpl """
   function uniform1ivImpl(webgl, location, v) {
@@ -1186,7 +1788,7 @@ foreign import uniform1ivImpl """
       return webgl.uniform1iv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform2fImpl """
   function uniform2fImpl(webgl, location, x, y) {
@@ -1194,7 +1796,7 @@ foreign import uniform2fImpl """
       return webgl.uniform2f(location, x, y);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform2fvImpl """
   function uniform2fvImpl(webgl, location, v) {
@@ -1202,7 +1804,7 @@ foreign import uniform2fvImpl """
       return webgl.uniform2fv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform2iImpl """
   function uniform2iImpl(webgl, location, x, y) {
@@ -1210,7 +1812,7 @@ foreign import uniform2iImpl """
       return webgl.uniform2i(location, x, y);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLint GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLint GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform2ivImpl """
   function uniform2ivImpl(webgl, location, v) {
@@ -1218,7 +1820,7 @@ foreign import uniform2ivImpl """
       return webgl.uniform2iv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform3fImpl """
   function uniform3fImpl(webgl, location, x, y, z) {
@@ -1226,7 +1828,7 @@ foreign import uniform3fImpl """
       return webgl.uniform3f(location, x, y, z);
     };
   }
-""" :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform3fvImpl """
   function uniform3fvImpl(webgl, location, v) {
@@ -1234,7 +1836,7 @@ foreign import uniform3fvImpl """
       return webgl.uniform3fv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform3iImpl """
   function uniform3iImpl(webgl, location, x, y, z) {
@@ -1242,7 +1844,7 @@ foreign import uniform3iImpl """
       return webgl.uniform3i(location, x, y, z);
     };
   }
-""" :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLint GLint GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform3ivImpl """
   function uniform3ivImpl(webgl, location, v) {
@@ -1250,7 +1852,7 @@ foreign import uniform3ivImpl """
       return webgl.uniform3iv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform4fImpl """
   function uniform4fImpl(webgl, location, x, y, z, w) {
@@ -1258,7 +1860,7 @@ foreign import uniform4fImpl """
       return webgl.uniform4f(location, x, y, z, w);
     };
   }
-""" :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform4fvImpl """
   function uniform4fvImpl(webgl, location, v) {
@@ -1266,7 +1868,7 @@ foreign import uniform4fvImpl """
       return webgl.uniform4fv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform4iImpl """
   function uniform4iImpl(webgl, location, x, y, z, w) {
@@ -1274,7 +1876,7 @@ foreign import uniform4iImpl """
       return webgl.uniform4i(location, x, y, z, w);
     };
   }
-""" :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLint GLint GLint GLint (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLint GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniform4ivImpl """
   function uniform4ivImpl(webgl, location, v) {
@@ -1282,7 +1884,7 @@ foreign import uniform4ivImpl """
       return webgl.uniform4iv(location, v);
     };
   }
-""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniformMatrix2fvImpl """
   function uniformMatrix2fvImpl(webgl, location, transpose, value) {
@@ -1290,7 +1892,7 @@ foreign import uniformMatrix2fvImpl """
       return webgl.uniformMatrix2fv(location, transpose, value);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniformMatrix3fvImpl """
   function uniformMatrix3fvImpl(webgl, location, transpose, value) {
@@ -1298,7 +1900,7 @@ foreign import uniformMatrix3fvImpl """
       return webgl.uniformMatrix3fv(location, transpose, value);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import uniformMatrix4fvImpl """
   function uniformMatrix4fvImpl(webgl, location, transpose, value) {
@@ -1306,7 +1908,7 @@ foreign import uniformMatrix4fvImpl """
       return webgl.uniformMatrix4fv(location, transpose, value);
     };
   }
-""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import useProgramImpl """
   function useProgramImpl(webgl, program) {
@@ -1314,7 +1916,7 @@ foreign import useProgramImpl """
       return webgl.useProgram(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import validateProgramImpl """
   function validateProgramImpl(webgl, program) {
@@ -1322,7 +1924,7 @@ foreign import validateProgramImpl """
       return webgl.validateProgram(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib1fImpl """
   function vertexAttrib1fImpl(webgl, indx, x) {
@@ -1330,7 +1932,7 @@ foreign import vertexAttrib1fImpl """
       return webgl.vertexAttrib1f(indx, x);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLuint GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib1fvImpl """
   function vertexAttrib1fvImpl(webgl, indx, values) {
@@ -1338,7 +1940,7 @@ foreign import vertexAttrib1fvImpl """
       return webgl.vertexAttrib1fv(indx, values);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib2fImpl """
   function vertexAttrib2fImpl(webgl, indx, x, y) {
@@ -1346,7 +1948,7 @@ foreign import vertexAttrib2fImpl """
       return webgl.vertexAttrib2f(indx, x, y);
     };
   }
-""" :: forall eff. Fn4 WebGLContext GLuint GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn4 WebGLContext GLuint GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib2fvImpl """
   function vertexAttrib2fvImpl(webgl, indx, values) {
@@ -1354,7 +1956,7 @@ foreign import vertexAttrib2fvImpl """
       return webgl.vertexAttrib2fv(indx, values);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib3fImpl """
   function vertexAttrib3fImpl(webgl, indx, x, y, z) {
@@ -1362,7 +1964,7 @@ foreign import vertexAttrib3fImpl """
       return webgl.vertexAttrib3f(indx, x, y, z);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLuint GLfloat GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn5 WebGLContext GLuint GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib3fvImpl """
   function vertexAttrib3fvImpl(webgl, indx, values) {
@@ -1370,7 +1972,7 @@ foreign import vertexAttrib3fvImpl """
       return webgl.vertexAttrib3fv(indx, values);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib4fImpl """
   function vertexAttrib4fImpl(webgl, indx, x, y, z, w) {
@@ -1378,7 +1980,7 @@ foreign import vertexAttrib4fImpl """
       return webgl.vertexAttrib4f(indx, x, y, z, w);
     };
   }
-""" :: forall eff. Fn6 WebGLContext GLuint GLfloat GLfloat GLfloat GLfloat (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn6 WebGLContext GLuint GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttrib4fvImpl """
   function vertexAttrib4fvImpl(webgl, indx, values) {
@@ -1386,7 +1988,7 @@ foreign import vertexAttrib4fvImpl """
       return webgl.vertexAttrib4fv(indx, values);
     };
   }
-""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import vertexAttribPointerImpl """
   function vertexAttribPointerImpl(webgl, indx, size, type, normalized, stride, offset) {
@@ -1394,7 +1996,7 @@ foreign import vertexAttribPointerImpl """
       return webgl.vertexAttribPointer(indx, size, type, normalized, stride, offset);
     };
   }
-""" :: forall eff. Fn7 WebGLContext GLuint GLint GLenum GLboolean GLsizei GLintptr (Eff (canvas :: Canvas | eff) Unit)
+""" :: forall eff. Fn7 WebGLContext GLuint GLint GLenum GLboolean GLsizei GLintptr (Eff (webgl :: WebGL | eff) Unit)
 
 foreign import viewportImpl """
   function viewportImpl(webgl, x, y, width, height) {
@@ -1402,5 +2004,4 @@ foreign import viewportImpl """
       return webgl.viewport(x, y, width, height);
     };
   }
-""" :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (canvas :: Canvas | eff) Unit)
-
+""" :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)

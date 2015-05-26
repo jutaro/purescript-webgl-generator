@@ -12,10 +12,7 @@ import IDL.AST
 
 ppPureScriptFFI :: IDL -> Doc
 ppPureScriptFFI idl =
-        header    $+$ blankLine
-    $+$ typeDecls $+$ blankLine
-    $+$ constants $+$ blankLine
-    $+$ methods   $+$ blankLine
+    header $+$ blankLine $+$ typeDecls $+$ blankLine $+$ constants $+$ methods
   where
     header = vcat $ moduleHeader ++ [""] ++ typedefs ++ [""] ++ effects
     typeDecls = vcat . map ppTypeDecl . sort $ types idl
@@ -34,12 +31,12 @@ moduleHeader =
     , "import Control.Monad.Eff"
     , "import Data.ArrayBuffer.Types"
     , "import Data.TypedArray"
+    , "import Data.Function"
     ]
 
 typedefs :: [Doc]
 typedefs =
-    [ "type ArrayBuffer = Float32Array"
-    , "type DOMString   = String"
+    [ "type DOMString   = String"
     , "type FloatArray  = Float32Array"
     , "type GLbitfield  = Number"
     , "type GLboolean   = Boolean"
@@ -64,9 +61,11 @@ effects = ["foreign import data WebGL :: !"]
 
 ppConstant :: Decl -> Doc
 ppConstant Enum { enumName = n, enumValue = v } =
-    text constName <+> "=" $$ nest 48 (integer v)
+    constName <+> ":: GLenum" $$
+    constName <+> "=" <+> (integer v) $$
+    blankLine
   where
-    constName = '_' : n
+    constName = text $ '_' : n
 
 ppTypeSig :: Decl -> Doc
 ppTypeSig f
@@ -116,6 +115,7 @@ ppType :: Type -> Doc
 ppType Type { typeName = name, typeIsArray = isArray }
     | name == "void"        = toType "Unit"
     | name == "boolean"     = toType "Boolean"
+    | name == "ArrayBuffer" = toType "Float32Array"
     | otherwise             = toType name
   where
     toType = if isArray then brackets . text else text
