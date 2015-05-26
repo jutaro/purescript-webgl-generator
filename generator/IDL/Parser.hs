@@ -23,8 +23,8 @@ parens'     = PP.parens     lexer
 brackets'   = PP.brackets   lexer
 angles'     = PP.angles     lexer
 
-webglTypes :: [String]
-webglTypes =
+excludedTypes :: [String]
+excludedTypes =
     [ "ArrayBuffer"
     , "DOMString"
     , "Float32Array"
@@ -72,7 +72,7 @@ partition c@Comment{} idl = idl
     }
 partition f@Function{} idl = idl
     { functions = f : functions idl
-    , types = methodRetType f : map argType (methodArgs f) ++ types idl
+    , types = methodRetType f : map argType (funcArgs f) ++ types idl
     }
 partition a@Attribute{} idl = idl
     { attributes = a : attributes idl
@@ -85,7 +85,7 @@ cleanup idl = IDL
     , comments = nub $ comments idl
     , functions = nub $ functions idl
     , attributes = nub $ attributes idl
-    , types = nub . filter (\t -> typeName t `notElem` webglTypes) $ types idl
+    , types = nub . filter (\t -> typeName t `notElem` excludedTypes) $ types idl
     }
 
 -- parsers

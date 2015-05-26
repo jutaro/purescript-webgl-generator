@@ -58,3 +58,9 @@ data Arg = Arg
 
 emptyIdl :: IDL
 emptyIdl = IDL [] [] [] [] []
+
+webglContext :: Arg
+webglContext = Arg (Type "WebGLContext" False Nothing) "webgl"
+
+funcArgs :: Decl -> [Arg]
+funcArgs f = webglContext : methodArgs f
