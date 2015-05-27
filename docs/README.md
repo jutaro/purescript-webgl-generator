@@ -3,118 +3,6 @@
 ## Module Graphics.WebGL.Raw
 
 
-#### `DOMString`
-
-``` purescript
-type DOMString = String
-```
-
-
-#### `FloatArray`
-
-``` purescript
-type FloatArray = Float32Array
-```
-
-
-#### `GLbitfield`
-
-``` purescript
-type GLbitfield = Number
-```
-
-
-#### `GLboolean`
-
-``` purescript
-type GLboolean = Boolean
-```
-
-
-#### `GLbyte`
-
-``` purescript
-type GLbyte = Number
-```
-
-
-#### `GLclampf`
-
-``` purescript
-type GLclampf = Number
-```
-
-
-#### `GLenum`
-
-``` purescript
-type GLenum = Number
-```
-
-
-#### `GLfloat`
-
-``` purescript
-type GLfloat = Number
-```
-
-
-#### `GLint`
-
-``` purescript
-type GLint = Number
-```
-
-
-#### `GLintptr`
-
-``` purescript
-type GLintptr = Number
-```
-
-
-#### `GLshort`
-
-``` purescript
-type GLshort = Number
-```
-
-
-#### `GLsizei`
-
-``` purescript
-type GLsizei = Number
-```
-
-
-#### `GLsizeiptr`
-
-``` purescript
-type GLsizeiptr = Number
-```
-
-
-#### `GLubyte`
-
-``` purescript
-type GLubyte = Number
-```
-
-
-#### `GLuint`
-
-``` purescript
-type GLuint = Number
-```
-
-
-#### `GLushort`
-
-``` purescript
-type GLushort = Number
-```
-
-
 #### `WebGL`
 
 ``` purescript
@@ -122,102 +10,939 @@ data WebGL :: !
 ```
 
 
-#### `ArrayBufferView`
+#### `getContextAttributesImpl`
 
 ``` purescript
-data ArrayBufferView :: *
+getContextAttributesImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLContextAttributes)
 ```
 
 
-#### `HTMLImageElement`
+#### `isContextLostImpl`
 
 ``` purescript
-data HTMLImageElement :: *
+isContextLostImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Boolean)
 ```
 
 
-#### `HTMLVideoElement`
+#### `getSupportedExtensionsImpl`
 
 ``` purescript
-data HTMLVideoElement :: *
+getSupportedExtensionsImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) [DOMString])
 ```
 
 
-#### `ImageData`
+#### `getExtensionImpl`
 
 ``` purescript
-data ImageData :: *
+getExtensionImpl :: forall eff a. Fn2 WebGLContext DOMString (Eff (webgl :: WebGL | eff) a)
 ```
 
 
-#### `WebGLActiveInfo`
+#### `activeTextureImpl`
 
 ``` purescript
-data WebGLActiveInfo :: *
+activeTextureImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLBuffer`
+#### `attachShaderImpl`
 
 ``` purescript
-data WebGLBuffer :: *
+attachShaderImpl :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLContext`
+#### `bindAttribLocationImpl`
 
 ``` purescript
-data WebGLContext :: *
+bindAttribLocationImpl :: forall eff. Fn4 WebGLContext WebGLProgram GLuint DOMString (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLContextAttributes`
+#### `bindBufferImpl`
 
 ``` purescript
-data WebGLContextAttributes :: *
+bindBufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLFramebuffer`
+#### `bindFramebufferImpl`
 
 ``` purescript
-data WebGLFramebuffer :: *
+bindFramebufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLProgram`
+#### `bindRenderbufferImpl`
 
 ``` purescript
-data WebGLProgram :: *
+bindRenderbufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLRenderbuffer`
+#### `bindTextureImpl`
 
 ``` purescript
-data WebGLRenderbuffer :: *
+bindTextureImpl :: forall eff. Fn3 WebGLContext GLenum WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLShader`
+#### `blendColorImpl`
 
 ``` purescript
-data WebGLShader :: *
+blendColorImpl :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLTexture`
+#### `blendEquationImpl`
 
 ``` purescript
-data WebGLTexture :: *
+blendEquationImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
 ```
 
 
-#### `WebGLUniformLocation`
+#### `blendEquationSeparateImpl`
 
 ``` purescript
-data WebGLUniformLocation :: *
+blendEquationSeparateImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
 ```
+
+
+#### `blendFuncImpl`
+
+``` purescript
+blendFuncImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `blendFuncSeparateImpl`
+
+``` purescript
+blendFuncSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `bufferDataImpl`
+
+``` purescript
+bufferDataImpl :: forall eff. Fn4 WebGLContext GLenum Float32Array GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `bufferSubDataImpl`
+
+``` purescript
+bufferSubDataImpl :: forall eff. Fn4 WebGLContext GLenum GLintptr ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `checkFramebufferStatusImpl`
+
+``` purescript
+checkFramebufferStatusImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLenum)
+```
+
+
+#### `clearImpl`
+
+``` purescript
+clearImpl :: forall eff. Fn2 WebGLContext GLbitfield (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `clearColorImpl`
+
+``` purescript
+clearColorImpl :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `clearDepthImpl`
+
+``` purescript
+clearDepthImpl :: forall eff. Fn2 WebGLContext GLclampf (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `clearStencilImpl`
+
+``` purescript
+clearStencilImpl :: forall eff. Fn2 WebGLContext GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `colorMaskImpl`
+
+``` purescript
+colorMaskImpl :: forall eff. Fn5 WebGLContext GLboolean GLboolean GLboolean GLboolean (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `compileShaderImpl`
+
+``` purescript
+compileShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `copyTexImage2DImpl`
+
+``` purescript
+copyTexImage2DImpl :: forall eff. Fn9 WebGLContext GLenum GLint GLenum GLint GLint GLsizei GLsizei GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `copyTexSubImage2DImpl`
+
+``` purescript
+copyTexSubImage2DImpl :: forall eff. Fn9 WebGLContext GLenum GLint GLint GLint GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `createBufferImpl`
+
+``` purescript
+createBufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLBuffer)
+```
+
+
+#### `createFramebufferImpl`
+
+``` purescript
+createFramebufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLFramebuffer)
+```
+
+
+#### `createProgramImpl`
+
+``` purescript
+createProgramImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLProgram)
+```
+
+
+#### `createRenderbufferImpl`
+
+``` purescript
+createRenderbufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLRenderbuffer)
+```
+
+
+#### `createShaderImpl`
+
+``` purescript
+createShaderImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) WebGLShader)
+```
+
+
+#### `createTextureImpl`
+
+``` purescript
+createTextureImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLTexture)
+```
+
+
+#### `cullFaceImpl`
+
+``` purescript
+cullFaceImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteBufferImpl`
+
+``` purescript
+deleteBufferImpl :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteFramebufferImpl`
+
+``` purescript
+deleteFramebufferImpl :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteProgramImpl`
+
+``` purescript
+deleteProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteRenderbufferImpl`
+
+``` purescript
+deleteRenderbufferImpl :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteShaderImpl`
+
+``` purescript
+deleteShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `deleteTextureImpl`
+
+``` purescript
+deleteTextureImpl :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `depthFuncImpl`
+
+``` purescript
+depthFuncImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `depthMaskImpl`
+
+``` purescript
+depthMaskImpl :: forall eff. Fn2 WebGLContext GLboolean (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `depthRangeImpl`
+
+``` purescript
+depthRangeImpl :: forall eff. Fn3 WebGLContext GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `detachShaderImpl`
+
+``` purescript
+detachShaderImpl :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `disableImpl`
+
+``` purescript
+disableImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `disableVertexAttribArrayImpl`
+
+``` purescript
+disableVertexAttribArrayImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `drawArraysImpl`
+
+``` purescript
+drawArraysImpl :: forall eff. Fn4 WebGLContext GLenum GLint GLsizei (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `drawElementsImpl`
+
+``` purescript
+drawElementsImpl :: forall eff. Fn5 WebGLContext GLenum GLsizei GLenum GLintptr (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `enableImpl`
+
+``` purescript
+enableImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `enableVertexAttribArrayImpl`
+
+``` purescript
+enableVertexAttribArrayImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `finishImpl`
+
+``` purescript
+finishImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `flushImpl`
+
+``` purescript
+flushImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `framebufferRenderbufferImpl`
+
+``` purescript
+framebufferRenderbufferImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `framebufferTexture2DImpl`
+
+``` purescript
+framebufferTexture2DImpl :: forall eff. Fn6 WebGLContext GLenum GLenum GLenum WebGLTexture GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `frontFaceImpl`
+
+``` purescript
+frontFaceImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `generateMipmapImpl`
+
+``` purescript
+generateMipmapImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `getActiveAttribImpl`
+
+``` purescript
+getActiveAttribImpl :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
+```
+
+
+#### `getActiveUniformImpl`
+
+``` purescript
+getActiveUniformImpl :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
+```
+
+
+#### `getAttachedShadersImpl`
+
+``` purescript
+getAttachedShadersImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) [WebGLShader])
+```
+
+
+#### `getAttribLocationImpl`
+
+``` purescript
+getAttribLocationImpl :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) GLint)
+```
+
+
+#### `getParameterImpl`
+
+``` purescript
+getParameterImpl :: forall eff a. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getBufferParameterImpl`
+
+``` purescript
+getBufferParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getErrorImpl`
+
+``` purescript
+getErrorImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) GLenum)
+```
+
+
+#### `getFramebufferAttachmentParameterImpl`
+
+``` purescript
+getFramebufferAttachmentParameterImpl :: forall eff a. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getProgramParameterImpl`
+
+``` purescript
+getProgramParameterImpl :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getProgramInfoLogImpl`
+
+``` purescript
+getProgramInfoLogImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) DOMString)
+```
+
+
+#### `getRenderbufferParameterImpl`
+
+``` purescript
+getRenderbufferParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getShaderParameterImpl`
+
+``` purescript
+getShaderParameterImpl :: forall eff a. Fn3 WebGLContext WebGLShader GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getShaderInfoLogImpl`
+
+``` purescript
+getShaderInfoLogImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
+```
+
+
+#### `getShaderSourceImpl`
+
+``` purescript
+getShaderSourceImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
+```
+
+
+#### `getTexParameterImpl`
+
+``` purescript
+getTexParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getUniformImpl`
+
+``` purescript
+getUniformImpl :: forall eff a. Fn3 WebGLContext WebGLProgram WebGLUniformLocation (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getUniformLocationImpl`
+
+``` purescript
+getUniformLocationImpl :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) WebGLUniformLocation)
+```
+
+
+#### `getVertexAttribImpl`
+
+``` purescript
+getVertexAttribImpl :: forall eff a. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) a)
+```
+
+
+#### `getVertexAttribOffsetImpl`
+
+``` purescript
+getVertexAttribOffsetImpl :: forall eff. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) GLsizeiptr)
+```
+
+
+#### `hintImpl`
+
+``` purescript
+hintImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `isBufferImpl`
+
+``` purescript
+isBufferImpl :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isEnabledImpl`
+
+``` purescript
+isEnabledImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isFramebufferImpl`
+
+``` purescript
+isFramebufferImpl :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isProgramImpl`
+
+``` purescript
+isProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isRenderbufferImpl`
+
+``` purescript
+isRenderbufferImpl :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isShaderImpl`
+
+``` purescript
+isShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `isTextureImpl`
+
+``` purescript
+isTextureImpl :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) GLboolean)
+```
+
+
+#### `lineWidthImpl`
+
+``` purescript
+lineWidthImpl :: forall eff. Fn2 WebGLContext GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `linkProgramImpl`
+
+``` purescript
+linkProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `pixelStoreiImpl`
+
+``` purescript
+pixelStoreiImpl :: forall eff. Fn3 WebGLContext GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `polygonOffsetImpl`
+
+``` purescript
+polygonOffsetImpl :: forall eff. Fn3 WebGLContext GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `readPixelsImpl`
+
+``` purescript
+readPixelsImpl :: forall eff. Fn8 WebGLContext GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `renderbufferStorageImpl`
+
+``` purescript
+renderbufferStorageImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `sampleCoverageImpl`
+
+``` purescript
+sampleCoverageImpl :: forall eff. Fn3 WebGLContext GLclampf GLboolean (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `scissorImpl`
+
+``` purescript
+scissorImpl :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `shaderSourceImpl`
+
+``` purescript
+shaderSourceImpl :: forall eff. Fn3 WebGLContext WebGLShader DOMString (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilFuncImpl`
+
+``` purescript
+stencilFuncImpl :: forall eff. Fn4 WebGLContext GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilFuncSeparateImpl`
+
+``` purescript
+stencilFuncSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilMaskImpl`
+
+``` purescript
+stencilMaskImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilMaskSeparateImpl`
+
+``` purescript
+stencilMaskSeparateImpl :: forall eff. Fn3 WebGLContext GLenum GLuint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilOpImpl`
+
+``` purescript
+stencilOpImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `stencilOpSeparateImpl`
+
+``` purescript
+stencilOpSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `texImage2DImpl`
+
+``` purescript
+texImage2DImpl :: forall eff. Fn10 WebGLContext GLenum GLint GLenum GLsizei GLsizei GLint GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `texParameterfImpl`
+
+``` purescript
+texParameterfImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `texParameteriImpl`
+
+``` purescript
+texParameteriImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `texSubImage2DImpl`
+
+``` purescript
+texSubImage2DImpl :: forall eff. Fn10 WebGLContext GLenum GLint GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform1fImpl`
+
+``` purescript
+uniform1fImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform1fvImpl`
+
+``` purescript
+uniform1fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform1iImpl`
+
+``` purescript
+uniform1iImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform1ivImpl`
+
+``` purescript
+uniform1ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform2fImpl`
+
+``` purescript
+uniform2fImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform2fvImpl`
+
+``` purescript
+uniform2fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform2iImpl`
+
+``` purescript
+uniform2iImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform2ivImpl`
+
+``` purescript
+uniform2ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform3fImpl`
+
+``` purescript
+uniform3fImpl :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform3fvImpl`
+
+``` purescript
+uniform3fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform3iImpl`
+
+``` purescript
+uniform3iImpl :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform3ivImpl`
+
+``` purescript
+uniform3ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform4fImpl`
+
+``` purescript
+uniform4fImpl :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform4fvImpl`
+
+``` purescript
+uniform4fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform4iImpl`
+
+``` purescript
+uniform4iImpl :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLint GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniform4ivImpl`
+
+``` purescript
+uniform4ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniformMatrix2fvImpl`
+
+``` purescript
+uniformMatrix2fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniformMatrix3fvImpl`
+
+``` purescript
+uniformMatrix3fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `uniformMatrix4fvImpl`
+
+``` purescript
+uniformMatrix4fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `useProgramImpl`
+
+``` purescript
+useProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `validateProgramImpl`
+
+``` purescript
+validateProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib1fImpl`
+
+``` purescript
+vertexAttrib1fImpl :: forall eff. Fn3 WebGLContext GLuint GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib1fvImpl`
+
+``` purescript
+vertexAttrib1fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib2fImpl`
+
+``` purescript
+vertexAttrib2fImpl :: forall eff. Fn4 WebGLContext GLuint GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib2fvImpl`
+
+``` purescript
+vertexAttrib2fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib3fImpl`
+
+``` purescript
+vertexAttrib3fImpl :: forall eff. Fn5 WebGLContext GLuint GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib3fvImpl`
+
+``` purescript
+vertexAttrib3fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib4fImpl`
+
+``` purescript
+vertexAttrib4fImpl :: forall eff. Fn6 WebGLContext GLuint GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttrib4fvImpl`
+
+``` purescript
+vertexAttrib4fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `vertexAttribPointerImpl`
+
+``` purescript
+vertexAttribPointerImpl :: forall eff. Fn7 WebGLContext GLuint GLint GLenum GLboolean GLsizei GLintptr (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+#### `viewportImpl`
+
+``` purescript
+viewportImpl :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
+```
+
+
+
+## Module Graphics.WebGL.Raw.Enums
 
 
 #### `_DEPTH_BUFFER_BIT`
@@ -2320,932 +3045,215 @@ _BROWSER_DEFAULT_WEBGL :: GLenum
 ```
 
 
-#### `getContextAttributesImpl`
 
-``` purescript
-getContextAttributesImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLContextAttributes)
-```
-
-
-#### `isContextLostImpl`
-
-``` purescript
-isContextLostImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Boolean)
-```
-
-
-#### `getSupportedExtensionsImpl`
-
-``` purescript
-getSupportedExtensionsImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) [DOMString])
-```
-
-
-#### `getExtensionImpl`
-
-``` purescript
-getExtensionImpl :: forall eff a. Fn2 WebGLContext DOMString (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `activeTextureImpl`
-
-``` purescript
-activeTextureImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `attachShaderImpl`
-
-``` purescript
-attachShaderImpl :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bindAttribLocationImpl`
-
-``` purescript
-bindAttribLocationImpl :: forall eff. Fn4 WebGLContext WebGLProgram GLuint DOMString (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bindBufferImpl`
-
-``` purescript
-bindBufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bindFramebufferImpl`
-
-``` purescript
-bindFramebufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bindRenderbufferImpl`
-
-``` purescript
-bindRenderbufferImpl :: forall eff. Fn3 WebGLContext GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bindTextureImpl`
-
-``` purescript
-bindTextureImpl :: forall eff. Fn3 WebGLContext GLenum WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `blendColorImpl`
-
-``` purescript
-blendColorImpl :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `blendEquationImpl`
-
-``` purescript
-blendEquationImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `blendEquationSeparateImpl`
-
-``` purescript
-blendEquationSeparateImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `blendFuncImpl`
-
-``` purescript
-blendFuncImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `blendFuncSeparateImpl`
-
-``` purescript
-blendFuncSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bufferDataImpl`
-
-``` purescript
-bufferDataImpl :: forall eff. Fn4 WebGLContext GLenum Float32Array GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `bufferSubDataImpl`
-
-``` purescript
-bufferSubDataImpl :: forall eff. Fn4 WebGLContext GLenum GLintptr ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `checkFramebufferStatusImpl`
-
-``` purescript
-checkFramebufferStatusImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLenum)
-```
-
-
-#### `clearImpl`
-
-``` purescript
-clearImpl :: forall eff. Fn2 WebGLContext GLbitfield (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `clearColorImpl`
-
-``` purescript
-clearColorImpl :: forall eff. Fn5 WebGLContext GLclampf GLclampf GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `clearDepthImpl`
-
-``` purescript
-clearDepthImpl :: forall eff. Fn2 WebGLContext GLclampf (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `clearStencilImpl`
-
-``` purescript
-clearStencilImpl :: forall eff. Fn2 WebGLContext GLint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `colorMaskImpl`
-
-``` purescript
-colorMaskImpl :: forall eff. Fn5 WebGLContext GLboolean GLboolean GLboolean GLboolean (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `compileShaderImpl`
-
-``` purescript
-compileShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `copyTexImage2DImpl`
-
-``` purescript
-copyTexImage2DImpl :: forall eff. Fn9 WebGLContext GLenum GLint GLenum GLint GLint GLsizei GLsizei GLint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `copyTexSubImage2DImpl`
-
-``` purescript
-copyTexSubImage2DImpl :: forall eff. Fn9 WebGLContext GLenum GLint GLint GLint GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `createBufferImpl`
-
-``` purescript
-createBufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLBuffer)
-```
-
-
-#### `createFramebufferImpl`
-
-``` purescript
-createFramebufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLFramebuffer)
-```
-
-
-#### `createProgramImpl`
-
-``` purescript
-createProgramImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLProgram)
-```
-
-
-#### `createRenderbufferImpl`
-
-``` purescript
-createRenderbufferImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLRenderbuffer)
-```
-
-
-#### `createShaderImpl`
-
-``` purescript
-createShaderImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) WebGLShader)
-```
-
-
-#### `createTextureImpl`
-
-``` purescript
-createTextureImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) WebGLTexture)
-```
-
-
-#### `cullFaceImpl`
-
-``` purescript
-cullFaceImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteBufferImpl`
-
-``` purescript
-deleteBufferImpl :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteFramebufferImpl`
-
-``` purescript
-deleteFramebufferImpl :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteProgramImpl`
-
-``` purescript
-deleteProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteRenderbufferImpl`
-
-``` purescript
-deleteRenderbufferImpl :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteShaderImpl`
-
-``` purescript
-deleteShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `deleteTextureImpl`
-
-``` purescript
-deleteTextureImpl :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `depthFuncImpl`
-
-``` purescript
-depthFuncImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `depthMaskImpl`
-
-``` purescript
-depthMaskImpl :: forall eff. Fn2 WebGLContext GLboolean (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `depthRangeImpl`
-
-``` purescript
-depthRangeImpl :: forall eff. Fn3 WebGLContext GLclampf GLclampf (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `detachShaderImpl`
-
-``` purescript
-detachShaderImpl :: forall eff. Fn3 WebGLContext WebGLProgram WebGLShader (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `disableImpl`
-
-``` purescript
-disableImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `disableVertexAttribArrayImpl`
-
-``` purescript
-disableVertexAttribArrayImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `drawArraysImpl`
-
-``` purescript
-drawArraysImpl :: forall eff. Fn4 WebGLContext GLenum GLint GLsizei (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `drawElementsImpl`
-
-``` purescript
-drawElementsImpl :: forall eff. Fn5 WebGLContext GLenum GLsizei GLenum GLintptr (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `enableImpl`
-
-``` purescript
-enableImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `enableVertexAttribArrayImpl`
-
-``` purescript
-enableVertexAttribArrayImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `finishImpl`
-
-``` purescript
-finishImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `flushImpl`
-
-``` purescript
-flushImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `framebufferRenderbufferImpl`
-
-``` purescript
-framebufferRenderbufferImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum WebGLRenderbuffer (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `framebufferTexture2DImpl`
-
-``` purescript
-framebufferTexture2DImpl :: forall eff. Fn6 WebGLContext GLenum GLenum GLenum WebGLTexture GLint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `frontFaceImpl`
-
-``` purescript
-frontFaceImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `generateMipmapImpl`
-
-``` purescript
-generateMipmapImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `getActiveAttribImpl`
-
-``` purescript
-getActiveAttribImpl :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
-```
-
-
-#### `getActiveUniformImpl`
-
-``` purescript
-getActiveUniformImpl :: forall eff. Fn3 WebGLContext WebGLProgram GLuint (Eff (webgl :: WebGL | eff) WebGLActiveInfo)
-```
-
-
-#### `getAttachedShadersImpl`
-
-``` purescript
-getAttachedShadersImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) [WebGLShader])
-```
-
-
-#### `getAttribLocationImpl`
-
-``` purescript
-getAttribLocationImpl :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) GLint)
-```
-
-
-#### `getParameterImpl`
-
-``` purescript
-getParameterImpl :: forall eff a. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getBufferParameterImpl`
-
-``` purescript
-getBufferParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getErrorImpl`
-
-``` purescript
-getErrorImpl :: forall eff. Fn1 WebGLContext (Eff (webgl :: WebGL | eff) GLenum)
-```
-
-
-#### `getFramebufferAttachmentParameterImpl`
-
-``` purescript
-getFramebufferAttachmentParameterImpl :: forall eff a. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getProgramParameterImpl`
-
-``` purescript
-getProgramParameterImpl :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getProgramInfoLogImpl`
-
-``` purescript
-getProgramInfoLogImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) DOMString)
-```
-
-
-#### `getRenderbufferParameterImpl`
-
-``` purescript
-getRenderbufferParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getShaderParameterImpl`
-
-``` purescript
-getShaderParameterImpl :: forall eff a. Fn3 WebGLContext WebGLShader GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getShaderInfoLogImpl`
-
-``` purescript
-getShaderInfoLogImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
-```
-
-
-#### `getShaderSourceImpl`
-
-``` purescript
-getShaderSourceImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) DOMString)
-```
-
-
-#### `getTexParameterImpl`
-
-``` purescript
-getTexParameterImpl :: forall eff a. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getUniformImpl`
-
-``` purescript
-getUniformImpl :: forall eff a. Fn3 WebGLContext WebGLProgram WebGLUniformLocation (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getUniformLocationImpl`
-
-``` purescript
-getUniformLocationImpl :: forall eff. Fn3 WebGLContext WebGLProgram DOMString (Eff (webgl :: WebGL | eff) WebGLUniformLocation)
-```
-
-
-#### `getVertexAttribImpl`
-
-``` purescript
-getVertexAttribImpl :: forall eff a. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) a)
-```
-
-
-#### `getVertexAttribOffsetImpl`
-
-``` purescript
-getVertexAttribOffsetImpl :: forall eff. Fn3 WebGLContext GLuint GLenum (Eff (webgl :: WebGL | eff) GLsizeiptr)
-```
-
-
-#### `hintImpl`
-
-``` purescript
-hintImpl :: forall eff. Fn3 WebGLContext GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `isBufferImpl`
-
-``` purescript
-isBufferImpl :: forall eff. Fn2 WebGLContext WebGLBuffer (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isEnabledImpl`
-
-``` purescript
-isEnabledImpl :: forall eff. Fn2 WebGLContext GLenum (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isFramebufferImpl`
-
-``` purescript
-isFramebufferImpl :: forall eff. Fn2 WebGLContext WebGLFramebuffer (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isProgramImpl`
-
-``` purescript
-isProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isRenderbufferImpl`
-
-``` purescript
-isRenderbufferImpl :: forall eff. Fn2 WebGLContext WebGLRenderbuffer (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isShaderImpl`
-
-``` purescript
-isShaderImpl :: forall eff. Fn2 WebGLContext WebGLShader (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `isTextureImpl`
-
-``` purescript
-isTextureImpl :: forall eff. Fn2 WebGLContext WebGLTexture (Eff (webgl :: WebGL | eff) GLboolean)
-```
-
-
-#### `lineWidthImpl`
-
-``` purescript
-lineWidthImpl :: forall eff. Fn2 WebGLContext GLfloat (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `linkProgramImpl`
-
-``` purescript
-linkProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `pixelStoreiImpl`
-
-``` purescript
-pixelStoreiImpl :: forall eff. Fn3 WebGLContext GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `polygonOffsetImpl`
-
-``` purescript
-polygonOffsetImpl :: forall eff. Fn3 WebGLContext GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `readPixelsImpl`
-
-``` purescript
-readPixelsImpl :: forall eff. Fn8 WebGLContext GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `renderbufferStorageImpl`
-
-``` purescript
-renderbufferStorageImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `sampleCoverageImpl`
-
-``` purescript
-sampleCoverageImpl :: forall eff. Fn3 WebGLContext GLclampf GLboolean (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `scissorImpl`
-
-``` purescript
-scissorImpl :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `shaderSourceImpl`
-
-``` purescript
-shaderSourceImpl :: forall eff. Fn3 WebGLContext WebGLShader DOMString (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilFuncImpl`
-
-``` purescript
-stencilFuncImpl :: forall eff. Fn4 WebGLContext GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilFuncSeparateImpl`
-
-``` purescript
-stencilFuncSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLint GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilMaskImpl`
-
-``` purescript
-stencilMaskImpl :: forall eff. Fn2 WebGLContext GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilMaskSeparateImpl`
-
-``` purescript
-stencilMaskSeparateImpl :: forall eff. Fn3 WebGLContext GLenum GLuint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilOpImpl`
-
-``` purescript
-stencilOpImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `stencilOpSeparateImpl`
-
-``` purescript
-stencilOpSeparateImpl :: forall eff. Fn5 WebGLContext GLenum GLenum GLenum GLenum (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `texImage2DImpl`
-
-``` purescript
-texImage2DImpl :: forall eff. Fn10 WebGLContext GLenum GLint GLenum GLsizei GLsizei GLint GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `texParameterfImpl`
-
-``` purescript
-texParameterfImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLfloat (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `texParameteriImpl`
-
-``` purescript
-texParameteriImpl :: forall eff. Fn4 WebGLContext GLenum GLenum GLint (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `texSubImage2DImpl`
-
-``` purescript
-texSubImage2DImpl :: forall eff. Fn10 WebGLContext GLenum GLint GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (webgl :: WebGL | eff) Unit)
-```
-
-
-#### `uniform1fImpl`
-
-``` purescript
-uniform1fImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLfloat (Eff (webgl :: WebGL | eff) Unit)
-```
+## Module Graphics.WebGL.Raw.Types
 
 
-#### `uniform1fvImpl`
+#### `DOMString`
 
 ``` purescript
-uniform1fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+type DOMString = String
 ```
 
 
-#### `uniform1iImpl`
+#### `FloatArray`
 
 ``` purescript
-uniform1iImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation GLint (Eff (webgl :: WebGL | eff) Unit)
+type FloatArray = Float32Array
 ```
 
 
-#### `uniform1ivImpl`
+#### `GLbitfield`
 
 ``` purescript
-uniform1ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+type GLbitfield = Number
 ```
 
 
-#### `uniform2fImpl`
+#### `GLboolean`
 
 ``` purescript
-uniform2fImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+type GLboolean = Boolean
 ```
 
 
-#### `uniform2fvImpl`
+#### `GLbyte`
 
 ``` purescript
-uniform2fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+type GLbyte = Number
 ```
 
 
-#### `uniform2iImpl`
+#### `GLclampf`
 
 ``` purescript
-uniform2iImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+type GLclampf = Number
 ```
 
 
-#### `uniform2ivImpl`
+#### `GLenum`
 
 ``` purescript
-uniform2ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+type GLenum = Number
 ```
 
 
-#### `uniform3fImpl`
+#### `GLfloat`
 
 ``` purescript
-uniform3fImpl :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+type GLfloat = Number
 ```
 
 
-#### `uniform3fvImpl`
+#### `GLint`
 
 ``` purescript
-uniform3fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+type GLint = Number
 ```
 
 
-#### `uniform3iImpl`
+#### `GLintptr`
 
 ``` purescript
-uniform3iImpl :: forall eff. Fn5 WebGLContext WebGLUniformLocation GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+type GLintptr = Number
 ```
 
 
-#### `uniform3ivImpl`
+#### `GLshort`
 
 ``` purescript
-uniform3ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+type GLshort = Number
 ```
 
 
-#### `uniform4fImpl`
+#### `GLsizei`
 
 ``` purescript
-uniform4fImpl :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+type GLsizei = Number
 ```
 
 
-#### `uniform4fvImpl`
+#### `GLsizeiptr`
 
 ``` purescript
-uniform4fvImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation FloatArray (Eff (webgl :: WebGL | eff) Unit)
+type GLsizeiptr = Number
 ```
 
 
-#### `uniform4iImpl`
+#### `GLubyte`
 
 ``` purescript
-uniform4iImpl :: forall eff. Fn6 WebGLContext WebGLUniformLocation GLint GLint GLint GLint (Eff (webgl :: WebGL | eff) Unit)
+type GLubyte = Number
 ```
 
 
-#### `uniform4ivImpl`
+#### `GLuint`
 
 ``` purescript
-uniform4ivImpl :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (webgl :: WebGL | eff) Unit)
+type GLuint = Number
 ```
 
 
-#### `uniformMatrix2fvImpl`
+#### `GLushort`
 
 ``` purescript
-uniformMatrix2fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+type GLushort = Number
 ```
 
 
-#### `uniformMatrix3fvImpl`
+#### `ArrayBufferView`
 
 ``` purescript
-uniformMatrix3fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data ArrayBufferView :: *
 ```
 
 
-#### `uniformMatrix4fvImpl`
+#### `HTMLImageElement`
 
 ``` purescript
-uniformMatrix4fvImpl :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data HTMLImageElement :: *
 ```
 
 
-#### `useProgramImpl`
+#### `HTMLVideoElement`
 
 ``` purescript
-useProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+data HTMLVideoElement :: *
 ```
 
 
-#### `validateProgramImpl`
+#### `ImageData`
 
 ``` purescript
-validateProgramImpl :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (webgl :: WebGL | eff) Unit)
+data ImageData :: *
 ```
 
 
-#### `vertexAttrib1fImpl`
+#### `WebGLActiveInfo`
 
 ``` purescript
-vertexAttrib1fImpl :: forall eff. Fn3 WebGLContext GLuint GLfloat (Eff (webgl :: WebGL | eff) Unit)
+data WebGLActiveInfo :: *
 ```
 
 
-#### `vertexAttrib1fvImpl`
+#### `WebGLBuffer`
 
 ``` purescript
-vertexAttrib1fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data WebGLBuffer :: *
 ```
 
 
-#### `vertexAttrib2fImpl`
+#### `WebGLContext`
 
 ``` purescript
-vertexAttrib2fImpl :: forall eff. Fn4 WebGLContext GLuint GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+data WebGLContext :: *
 ```
 
 
-#### `vertexAttrib2fvImpl`
+#### `WebGLContextAttributes`
 
 ``` purescript
-vertexAttrib2fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data WebGLContextAttributes :: *
 ```
 
 
-#### `vertexAttrib3fImpl`
+#### `WebGLFramebuffer`
 
 ``` purescript
-vertexAttrib3fImpl :: forall eff. Fn5 WebGLContext GLuint GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+data WebGLFramebuffer :: *
 ```
 
 
-#### `vertexAttrib3fvImpl`
+#### `WebGLProgram`
 
 ``` purescript
-vertexAttrib3fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data WebGLProgram :: *
 ```
 
 
-#### `vertexAttrib4fImpl`
+#### `WebGLRenderbuffer`
 
 ``` purescript
-vertexAttrib4fImpl :: forall eff. Fn6 WebGLContext GLuint GLfloat GLfloat GLfloat GLfloat (Eff (webgl :: WebGL | eff) Unit)
+data WebGLRenderbuffer :: *
 ```
 
 
-#### `vertexAttrib4fvImpl`
+#### `WebGLShader`
 
 ``` purescript
-vertexAttrib4fvImpl :: forall eff. Fn3 WebGLContext GLuint FloatArray (Eff (webgl :: WebGL | eff) Unit)
+data WebGLShader :: *
 ```
 
 
-#### `vertexAttribPointerImpl`
+#### `WebGLTexture`
 
 ``` purescript
-vertexAttribPointerImpl :: forall eff. Fn7 WebGLContext GLuint GLint GLenum GLboolean GLsizei GLintptr (Eff (webgl :: WebGL | eff) Unit)
+data WebGLTexture :: *
 ```
 
 
-#### `viewportImpl`
+#### `WebGLUniformLocation`
 
 ``` purescript
-viewportImpl :: forall eff. Fn5 WebGLContext GLint GLint GLsizei GLsizei (Eff (webgl :: WebGL | eff) Unit)
+data WebGLUniformLocation :: *
 ```
