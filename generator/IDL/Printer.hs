@@ -6,6 +6,7 @@ module IDL.Printer
 , funcsFFI
 ) where
 
+import Data.Char (toLower, toUpper)
 import Data.List (sort)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
@@ -24,7 +25,7 @@ typesFFI idl =
     header = vcat
       [ "module Graphics.WebGL.Raw.Types where"
       , ""
-      , "import Data.ArrayBuffer.Types (Float32Array ())"
+      , "import Data.ArrayBuffer.Types"
       , ""
       , "foreign import data WebGL :: !"
       ]
@@ -39,7 +40,8 @@ enumsFFI idl =
     header = vcat
       [ "module Graphics.WebGL.Raw.Enums where"
       , ""
-      , "import Graphics.WebGL.Raw.Types (GLenum ())"
+      , "import Graphics.WebGL.Raw.Types"
+      , "import qualified Prelude as Pre"
       ]
 
 funcsFFI :: IDL -> Doc
@@ -57,9 +59,7 @@ funcsFFI idl =
     imports = vcat
       [ "import Control.Monad.Eff"
       , "import Data.ArrayBuffer.Types"
-      , "import Data.TypedArray"
       , "import Data.Function"
-      , "import Graphics.WebGL.Raw.Enums"
       , "import Graphics.WebGL.Raw.Types"
       ]
 
@@ -99,7 +99,7 @@ ppConstant Enum { enumName = n, enumValue = v } =
     constName <+> "=" <+> (integer v) $$
     blank
   where
-    constName = text $ '_' : n
+    constName = toCamelCase n
 
 ppImplTypeSig :: Decl -> Doc
 ppImplTypeSig f@Function{} =
@@ -194,8 +194,14 @@ sigReturnType Function{ methodRetType = ret } =
 blank :: Doc
 blank = ""
 
+genericType :: Doc
+genericType = char 'a'
+
 implName :: Decl -> Doc
 implName f@Function{} = text (methodName f) <> "Impl"
+
+int :: Int -> Doc
+int = integer . fromIntegral
 
 prefixWebgl :: Doc
 prefixWebgl = text (argName webglContext) <> "."
@@ -207,8 +213,8 @@ prePunct p (x:x':xs) = x : go x' xs
     go y (z:zs) = (p <> y) : go z zs
 prePunct _ xs = xs
 
-genericType :: Doc
-genericType = char 'a'
-
-int :: Int -> Doc
-int = integer . fromIntegral
+toCamelCase :: String -> Doc
+toCamelCase = text . foldr go ""
+  where
+    go '_' (l:ls) = toUpper l : ls
+    go l ls       = toLower l : ls

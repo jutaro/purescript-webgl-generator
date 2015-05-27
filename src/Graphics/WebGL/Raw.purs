@@ -139,9 +139,7 @@ module Graphics.WebGL.Raw
 
 import Control.Monad.Eff
 import Data.ArrayBuffer.Types
-import Data.TypedArray
 import Data.Function
-import Graphics.WebGL.Raw.Enums
 import Graphics.WebGL.Raw.Types
 
 foreign import getContextAttributesImpl """

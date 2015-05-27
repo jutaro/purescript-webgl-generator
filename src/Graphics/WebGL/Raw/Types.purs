@@ -3,7 +3,7 @@
 
 module Graphics.WebGL.Raw.Types where
 
-import Data.ArrayBuffer.Types (Float32Array ())
+import Data.ArrayBuffer.Types
 
 foreign import data WebGL :: !
 

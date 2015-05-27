@@ -3,905 +3,906 @@
 
 module Graphics.WebGL.Raw.Enums where
 
-import Graphics.WebGL.Raw.Types (GLenum ())
+import Graphics.WebGL.Raw.Types
+import qualified Prelude as Pre
 
-_DEPTH_BUFFER_BIT :: GLenum
-_DEPTH_BUFFER_BIT = 256
+depthBufferBit :: GLenum
+depthBufferBit = 256
 
-_STENCIL_BUFFER_BIT :: GLenum
-_STENCIL_BUFFER_BIT = 1024
+stencilBufferBit :: GLenum
+stencilBufferBit = 1024
 
-_COLOR_BUFFER_BIT :: GLenum
-_COLOR_BUFFER_BIT = 16384
+colorBufferBit :: GLenum
+colorBufferBit = 16384
 
-_POINTS :: GLenum
-_POINTS = 0
+points :: GLenum
+points = 0
 
-_LINES :: GLenum
-_LINES = 1
+lines :: GLenum
+lines = 1
 
-_LINE_LOOP :: GLenum
-_LINE_LOOP = 2
+lineLoop :: GLenum
+lineLoop = 2
 
-_LINE_STRIP :: GLenum
-_LINE_STRIP = 3
+lineStrip :: GLenum
+lineStrip = 3
 
-_TRIANGLES :: GLenum
-_TRIANGLES = 4
+triangles :: GLenum
+triangles = 4
 
-_TRIANGLE_STRIP :: GLenum
-_TRIANGLE_STRIP = 5
+triangleStrip :: GLenum
+triangleStrip = 5
 
-_TRIANGLE_FAN :: GLenum
-_TRIANGLE_FAN = 6
+triangleFan :: GLenum
+triangleFan = 6
 
-_ZERO :: GLenum
-_ZERO = 0
+zero :: GLenum
+zero = 0
 
-_ONE :: GLenum
-_ONE = 1
+one :: GLenum
+one = 1
 
-_SRC_COLOR :: GLenum
-_SRC_COLOR = 768
+srcColor :: GLenum
+srcColor = 768
 
-_ONE_MINUS_SRC_COLOR :: GLenum
-_ONE_MINUS_SRC_COLOR = 769
+oneMinusSrcColor :: GLenum
+oneMinusSrcColor = 769
 
-_SRC_ALPHA :: GLenum
-_SRC_ALPHA = 770
+srcAlpha :: GLenum
+srcAlpha = 770
 
-_ONE_MINUS_SRC_ALPHA :: GLenum
-_ONE_MINUS_SRC_ALPHA = 771
+oneMinusSrcAlpha :: GLenum
+oneMinusSrcAlpha = 771
 
-_DST_ALPHA :: GLenum
-_DST_ALPHA = 772
+dstAlpha :: GLenum
+dstAlpha = 772
 
-_ONE_MINUS_DST_ALPHA :: GLenum
-_ONE_MINUS_DST_ALPHA = 773
+oneMinusDstAlpha :: GLenum
+oneMinusDstAlpha = 773
 
-_DST_COLOR :: GLenum
-_DST_COLOR = 774
+dstColor :: GLenum
+dstColor = 774
 
-_ONE_MINUS_DST_COLOR :: GLenum
-_ONE_MINUS_DST_COLOR = 775
+oneMinusDstColor :: GLenum
+oneMinusDstColor = 775
 
-_SRC_ALPHA_SATURATE :: GLenum
-_SRC_ALPHA_SATURATE = 776
+srcAlphaSaturate :: GLenum
+srcAlphaSaturate = 776
 
-_FUNC_ADD :: GLenum
-_FUNC_ADD = 32774
+funcAdd :: GLenum
+funcAdd = 32774
 
-_BLEND_EQUATION :: GLenum
-_BLEND_EQUATION = 32777
+blendEquation :: GLenum
+blendEquation = 32777
 
-_BLEND_EQUATION_RGB :: GLenum
-_BLEND_EQUATION_RGB = 32777
+blendEquationRgb :: GLenum
+blendEquationRgb = 32777
 
-_BLEND_EQUATION_ALPHA :: GLenum
-_BLEND_EQUATION_ALPHA = 34877
+blendEquationAlpha :: GLenum
+blendEquationAlpha = 34877
 
-_FUNC_SUBTRACT :: GLenum
-_FUNC_SUBTRACT = 32778
+funcSubtract :: GLenum
+funcSubtract = 32778
 
-_FUNC_REVERSE_SUBTRACT :: GLenum
-_FUNC_REVERSE_SUBTRACT = 32779
+funcReverseSubtract :: GLenum
+funcReverseSubtract = 32779
 
-_BLEND_DST_RGB :: GLenum
-_BLEND_DST_RGB = 32968
+blendDstRgb :: GLenum
+blendDstRgb = 32968
 
-_BLEND_SRC_RGB :: GLenum
-_BLEND_SRC_RGB = 32969
+blendSrcRgb :: GLenum
+blendSrcRgb = 32969
 
-_BLEND_DST_ALPHA :: GLenum
-_BLEND_DST_ALPHA = 32970
+blendDstAlpha :: GLenum
+blendDstAlpha = 32970
 
-_BLEND_SRC_ALPHA :: GLenum
-_BLEND_SRC_ALPHA = 32971
+blendSrcAlpha :: GLenum
+blendSrcAlpha = 32971
 
-_CONSTANT_COLOR :: GLenum
-_CONSTANT_COLOR = 32769
+constantColor :: GLenum
+constantColor = 32769
 
-_ONE_MINUS_CONSTANT_COLOR :: GLenum
-_ONE_MINUS_CONSTANT_COLOR = 32770
+oneMinusConstantColor :: GLenum
+oneMinusConstantColor = 32770
 
-_CONSTANT_ALPHA :: GLenum
-_CONSTANT_ALPHA = 32771
+constantAlpha :: GLenum
+constantAlpha = 32771
 
-_ONE_MINUS_CONSTANT_ALPHA :: GLenum
-_ONE_MINUS_CONSTANT_ALPHA = 32772
+oneMinusConstantAlpha :: GLenum
+oneMinusConstantAlpha = 32772
 
-_BLEND_COLOR :: GLenum
-_BLEND_COLOR = 32773
+blendColor :: GLenum
+blendColor = 32773
 
-_ARRAY_BUFFER :: GLenum
-_ARRAY_BUFFER = 34962
+arrayBuffer :: GLenum
+arrayBuffer = 34962
 
-_ELEMENT_ARRAY_BUFFER :: GLenum
-_ELEMENT_ARRAY_BUFFER = 34963
+elementArrayBuffer :: GLenum
+elementArrayBuffer = 34963
 
-_ARRAY_BUFFER_BINDING :: GLenum
-_ARRAY_BUFFER_BINDING = 34964
+arrayBufferBinding :: GLenum
+arrayBufferBinding = 34964
 
-_ELEMENT_ARRAY_BUFFER_BINDING :: GLenum
-_ELEMENT_ARRAY_BUFFER_BINDING = 34965
+elementArrayBufferBinding :: GLenum
+elementArrayBufferBinding = 34965
 
-_STREAM_DRAW :: GLenum
-_STREAM_DRAW = 35040
+streamDraw :: GLenum
+streamDraw = 35040
 
-_STATIC_DRAW :: GLenum
-_STATIC_DRAW = 35044
+staticDraw :: GLenum
+staticDraw = 35044
 
-_DYNAMIC_DRAW :: GLenum
-_DYNAMIC_DRAW = 35048
+dynamicDraw :: GLenum
+dynamicDraw = 35048
 
-_BUFFER_SIZE :: GLenum
-_BUFFER_SIZE = 34660
+bufferSize :: GLenum
+bufferSize = 34660
 
-_BUFFER_USAGE :: GLenum
-_BUFFER_USAGE = 34661
+bufferUsage :: GLenum
+bufferUsage = 34661
 
-_CURRENT_VERTEX_ATTRIB :: GLenum
-_CURRENT_VERTEX_ATTRIB = 34342
+currentVertexAttrib :: GLenum
+currentVertexAttrib = 34342
 
-_FRONT :: GLenum
-_FRONT = 1028
+front :: GLenum
+front = 1028
 
-_BACK :: GLenum
-_BACK = 1029
+back :: GLenum
+back = 1029
 
-_FRONT_AND_BACK :: GLenum
-_FRONT_AND_BACK = 1032
+frontAndBack :: GLenum
+frontAndBack = 1032
 
-_TEXTURE_2D :: GLenum
-_TEXTURE_2D = 3553
+texture2d :: GLenum
+texture2d = 3553
 
-_CULL_FACE :: GLenum
-_CULL_FACE = 2884
+cullFace :: GLenum
+cullFace = 2884
 
-_BLEND :: GLenum
-_BLEND = 3042
+blend :: GLenum
+blend = 3042
 
-_DITHER :: GLenum
-_DITHER = 3024
+dither :: GLenum
+dither = 3024
 
-_STENCIL_TEST :: GLenum
-_STENCIL_TEST = 2960
+stencilTest :: GLenum
+stencilTest = 2960
 
-_DEPTH_TEST :: GLenum
-_DEPTH_TEST = 2929
+depthTest :: GLenum
+depthTest = 2929
 
-_SCISSOR_TEST :: GLenum
-_SCISSOR_TEST = 3089
+scissorTest :: GLenum
+scissorTest = 3089
 
-_POLYGON_OFFSET_FILL :: GLenum
-_POLYGON_OFFSET_FILL = 32823
+polygonOffsetFill :: GLenum
+polygonOffsetFill = 32823
 
-_SAMPLE_ALPHA_TO_COVERAGE :: GLenum
-_SAMPLE_ALPHA_TO_COVERAGE = 32926
+sampleAlphaToCoverage :: GLenum
+sampleAlphaToCoverage = 32926
 
-_SAMPLE_COVERAGE :: GLenum
-_SAMPLE_COVERAGE = 32928
+sampleCoverage :: GLenum
+sampleCoverage = 32928
 
-_NO_ERROR :: GLenum
-_NO_ERROR = 0
+noError :: GLenum
+noError = 0
 
-_INVALID_ENUM :: GLenum
-_INVALID_ENUM = 1280
+invalidEnum :: GLenum
+invalidEnum = 1280
 
-_INVALID_VALUE :: GLenum
-_INVALID_VALUE = 1281
+invalidValue :: GLenum
+invalidValue = 1281
 
-_INVALID_OPERATION :: GLenum
-_INVALID_OPERATION = 1282
+invalidOperation :: GLenum
+invalidOperation = 1282
 
-_OUT_OF_MEMORY :: GLenum
-_OUT_OF_MEMORY = 1285
+outOfMemory :: GLenum
+outOfMemory = 1285
 
-_CW :: GLenum
-_CW = 2304
+cw :: GLenum
+cw = 2304
 
-_CCW :: GLenum
-_CCW = 2305
+ccw :: GLenum
+ccw = 2305
 
-_LINE_WIDTH :: GLenum
-_LINE_WIDTH = 2849
+lineWidth :: GLenum
+lineWidth = 2849
 
-_ALIASED_POINT_SIZE_RANGE :: GLenum
-_ALIASED_POINT_SIZE_RANGE = 33901
+aliasedPointSizeRange :: GLenum
+aliasedPointSizeRange = 33901
 
-_ALIASED_LINE_WIDTH_RANGE :: GLenum
-_ALIASED_LINE_WIDTH_RANGE = 33902
+aliasedLineWidthRange :: GLenum
+aliasedLineWidthRange = 33902
 
-_CULL_FACE_MODE :: GLenum
-_CULL_FACE_MODE = 2885
+cullFaceMode :: GLenum
+cullFaceMode = 2885
 
-_FRONT_FACE :: GLenum
-_FRONT_FACE = 2886
+frontFace :: GLenum
+frontFace = 2886
 
-_DEPTH_RANGE :: GLenum
-_DEPTH_RANGE = 2928
+depthRange :: GLenum
+depthRange = 2928
 
-_DEPTH_WRITEMASK :: GLenum
-_DEPTH_WRITEMASK = 2930
+depthWritemask :: GLenum
+depthWritemask = 2930
 
-_DEPTH_CLEAR_VALUE :: GLenum
-_DEPTH_CLEAR_VALUE = 2931
+depthClearValue :: GLenum
+depthClearValue = 2931
 
-_DEPTH_FUNC :: GLenum
-_DEPTH_FUNC = 2932
+depthFunc :: GLenum
+depthFunc = 2932
 
-_STENCIL_CLEAR_VALUE :: GLenum
-_STENCIL_CLEAR_VALUE = 2961
+stencilClearValue :: GLenum
+stencilClearValue = 2961
 
-_STENCIL_FUNC :: GLenum
-_STENCIL_FUNC = 2962
+stencilFunc :: GLenum
+stencilFunc = 2962
 
-_STENCIL_FAIL :: GLenum
-_STENCIL_FAIL = 2964
+stencilFail :: GLenum
+stencilFail = 2964
 
-_STENCIL_PASS_DEPTH_FAIL :: GLenum
-_STENCIL_PASS_DEPTH_FAIL = 2965
+stencilPassDepthFail :: GLenum
+stencilPassDepthFail = 2965
 
-_STENCIL_PASS_DEPTH_PASS :: GLenum
-_STENCIL_PASS_DEPTH_PASS = 2966
+stencilPassDepthPass :: GLenum
+stencilPassDepthPass = 2966
 
-_STENCIL_REF :: GLenum
-_STENCIL_REF = 2967
+stencilRef :: GLenum
+stencilRef = 2967
 
-_STENCIL_VALUE_MASK :: GLenum
-_STENCIL_VALUE_MASK = 2963
+stencilValueMask :: GLenum
+stencilValueMask = 2963
 
-_STENCIL_WRITEMASK :: GLenum
-_STENCIL_WRITEMASK = 2968
+stencilWritemask :: GLenum
+stencilWritemask = 2968
 
-_STENCIL_BACK_FUNC :: GLenum
-_STENCIL_BACK_FUNC = 34816
+stencilBackFunc :: GLenum
+stencilBackFunc = 34816
 
-_STENCIL_BACK_FAIL :: GLenum
-_STENCIL_BACK_FAIL = 34817
+stencilBackFail :: GLenum
+stencilBackFail = 34817
 
-_STENCIL_BACK_PASS_DEPTH_FAIL :: GLenum
-_STENCIL_BACK_PASS_DEPTH_FAIL = 34818
+stencilBackPassDepthFail :: GLenum
+stencilBackPassDepthFail = 34818
 
-_STENCIL_BACK_PASS_DEPTH_PASS :: GLenum
-_STENCIL_BACK_PASS_DEPTH_PASS = 34819
+stencilBackPassDepthPass :: GLenum
+stencilBackPassDepthPass = 34819
 
-_STENCIL_BACK_REF :: GLenum
-_STENCIL_BACK_REF = 36003
+stencilBackRef :: GLenum
+stencilBackRef = 36003
 
-_STENCIL_BACK_VALUE_MASK :: GLenum
-_STENCIL_BACK_VALUE_MASK = 36004
+stencilBackValueMask :: GLenum
+stencilBackValueMask = 36004
 
-_STENCIL_BACK_WRITEMASK :: GLenum
-_STENCIL_BACK_WRITEMASK = 36005
+stencilBackWritemask :: GLenum
+stencilBackWritemask = 36005
 
-_VIEWPORT :: GLenum
-_VIEWPORT = 2978
+viewport :: GLenum
+viewport = 2978
 
-_SCISSOR_BOX :: GLenum
-_SCISSOR_BOX = 3088
+scissorBox :: GLenum
+scissorBox = 3088
 
-_COLOR_CLEAR_VALUE :: GLenum
-_COLOR_CLEAR_VALUE = 3106
+colorClearValue :: GLenum
+colorClearValue = 3106
 
-_COLOR_WRITEMASK :: GLenum
-_COLOR_WRITEMASK = 3107
+colorWritemask :: GLenum
+colorWritemask = 3107
 
-_UNPACK_ALIGNMENT :: GLenum
-_UNPACK_ALIGNMENT = 3317
+unpackAlignment :: GLenum
+unpackAlignment = 3317
 
-_PACK_ALIGNMENT :: GLenum
-_PACK_ALIGNMENT = 3333
+packAlignment :: GLenum
+packAlignment = 3333
 
-_MAX_TEXTURE_SIZE :: GLenum
-_MAX_TEXTURE_SIZE = 3379
+maxTextureSize :: GLenum
+maxTextureSize = 3379
 
-_MAX_VIEWPORT_DIMS :: GLenum
-_MAX_VIEWPORT_DIMS = 3386
+maxViewportDims :: GLenum
+maxViewportDims = 3386
 
-_SUBPIXEL_BITS :: GLenum
-_SUBPIXEL_BITS = 3408
+subpixelBits :: GLenum
+subpixelBits = 3408
 
-_RED_BITS :: GLenum
-_RED_BITS = 3410
+redBits :: GLenum
+redBits = 3410
 
-_GREEN_BITS :: GLenum
-_GREEN_BITS = 3411
+greenBits :: GLenum
+greenBits = 3411
 
-_BLUE_BITS :: GLenum
-_BLUE_BITS = 3412
+blueBits :: GLenum
+blueBits = 3412
 
-_ALPHA_BITS :: GLenum
-_ALPHA_BITS = 3413
+alphaBits :: GLenum
+alphaBits = 3413
 
-_DEPTH_BITS :: GLenum
-_DEPTH_BITS = 3414
+depthBits :: GLenum
+depthBits = 3414
 
-_STENCIL_BITS :: GLenum
-_STENCIL_BITS = 3415
+stencilBits :: GLenum
+stencilBits = 3415
 
-_POLYGON_OFFSET_UNITS :: GLenum
-_POLYGON_OFFSET_UNITS = 10752
+polygonOffsetUnits :: GLenum
+polygonOffsetUnits = 10752
 
-_POLYGON_OFFSET_FACTOR :: GLenum
-_POLYGON_OFFSET_FACTOR = 32824
+polygonOffsetFactor :: GLenum
+polygonOffsetFactor = 32824
 
-_TEXTURE_BINDING_2D :: GLenum
-_TEXTURE_BINDING_2D = 32873
+textureBinding2d :: GLenum
+textureBinding2d = 32873
 
-_SAMPLE_BUFFERS :: GLenum
-_SAMPLE_BUFFERS = 32936
+sampleBuffers :: GLenum
+sampleBuffers = 32936
 
-_SAMPLES :: GLenum
-_SAMPLES = 32937
+samples :: GLenum
+samples = 32937
 
-_SAMPLE_COVERAGE_VALUE :: GLenum
-_SAMPLE_COVERAGE_VALUE = 32938
+sampleCoverageValue :: GLenum
+sampleCoverageValue = 32938
 
-_SAMPLE_COVERAGE_INVERT :: GLenum
-_SAMPLE_COVERAGE_INVERT = 32939
+sampleCoverageInvert :: GLenum
+sampleCoverageInvert = 32939
 
-_NUM_COMPRESSED_TEXTURE_FORMATS :: GLenum
-_NUM_COMPRESSED_TEXTURE_FORMATS = 34466
+numCompressedTextureFormats :: GLenum
+numCompressedTextureFormats = 34466
 
-_COMPRESSED_TEXTURE_FORMATS :: GLenum
-_COMPRESSED_TEXTURE_FORMATS = 34467
+compressedTextureFormats :: GLenum
+compressedTextureFormats = 34467
 
-_DONT_CARE :: GLenum
-_DONT_CARE = 4352
+dontCare :: GLenum
+dontCare = 4352
 
-_FASTEST :: GLenum
-_FASTEST = 4353
+fastest :: GLenum
+fastest = 4353
 
-_NICEST :: GLenum
-_NICEST = 4354
+nicest :: GLenum
+nicest = 4354
 
-_GENERATE_MIPMAP_HINT :: GLenum
-_GENERATE_MIPMAP_HINT = 33170
+generateMipmapHint :: GLenum
+generateMipmapHint = 33170
 
-_BYTE :: GLenum
-_BYTE = 5120
+byte :: GLenum
+byte = 5120
 
-_UNSIGNED_BYTE :: GLenum
-_UNSIGNED_BYTE = 5121
+unsignedByte :: GLenum
+unsignedByte = 5121
 
-_SHORT :: GLenum
-_SHORT = 5122
+short :: GLenum
+short = 5122
 
-_UNSIGNED_SHORT :: GLenum
-_UNSIGNED_SHORT = 5123
+unsignedShort :: GLenum
+unsignedShort = 5123
 
-_INT :: GLenum
-_INT = 5124
+int :: GLenum
+int = 5124
 
-_UNSIGNED_INT :: GLenum
-_UNSIGNED_INT = 5125
+unsignedInt :: GLenum
+unsignedInt = 5125
 
-_FLOAT :: GLenum
-_FLOAT = 5126
+float :: GLenum
+float = 5126
 
-_DEPTH_COMPONENT :: GLenum
-_DEPTH_COMPONENT = 6402
+depthComponent :: GLenum
+depthComponent = 6402
 
-_ALPHA :: GLenum
-_ALPHA = 6406
+alpha :: GLenum
+alpha = 6406
 
-_RGB :: GLenum
-_RGB = 6407
+rgb :: GLenum
+rgb = 6407
 
-_RGBA :: GLenum
-_RGBA = 6408
+rgba :: GLenum
+rgba = 6408
 
-_LUMINANCE :: GLenum
-_LUMINANCE = 6409
+luminance :: GLenum
+luminance = 6409
 
-_LUMINANCE_ALPHA :: GLenum
-_LUMINANCE_ALPHA = 6410
+luminanceAlpha :: GLenum
+luminanceAlpha = 6410
 
-_UNSIGNED_SHORT_4_4_4_4 :: GLenum
-_UNSIGNED_SHORT_4_4_4_4 = 32819
+unsignedShort4444 :: GLenum
+unsignedShort4444 = 32819
 
-_UNSIGNED_SHORT_5_5_5_1 :: GLenum
-_UNSIGNED_SHORT_5_5_5_1 = 32820
+unsignedShort5551 :: GLenum
+unsignedShort5551 = 32820
 
-_UNSIGNED_SHORT_5_6_5 :: GLenum
-_UNSIGNED_SHORT_5_6_5 = 33635
+unsignedShort565 :: GLenum
+unsignedShort565 = 33635
 
-_FRAGMENT_SHADER :: GLenum
-_FRAGMENT_SHADER = 35632
+fragmentShader :: GLenum
+fragmentShader = 35632
 
-_VERTEX_SHADER :: GLenum
-_VERTEX_SHADER = 35633
+vertexShader :: GLenum
+vertexShader = 35633
 
-_MAX_VERTEX_ATTRIBS :: GLenum
-_MAX_VERTEX_ATTRIBS = 34921
+maxVertexAttribs :: GLenum
+maxVertexAttribs = 34921
 
-_MAX_VERTEX_UNIFORM_VECTORS :: GLenum
-_MAX_VERTEX_UNIFORM_VECTORS = 36347
+maxVertexUniformVectors :: GLenum
+maxVertexUniformVectors = 36347
 
-_MAX_VARYING_VECTORS :: GLenum
-_MAX_VARYING_VECTORS = 36348
+maxVaryingVectors :: GLenum
+maxVaryingVectors = 36348
 
-_MAX_COMBINED_TEXTURE_IMAGE_UNITS :: GLenum
-_MAX_COMBINED_TEXTURE_IMAGE_UNITS = 35661
+maxCombinedTextureImageUnits :: GLenum
+maxCombinedTextureImageUnits = 35661
 
-_MAX_VERTEX_TEXTURE_IMAGE_UNITS :: GLenum
-_MAX_VERTEX_TEXTURE_IMAGE_UNITS = 35660
+maxVertexTextureImageUnits :: GLenum
+maxVertexTextureImageUnits = 35660
 
-_MAX_TEXTURE_IMAGE_UNITS :: GLenum
-_MAX_TEXTURE_IMAGE_UNITS = 34930
+maxTextureImageUnits :: GLenum
+maxTextureImageUnits = 34930
 
-_MAX_FRAGMENT_UNIFORM_VECTORS :: GLenum
-_MAX_FRAGMENT_UNIFORM_VECTORS = 36349
+maxFragmentUniformVectors :: GLenum
+maxFragmentUniformVectors = 36349
 
-_SHADER_TYPE :: GLenum
-_SHADER_TYPE = 35663
+shaderType :: GLenum
+shaderType = 35663
 
-_DELETE_STATUS :: GLenum
-_DELETE_STATUS = 35712
+deleteStatus :: GLenum
+deleteStatus = 35712
 
-_LINK_STATUS :: GLenum
-_LINK_STATUS = 35714
+linkStatus :: GLenum
+linkStatus = 35714
 
-_VALIDATE_STATUS :: GLenum
-_VALIDATE_STATUS = 35715
+validateStatus :: GLenum
+validateStatus = 35715
 
-_ATTACHED_SHADERS :: GLenum
-_ATTACHED_SHADERS = 35717
+attachedShaders :: GLenum
+attachedShaders = 35717
 
-_ACTIVE_UNIFORMS :: GLenum
-_ACTIVE_UNIFORMS = 35718
+activeUniforms :: GLenum
+activeUniforms = 35718
 
-_ACTIVE_UNIFORM_MAX_LENGTH :: GLenum
-_ACTIVE_UNIFORM_MAX_LENGTH = 35719
+activeUniformMaxLength :: GLenum
+activeUniformMaxLength = 35719
 
-_ACTIVE_ATTRIBUTES :: GLenum
-_ACTIVE_ATTRIBUTES = 35721
+activeAttributes :: GLenum
+activeAttributes = 35721
 
-_ACTIVE_ATTRIBUTE_MAX_LENGTH :: GLenum
-_ACTIVE_ATTRIBUTE_MAX_LENGTH = 35722
+activeAttributeMaxLength :: GLenum
+activeAttributeMaxLength = 35722
 
-_SHADING_LANGUAGE_VERSION :: GLenum
-_SHADING_LANGUAGE_VERSION = 35724
+shadingLanguageVersion :: GLenum
+shadingLanguageVersion = 35724
 
-_CURRENT_PROGRAM :: GLenum
-_CURRENT_PROGRAM = 35725
+currentProgram :: GLenum
+currentProgram = 35725
 
-_NEVER :: GLenum
-_NEVER = 512
+never :: GLenum
+never = 512
 
-_LESS :: GLenum
-_LESS = 513
+less :: GLenum
+less = 513
 
-_EQUAL :: GLenum
-_EQUAL = 514
+equal :: GLenum
+equal = 514
 
-_LEQUAL :: GLenum
-_LEQUAL = 515
+lequal :: GLenum
+lequal = 515
 
-_GREATER :: GLenum
-_GREATER = 516
+greater :: GLenum
+greater = 516
 
-_NOTEQUAL :: GLenum
-_NOTEQUAL = 517
+notequal :: GLenum
+notequal = 517
 
-_GEQUAL :: GLenum
-_GEQUAL = 518
+gequal :: GLenum
+gequal = 518
 
-_ALWAYS :: GLenum
-_ALWAYS = 519
+always :: GLenum
+always = 519
 
-_KEEP :: GLenum
-_KEEP = 7680
+keep :: GLenum
+keep = 7680
 
-_REPLACE :: GLenum
-_REPLACE = 7681
+replace :: GLenum
+replace = 7681
 
-_INCR :: GLenum
-_INCR = 7682
+incr :: GLenum
+incr = 7682
 
-_DECR :: GLenum
-_DECR = 7683
+decr :: GLenum
+decr = 7683
 
-_INVERT :: GLenum
-_INVERT = 5386
+invert :: GLenum
+invert = 5386
 
-_INCR_WRAP :: GLenum
-_INCR_WRAP = 34055
+incrWrap :: GLenum
+incrWrap = 34055
 
-_DECR_WRAP :: GLenum
-_DECR_WRAP = 34056
+decrWrap :: GLenum
+decrWrap = 34056
 
-_VENDOR :: GLenum
-_VENDOR = 7936
+vendor :: GLenum
+vendor = 7936
 
-_RENDERER :: GLenum
-_RENDERER = 7937
+renderer :: GLenum
+renderer = 7937
 
-_VERSION :: GLenum
-_VERSION = 7938
+version :: GLenum
+version = 7938
 
-_NEAREST :: GLenum
-_NEAREST = 9728
+nearest :: GLenum
+nearest = 9728
 
-_LINEAR :: GLenum
-_LINEAR = 9729
+linear :: GLenum
+linear = 9729
 
-_NEAREST_MIPMAP_NEAREST :: GLenum
-_NEAREST_MIPMAP_NEAREST = 9984
+nearestMipmapNearest :: GLenum
+nearestMipmapNearest = 9984
 
-_LINEAR_MIPMAP_NEAREST :: GLenum
-_LINEAR_MIPMAP_NEAREST = 9985
+linearMipmapNearest :: GLenum
+linearMipmapNearest = 9985
 
-_NEAREST_MIPMAP_LINEAR :: GLenum
-_NEAREST_MIPMAP_LINEAR = 9986
+nearestMipmapLinear :: GLenum
+nearestMipmapLinear = 9986
 
-_LINEAR_MIPMAP_LINEAR :: GLenum
-_LINEAR_MIPMAP_LINEAR = 9987
+linearMipmapLinear :: GLenum
+linearMipmapLinear = 9987
 
-_TEXTURE_MAG_FILTER :: GLenum
-_TEXTURE_MAG_FILTER = 10240
+textureMagFilter :: GLenum
+textureMagFilter = 10240
 
-_TEXTURE_MIN_FILTER :: GLenum
-_TEXTURE_MIN_FILTER = 10241
+textureMinFilter :: GLenum
+textureMinFilter = 10241
 
-_TEXTURE_WRAP_S :: GLenum
-_TEXTURE_WRAP_S = 10242
+textureWrapS :: GLenum
+textureWrapS = 10242
 
-_TEXTURE_WRAP_T :: GLenum
-_TEXTURE_WRAP_T = 10243
+textureWrapT :: GLenum
+textureWrapT = 10243
 
-_TEXTURE :: GLenum
-_TEXTURE = 5890
+texture :: GLenum
+texture = 5890
 
-_TEXTURE_CUBE_MAP :: GLenum
-_TEXTURE_CUBE_MAP = 34067
+textureCubeMap :: GLenum
+textureCubeMap = 34067
 
-_TEXTURE_BINDING_CUBE_MAP :: GLenum
-_TEXTURE_BINDING_CUBE_MAP = 34068
+textureBindingCubeMap :: GLenum
+textureBindingCubeMap = 34068
 
-_TEXTURE_CUBE_MAP_POSITIVE_X :: GLenum
-_TEXTURE_CUBE_MAP_POSITIVE_X = 34069
+textureCubeMapPositiveX :: GLenum
+textureCubeMapPositiveX = 34069
 
-_TEXTURE_CUBE_MAP_NEGATIVE_X :: GLenum
-_TEXTURE_CUBE_MAP_NEGATIVE_X = 34070
+textureCubeMapNegativeX :: GLenum
+textureCubeMapNegativeX = 34070
 
-_TEXTURE_CUBE_MAP_POSITIVE_Y :: GLenum
-_TEXTURE_CUBE_MAP_POSITIVE_Y = 34071
+textureCubeMapPositiveY :: GLenum
+textureCubeMapPositiveY = 34071
 
-_TEXTURE_CUBE_MAP_NEGATIVE_Y :: GLenum
-_TEXTURE_CUBE_MAP_NEGATIVE_Y = 34072
+textureCubeMapNegativeY :: GLenum
+textureCubeMapNegativeY = 34072
 
-_TEXTURE_CUBE_MAP_POSITIVE_Z :: GLenum
-_TEXTURE_CUBE_MAP_POSITIVE_Z = 34073
+textureCubeMapPositiveZ :: GLenum
+textureCubeMapPositiveZ = 34073
 
-_TEXTURE_CUBE_MAP_NEGATIVE_Z :: GLenum
-_TEXTURE_CUBE_MAP_NEGATIVE_Z = 34074
+textureCubeMapNegativeZ :: GLenum
+textureCubeMapNegativeZ = 34074
 
-_MAX_CUBE_MAP_TEXTURE_SIZE :: GLenum
-_MAX_CUBE_MAP_TEXTURE_SIZE = 34076
+maxCubeMapTextureSize :: GLenum
+maxCubeMapTextureSize = 34076
 
-_TEXTURE0 :: GLenum
-_TEXTURE0 = 33984
+texture0 :: GLenum
+texture0 = 33984
 
-_TEXTURE1 :: GLenum
-_TEXTURE1 = 33985
+texture1 :: GLenum
+texture1 = 33985
 
-_TEXTURE2 :: GLenum
-_TEXTURE2 = 33986
+texture2 :: GLenum
+texture2 = 33986
 
-_TEXTURE3 :: GLenum
-_TEXTURE3 = 33987
+texture3 :: GLenum
+texture3 = 33987
 
-_TEXTURE4 :: GLenum
-_TEXTURE4 = 33988
+texture4 :: GLenum
+texture4 = 33988
 
-_TEXTURE5 :: GLenum
-_TEXTURE5 = 33989
+texture5 :: GLenum
+texture5 = 33989
 
-_TEXTURE6 :: GLenum
-_TEXTURE6 = 33990
+texture6 :: GLenum
+texture6 = 33990
 
-_TEXTURE7 :: GLenum
-_TEXTURE7 = 33991
+texture7 :: GLenum
+texture7 = 33991
 
-_TEXTURE8 :: GLenum
-_TEXTURE8 = 33992
+texture8 :: GLenum
+texture8 = 33992
 
-_TEXTURE9 :: GLenum
-_TEXTURE9 = 33993
+texture9 :: GLenum
+texture9 = 33993
 
-_TEXTURE10 :: GLenum
-_TEXTURE10 = 33994
+texture10 :: GLenum
+texture10 = 33994
 
-_TEXTURE11 :: GLenum
-_TEXTURE11 = 33995
+texture11 :: GLenum
+texture11 = 33995
 
-_TEXTURE12 :: GLenum
-_TEXTURE12 = 33996
+texture12 :: GLenum
+texture12 = 33996
 
-_TEXTURE13 :: GLenum
-_TEXTURE13 = 33997
+texture13 :: GLenum
+texture13 = 33997
 
-_TEXTURE14 :: GLenum
-_TEXTURE14 = 33998
+texture14 :: GLenum
+texture14 = 33998
 
-_TEXTURE15 :: GLenum
-_TEXTURE15 = 33999
+texture15 :: GLenum
+texture15 = 33999
 
-_TEXTURE16 :: GLenum
-_TEXTURE16 = 34000
+texture16 :: GLenum
+texture16 = 34000
 
-_TEXTURE17 :: GLenum
-_TEXTURE17 = 34001
+texture17 :: GLenum
+texture17 = 34001
 
-_TEXTURE18 :: GLenum
-_TEXTURE18 = 34002
+texture18 :: GLenum
+texture18 = 34002
 
-_TEXTURE19 :: GLenum
-_TEXTURE19 = 34003
+texture19 :: GLenum
+texture19 = 34003
 
-_TEXTURE20 :: GLenum
-_TEXTURE20 = 34004
+texture20 :: GLenum
+texture20 = 34004
 
-_TEXTURE21 :: GLenum
-_TEXTURE21 = 34005
+texture21 :: GLenum
+texture21 = 34005
 
-_TEXTURE22 :: GLenum
-_TEXTURE22 = 34006
+texture22 :: GLenum
+texture22 = 34006
 
-_TEXTURE23 :: GLenum
-_TEXTURE23 = 34007
+texture23 :: GLenum
+texture23 = 34007
 
-_TEXTURE24 :: GLenum
-_TEXTURE24 = 34008
+texture24 :: GLenum
+texture24 = 34008
 
-_TEXTURE25 :: GLenum
-_TEXTURE25 = 34009
+texture25 :: GLenum
+texture25 = 34009
 
-_TEXTURE26 :: GLenum
-_TEXTURE26 = 34010
+texture26 :: GLenum
+texture26 = 34010
 
-_TEXTURE27 :: GLenum
-_TEXTURE27 = 34011
+texture27 :: GLenum
+texture27 = 34011
 
-_TEXTURE28 :: GLenum
-_TEXTURE28 = 34012
+texture28 :: GLenum
+texture28 = 34012
 
-_TEXTURE29 :: GLenum
-_TEXTURE29 = 34013
+texture29 :: GLenum
+texture29 = 34013
 
-_TEXTURE30 :: GLenum
-_TEXTURE30 = 34014
+texture30 :: GLenum
+texture30 = 34014
 
-_TEXTURE31 :: GLenum
-_TEXTURE31 = 34015
+texture31 :: GLenum
+texture31 = 34015
 
-_ACTIVE_TEXTURE :: GLenum
-_ACTIVE_TEXTURE = 34016
+activeTexture :: GLenum
+activeTexture = 34016
 
-_REPEAT :: GLenum
-_REPEAT = 10497
+repeat :: GLenum
+repeat = 10497
 
-_CLAMP_TO_EDGE :: GLenum
-_CLAMP_TO_EDGE = 33071
+clampToEdge :: GLenum
+clampToEdge = 33071
 
-_MIRRORED_REPEAT :: GLenum
-_MIRRORED_REPEAT = 33648
+mirroredRepeat :: GLenum
+mirroredRepeat = 33648
 
-_FLOAT_VEC2 :: GLenum
-_FLOAT_VEC2 = 35664
+floatVec2 :: GLenum
+floatVec2 = 35664
 
-_FLOAT_VEC3 :: GLenum
-_FLOAT_VEC3 = 35665
+floatVec3 :: GLenum
+floatVec3 = 35665
 
-_FLOAT_VEC4 :: GLenum
-_FLOAT_VEC4 = 35666
+floatVec4 :: GLenum
+floatVec4 = 35666
 
-_INT_VEC2 :: GLenum
-_INT_VEC2 = 35667
+intVec2 :: GLenum
+intVec2 = 35667
 
-_INT_VEC3 :: GLenum
-_INT_VEC3 = 35668
+intVec3 :: GLenum
+intVec3 = 35668
 
-_INT_VEC4 :: GLenum
-_INT_VEC4 = 35669
+intVec4 :: GLenum
+intVec4 = 35669
 
-_BOOL :: GLenum
-_BOOL = 35670
+bool :: GLenum
+bool = 35670
 
-_BOOL_VEC2 :: GLenum
-_BOOL_VEC2 = 35671
+boolVec2 :: GLenum
+boolVec2 = 35671
 
-_BOOL_VEC3 :: GLenum
-_BOOL_VEC3 = 35672
+boolVec3 :: GLenum
+boolVec3 = 35672
 
-_BOOL_VEC4 :: GLenum
-_BOOL_VEC4 = 35673
+boolVec4 :: GLenum
+boolVec4 = 35673
 
-_FLOAT_MAT2 :: GLenum
-_FLOAT_MAT2 = 35674
+floatMat2 :: GLenum
+floatMat2 = 35674
 
-_FLOAT_MAT3 :: GLenum
-_FLOAT_MAT3 = 35675
+floatMat3 :: GLenum
+floatMat3 = 35675
 
-_FLOAT_MAT4 :: GLenum
-_FLOAT_MAT4 = 35676
+floatMat4 :: GLenum
+floatMat4 = 35676
 
-_SAMPLER_2D :: GLenum
-_SAMPLER_2D = 35678
+sampler2d :: GLenum
+sampler2d = 35678
 
-_SAMPLER_CUBE :: GLenum
-_SAMPLER_CUBE = 35680
+samplerCube :: GLenum
+samplerCube = 35680
 
-_VERTEX_ATTRIB_ARRAY_ENABLED :: GLenum
-_VERTEX_ATTRIB_ARRAY_ENABLED = 34338
+vertexAttribArrayEnabled :: GLenum
+vertexAttribArrayEnabled = 34338
 
-_VERTEX_ATTRIB_ARRAY_SIZE :: GLenum
-_VERTEX_ATTRIB_ARRAY_SIZE = 34339
+vertexAttribArraySize :: GLenum
+vertexAttribArraySize = 34339
 
-_VERTEX_ATTRIB_ARRAY_STRIDE :: GLenum
-_VERTEX_ATTRIB_ARRAY_STRIDE = 34340
+vertexAttribArrayStride :: GLenum
+vertexAttribArrayStride = 34340
 
-_VERTEX_ATTRIB_ARRAY_TYPE :: GLenum
-_VERTEX_ATTRIB_ARRAY_TYPE = 34341
+vertexAttribArrayType :: GLenum
+vertexAttribArrayType = 34341
 
-_VERTEX_ATTRIB_ARRAY_NORMALIZED :: GLenum
-_VERTEX_ATTRIB_ARRAY_NORMALIZED = 34922
+vertexAttribArrayNormalized :: GLenum
+vertexAttribArrayNormalized = 34922
 
-_VERTEX_ATTRIB_ARRAY_POINTER :: GLenum
-_VERTEX_ATTRIB_ARRAY_POINTER = 34373
+vertexAttribArrayPointer :: GLenum
+vertexAttribArrayPointer = 34373
 
-_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING :: GLenum
-_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING = 34975
+vertexAttribArrayBufferBinding :: GLenum
+vertexAttribArrayBufferBinding = 34975
 
-_COMPILE_STATUS :: GLenum
-_COMPILE_STATUS = 35713
+compileStatus :: GLenum
+compileStatus = 35713
 
-_INFO_LOG_LENGTH :: GLenum
-_INFO_LOG_LENGTH = 35716
+infoLogLength :: GLenum
+infoLogLength = 35716
 
-_SHADER_SOURCE_LENGTH :: GLenum
-_SHADER_SOURCE_LENGTH = 35720
+shaderSourceLength :: GLenum
+shaderSourceLength = 35720
 
-_LOW_FLOAT :: GLenum
-_LOW_FLOAT = 36336
+lowFloat :: GLenum
+lowFloat = 36336
 
-_MEDIUM_FLOAT :: GLenum
-_MEDIUM_FLOAT = 36337
+mediumFloat :: GLenum
+mediumFloat = 36337
 
-_HIGH_FLOAT :: GLenum
-_HIGH_FLOAT = 36338
+highFloat :: GLenum
+highFloat = 36338
 
-_LOW_INT :: GLenum
-_LOW_INT = 36339
+lowInt :: GLenum
+lowInt = 36339
 
-_MEDIUM_INT :: GLenum
-_MEDIUM_INT = 36340
+mediumInt :: GLenum
+mediumInt = 36340
 
-_HIGH_INT :: GLenum
-_HIGH_INT = 36341
+highInt :: GLenum
+highInt = 36341
 
-_FRAMEBUFFER :: GLenum
-_FRAMEBUFFER = 36160
+framebuffer :: GLenum
+framebuffer = 36160
 
-_RENDERBUFFER :: GLenum
-_RENDERBUFFER = 36161
+renderbuffer :: GLenum
+renderbuffer = 36161
 
-_RGBA4 :: GLenum
-_RGBA4 = 32854
+rgba4 :: GLenum
+rgba4 = 32854
 
-_RGB5_A1 :: GLenum
-_RGB5_A1 = 32855
+rgb5A1 :: GLenum
+rgb5A1 = 32855
 
-_RGB565 :: GLenum
-_RGB565 = 36194
+rgb565 :: GLenum
+rgb565 = 36194
 
-_DEPTH_COMPONENT16 :: GLenum
-_DEPTH_COMPONENT16 = 33189
+depthComponent16 :: GLenum
+depthComponent16 = 33189
 
-_STENCIL_INDEX :: GLenum
-_STENCIL_INDEX = 6401
+stencilIndex :: GLenum
+stencilIndex = 6401
 
-_STENCIL_INDEX8 :: GLenum
-_STENCIL_INDEX8 = 36168
+stencilIndex8 :: GLenum
+stencilIndex8 = 36168
 
-_DEPTH_STENCIL :: GLenum
-_DEPTH_STENCIL = 34041
+depthStencil :: GLenum
+depthStencil = 34041
 
-_RENDERBUFFER_WIDTH :: GLenum
-_RENDERBUFFER_WIDTH = 36162
+renderbufferWidth :: GLenum
+renderbufferWidth = 36162
 
-_RENDERBUFFER_HEIGHT :: GLenum
-_RENDERBUFFER_HEIGHT = 36163
+renderbufferHeight :: GLenum
+renderbufferHeight = 36163
 
-_RENDERBUFFER_INTERNAL_FORMAT :: GLenum
-_RENDERBUFFER_INTERNAL_FORMAT = 36164
+renderbufferInternalFormat :: GLenum
+renderbufferInternalFormat = 36164
 
-_RENDERBUFFER_RED_SIZE :: GLenum
-_RENDERBUFFER_RED_SIZE = 36176
+renderbufferRedSize :: GLenum
+renderbufferRedSize = 36176
 
-_RENDERBUFFER_GREEN_SIZE :: GLenum
-_RENDERBUFFER_GREEN_SIZE = 36177
+renderbufferGreenSize :: GLenum
+renderbufferGreenSize = 36177
 
-_RENDERBUFFER_BLUE_SIZE :: GLenum
-_RENDERBUFFER_BLUE_SIZE = 36178
+renderbufferBlueSize :: GLenum
+renderbufferBlueSize = 36178
 
-_RENDERBUFFER_ALPHA_SIZE :: GLenum
-_RENDERBUFFER_ALPHA_SIZE = 36179
+renderbufferAlphaSize :: GLenum
+renderbufferAlphaSize = 36179
 
-_RENDERBUFFER_DEPTH_SIZE :: GLenum
-_RENDERBUFFER_DEPTH_SIZE = 36180
+renderbufferDepthSize :: GLenum
+renderbufferDepthSize = 36180
 
-_RENDERBUFFER_STENCIL_SIZE :: GLenum
-_RENDERBUFFER_STENCIL_SIZE = 36181
+renderbufferStencilSize :: GLenum
+renderbufferStencilSize = 36181
 
-_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE :: GLenum
-_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE = 36048
+framebufferAttachmentObjectType :: GLenum
+framebufferAttachmentObjectType = 36048
 
-_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME :: GLenum
-_FRAMEBUFFER_ATTACHMENT_OBJECT_NAME = 36049
+framebufferAttachmentObjectName :: GLenum
+framebufferAttachmentObjectName = 36049
 
-_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL :: GLenum
-_FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL = 36050
+framebufferAttachmentTextureLevel :: GLenum
+framebufferAttachmentTextureLevel = 36050
 
-_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE :: GLenum
-_FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE = 36051
+framebufferAttachmentTextureCubeMapFace :: GLenum
+framebufferAttachmentTextureCubeMapFace = 36051
 
-_COLOR_ATTACHMENT0 :: GLenum
-_COLOR_ATTACHMENT0 = 36064
+colorAttachment0 :: GLenum
+colorAttachment0 = 36064
 
-_DEPTH_ATTACHMENT :: GLenum
-_DEPTH_ATTACHMENT = 36096
+depthAttachment :: GLenum
+depthAttachment = 36096
 
-_STENCIL_ATTACHMENT :: GLenum
-_STENCIL_ATTACHMENT = 36128
+stencilAttachment :: GLenum
+stencilAttachment = 36128
 
-_DEPTH_STENCIL_ATTACHMENT :: GLenum
-_DEPTH_STENCIL_ATTACHMENT = 33306
+depthStencilAttachment :: GLenum
+depthStencilAttachment = 33306
 
-_NONE :: GLenum
-_NONE = 0
+none :: GLenum
+none = 0
 
-_FRAMEBUFFER_COMPLETE :: GLenum
-_FRAMEBUFFER_COMPLETE = 36053
+framebufferComplete :: GLenum
+framebufferComplete = 36053
 
-_FRAMEBUFFER_INCOMPLETE_ATTACHMENT :: GLenum
-_FRAMEBUFFER_INCOMPLETE_ATTACHMENT = 36054
+framebufferIncompleteAttachment :: GLenum
+framebufferIncompleteAttachment = 36054
 
-_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT :: GLenum
-_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = 36055
+framebufferIncompleteMissingAttachment :: GLenum
+framebufferIncompleteMissingAttachment = 36055
 
-_FRAMEBUFFER_INCOMPLETE_DIMENSIONS :: GLenum
-_FRAMEBUFFER_INCOMPLETE_DIMENSIONS = 36057
+framebufferIncompleteDimensions :: GLenum
+framebufferIncompleteDimensions = 36057
 
-_FRAMEBUFFER_UNSUPPORTED :: GLenum
-_FRAMEBUFFER_UNSUPPORTED = 36061
+framebufferUnsupported :: GLenum
+framebufferUnsupported = 36061
 
-_FRAMEBUFFER_BINDING :: GLenum
-_FRAMEBUFFER_BINDING = 36006
+framebufferBinding :: GLenum
+framebufferBinding = 36006
 
-_RENDERBUFFER_BINDING :: GLenum
-_RENDERBUFFER_BINDING = 36007
+renderbufferBinding :: GLenum
+renderbufferBinding = 36007
 
-_MAX_RENDERBUFFER_SIZE :: GLenum
-_MAX_RENDERBUFFER_SIZE = 34024
+maxRenderbufferSize :: GLenum
+maxRenderbufferSize = 34024
 
-_INVALID_FRAMEBUFFER_OPERATION :: GLenum
-_INVALID_FRAMEBUFFER_OPERATION = 1286
+invalidFramebufferOperation :: GLenum
+invalidFramebufferOperation = 1286
 
-_UNPACK_FLIP_Y_WEBGL :: GLenum
-_UNPACK_FLIP_Y_WEBGL = 37440
+unpackFlipYWebgl :: GLenum
+unpackFlipYWebgl = 37440
 
-_UNPACK_PREMULTIPLY_ALPHA_WEBGL :: GLenum
-_UNPACK_PREMULTIPLY_ALPHA_WEBGL = 37441
+unpackPremultiplyAlphaWebgl :: GLenum
+unpackPremultiplyAlphaWebgl = 37441
 
-_CONTEXT_LOST_WEBGL :: GLenum
-_CONTEXT_LOST_WEBGL = 37442
+contextLostWebgl :: GLenum
+contextLostWebgl = 37442
 
-_UNPACK_COLORSPACE_CONVERSION_WEBGL :: GLenum
-_UNPACK_COLORSPACE_CONVERSION_WEBGL = 37443
+unpackColorspaceConversionWebgl :: GLenum
+unpackColorspaceConversionWebgl = 37443
 
-_BROWSER_DEFAULT_WEBGL :: GLenum
-_BROWSER_DEFAULT_WEBGL = 37444
+browserDefaultWebgl :: GLenum
+browserDefaultWebgl = 37444
 
