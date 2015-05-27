@@ -37,7 +37,9 @@ instance Eq Decl where
   x@Attribute{} == y@Attribute{} = attrName x == attrName y
   _ == _ = False
 
-data Type = Type
+data Type
+  = Generic
+  | Concrete
     { typeName     :: String
     , typeIsArray  :: Bool
     , typeCondPara :: Maybe String
@@ -60,7 +62,7 @@ emptyIdl :: IDL
 emptyIdl = IDL [] [] [] [] []
 
 webglContext :: Arg
-webglContext = Arg (Type "WebGLContext" False Nothing) "webgl"
+webglContext = Arg (Concrete "WebGLContext" False Nothing) "webgl"
 
 funcArgs :: Decl -> [Arg]
 funcArgs f = webglContext : methodArgs f

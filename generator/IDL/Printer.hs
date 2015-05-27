@@ -9,8 +9,7 @@ module IDL.Printer
 import Data.List (sort)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
-  hcat, integer, lbrace, nest, parens, punctuate, rbrace, semi, space, text,
-  vcat)
+  hcat, integer, nest, parens, punctuate, text, vcat)
 
 import IDL.AST
 
@@ -26,6 +25,8 @@ typesFFI idl =
       [ "module Graphics.WebGL.Raw.Types where"
       , ""
       , "import Data.ArrayBuffer.Types (Float32Array ())"
+      , ""
+      , "foreign import data WebGL :: !"
       ]
 
 enumsFFI :: IDL -> Doc
@@ -48,7 +49,7 @@ funcsFFI idl =
     imports          $+$ blank $+$
     methods          $+$ blank
   where
-    methods = vcat . map ppFuncImpl $ functions idl
+    methods = vcat . map ppFunc $ functions idl
     moduleDef = vcat
       [ "module Graphics.WebGL.Raw"
       , ppExportList (functions idl) $+$ ") where"
@@ -60,8 +61,6 @@ funcsFFI idl =
       , "import Data.Function"
       , "import Graphics.WebGL.Raw.Enums"
       , "import Graphics.WebGL.Raw.Types"
-      , ""
-      , "foreign import data WebGL :: !"
       ]
 
 -- predefined text
@@ -102,58 +101,73 @@ ppConstant Enum { enumName = n, enumValue = v } =
   where
     constName = text $ '_' : n
 
-ppTypeSig :: Decl -> Doc
-ppTypeSig f
-    | hasGenericReturnType =
-        ":: forall eff a." <+> argList <+> effMonad (char 'a')
-    | otherwise =
-        ":: forall eff." <+> argList <+> effMonad (ppType $ methodRetType f)
+ppImplTypeSig :: Decl -> Doc
+ppImplTypeSig f@Function{} =
+    sigForall f <+> funcType <+> argList <+> parens (sigReturnType f)
   where
-    hasGenericReturnType =
-      typeName (methodRetType f) `elem` ["any", "object"]
-    effMonad doc =
-      parens $ "Eff (webgl :: WebGL | eff)" <+> doc
-    argList =
-      "Fn" <> text (show . length $ funcArgs f) <+>
-      hcat (punctuate space (map (ppType . argType) (funcArgs f)))
+    args = funcArgs f
+    funcType = "Fn" <> int (length args)
+    argList = hcat . punctuate " " $ map (ppConvertType . argType) args
 
-ppMethod :: Decl -> Doc
-ppMethod f =
-    prefixWebgl <> text (methodName f) <> parens (ppArgs methodArgs f) <> semi
+ppRunTypeSig :: Decl -> Doc
+ppRunTypeSig f@Function{ methodName = name } =
+    text name <+> sigForall f <+> argList
+  where
+    types = map (ppConvertType . argType) (funcArgs f) ++ [sigReturnType f]
+    argList = hcat $ punctuate " -> " types
+
+ppFunc :: Decl -> Doc
+ppFunc f@Function{} = ppFuncImpl f $+$ blank $+$ ppRunFunc f $+$ blank
+
+ppRunFunc :: Decl -> Doc
+ppRunFunc f@Function{} = ppRunTypeSig f $+$ ppRunFuncBody f
+
+ppRunFuncBody :: Decl -> Doc
+ppRunFuncBody f@Function { methodName = name } =
+    text name <+> "=" <+>
+    "runFn" <> int (length $ funcArgs f) <+>
+    implName f
+
+ppFuncImpl :: Decl -> Doc
+ppFuncImpl f@Function{} =
+    "foreign import" <+> implName f <+> jsBlock $+$
+    nest 2 (ppFuncImplBody f) $+$
+    jsBlock <+> ppImplTypeSig f
+  where
+    jsBlock = "\"\"\""
 
 ppFuncImplBody :: Decl -> Doc
 ppFuncImplBody f =
-    func <+> implName f <> parens (ppArgs funcArgs f) <+> lbrace $+$
-    nest 2 (ret <+> func <+> parens empty <+> lbrace) $+$
+    func <+> implName f <> parens (ppArgs funcArgs f) <+> "{" $+$
+    nest 2 (ret <+> func <+> "() {") $+$
     nest 4 (ret <+> ppMethod f) $+$
-    nest 2 rbrace <> semi $+$
-    rbrace
+    nest 2 "};" $+$
+    "}"
   where
     func = "function"
     ret  = "return"
 
+ppMethod :: Decl -> Doc
+ppMethod f@Function{} =
+    prefixWebgl <> text (methodName f) <> parens (ppArgs methodArgs f) <> ";"
+
 ppArgs :: (Decl -> [Arg]) -> Decl -> Doc
 ppArgs f = hcat . punctuate ", " . map (text . argName) . f
 
-ppFuncImpl :: Decl -> Doc
-ppFuncImpl f =
-    "foreign import" <+> implName f <+>
-    jsBlock $+$ nest 2 (ppFuncImplBody f) $+$ jsBlock <+>
-    ppTypeSig f $+$ blank
-  where
-    jsBlock = "\"\"\""
-
 ppTypeDecl :: Type -> Doc
-ppTypeDecl d = "foreign import data" <+> text (typeName d) <+> ":: *"
+ppTypeDecl Concrete{ typeName = name } =
+  "foreign import data" <+> text name <+> ":: *"
+ppTypeDecl _ = empty
 
-ppType :: Type -> Doc
-ppType Type { typeName = name, typeIsArray = isArray }
+ppConvertType :: Type -> Doc
+ppConvertType Concrete{ typeName = name, typeIsArray = isArray }
     | name == "void"        = toType "Unit"
     | name == "boolean"     = toType "Boolean"
     | name == "ArrayBuffer" = toType "Float32Array"
     | otherwise             = toType name
   where
     toType = if isArray then brackets . text else text
+ppConvertType _ = empty
 
 ppExportList :: [Decl] -> Doc
 ppExportList = vcat . addOpener . prePunct (", ") . map (text . methodName)
@@ -161,20 +175,40 @@ ppExportList = vcat . addOpener . prePunct (", ") . map (text . methodName)
     addOpener (x:xs) = "(" <+> x : xs
     addOpener xs     = xs
 
+sigForall :: Decl -> Doc
+sigForall Function{ methodRetType = ret } =
+    case ret of
+      Generic -> ":: forall eff" <+> genericType <> "."
+      _       -> ":: forall eff."
+
+sigReturnType :: Decl -> Doc
+sigReturnType Function{ methodRetType = ret } =
+    case ret of
+      t@Concrete{} -> effMonad <+> ppConvertType t
+      _            -> effMonad <+> genericType
+  where
+    effMonad = "Eff (webgl :: WebGL | eff)"
+
 -- helpers
 
 blank :: Doc
 blank = ""
 
 implName :: Decl -> Doc
-implName f = text (methodName f) <> "Impl"
+implName f@Function{} = text (methodName f) <> "Impl"
 
 prefixWebgl :: Doc
 prefixWebgl = text (argName webglContext) <> "."
 
 prePunct :: Doc -> [Doc] -> [Doc]
-prePunct p (x:x':xs) = x : go x xs
+prePunct p (x:x':xs) = x : go x' xs
   where
     go y [] = [p <> y]
     go y (z:zs) = (p <> y) : go z zs
 prePunct _ xs = xs
+
+genericType :: Doc
+genericType = char 'a'
+
+int :: Int -> Doc
+int = integer . fromIntegral

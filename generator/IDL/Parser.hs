@@ -85,8 +85,11 @@ cleanup idl = IDL
     , comments = nub $ comments idl
     , functions = nub $ functions idl
     , attributes = nub $ attributes idl
-    , types = nub . filter (\t -> typeName t `notElem` excludedTypes) $ types idl
+    , types = nub . filter onlyAllowedTypes $ types idl
     }
+  where
+    onlyAllowedTypes Concrete{ typeName = t } = t `notElem` excludedTypes
+    onlyAllowedTypes _                        = False
 
 -- parsers
 
@@ -160,11 +163,14 @@ parseType = typ PP.<?> "expecting type"
           if ident == "sequence"
           then angles' identifier' >>= return . Just
           else return Nothing
-        return Type
-          { typeName     = ident
-          , typeIsArray  = isArray
-          , typeCondPara = condPara
-          }
+        return $
+          if ident `elem` ["any", "object"]
+          then Generic
+          else Concrete
+            { typeName     = ident
+            , typeIsArray  = isArray
+            , typeCondPara = condPara
+            }
 
 parseArg :: Parse Arg
 parseArg = do
