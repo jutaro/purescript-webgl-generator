@@ -26,8 +26,6 @@ typesFFI idl =
       [ "module Graphics.WebGL.Raw.Types where"
       , ""
       , "import Data.ArrayBuffer.Types"
-      , ""
-      , "foreign import data WebGL :: !"
       ]
 
 enumsFFI :: IDL -> Doc
@@ -57,7 +55,9 @@ funcsFFI idl =
       , ppExportList (functions idl) $+$ ") where"
       ]
     imports = vcat
-      [ "import Control.Monad.Eff"
+      [ "import Graphics.Canvas (Canvas ())"
+      , ""
+      , "import Control.Monad.Eff"
       , "import Data.ArrayBuffer.Types"
       , "import Data.Function"
       , "import Graphics.WebGL.Raw.Types"
@@ -187,7 +187,7 @@ sigReturnType Function{ methodRetType = ret } =
       t@Concrete{} -> effMonad <+> ppConvertType t
       _            -> effMonad <+> genericType
   where
-    effMonad = "Eff (webgl :: WebGL | eff)"
+    effMonad = "Eff (canvas :: Canvas | eff)"
 
 -- helpers
 

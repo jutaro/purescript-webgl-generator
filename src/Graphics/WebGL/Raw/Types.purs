@@ -5,8 +5,6 @@ module Graphics.WebGL.Raw.Types where
 
 import Data.ArrayBuffer.Types
 
-foreign import data WebGL :: !
-
 type DOMString   = String
 type FloatArray  = Float32Array
 type GLbitfield  = Number
