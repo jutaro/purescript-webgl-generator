@@ -9,12 +9,12 @@ module.exports = function(grunt) {
     ],
 
     dotPsci: ["<%=srcFiles%>"],
-    pscMake: ["<%=srcFiles%>"],
 
     psc: {
       options: {
         modules: 'Graphics.WebGL.Raw',
-        main: 'Graphics.WebGL.Raw'
+        main: 'Graphics.WebGL.Raw',
+        dest: 'dist'
       }
     },
 
@@ -25,6 +25,12 @@ module.exports = function(grunt) {
       }
     },
 
+    pscMake: {
+      all: {
+        src: ["<%=srcFiles%>"],
+        dest: "dist/purescript"
+      }
+    }
   });
 
   grunt.loadNpmTasks("grunt-purescript");
