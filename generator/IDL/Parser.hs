@@ -160,12 +160,17 @@ parseType = typ PP.<?> "expecting type"
     typ = do
         ident <- identifier'
         isArray <- PP.option False $ brackets' whiteSpace' >> return True
+        condPara <-
+          if ident == "sequence"
+          then angles' identifier' >>= return . Just
+          else return Nothing
         return $
           if ident `elem` ["any", "object"]
           then Generic
           else Concrete
             { typeName     = ident
             , typeIsArray  = isArray
+            , typeCondPara = condPara
             }
 
 parseArg :: Parse Arg
