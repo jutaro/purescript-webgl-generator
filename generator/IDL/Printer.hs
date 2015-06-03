@@ -10,7 +10,7 @@ import Data.Char (toLower, toUpper)
 import Data.List (sort)
 import Data.Maybe (isNothing)
 import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
-  hcat, integer, nest, parens, punctuate, text, vcat)
+  hcat, int, integer, nest, parens, punctuate, text, vcat)
 
 import IDL.AST
 
@@ -62,6 +62,7 @@ funcsFFI idl =
       , "import Data.ArrayBuffer.Types"
       , "import Data.Function"
       , "import Graphics.WebGL.Raw.Types"
+      , "import Graphics.WebGL.Raw.Util"
       ]
 
 -- predefined text
@@ -118,7 +119,7 @@ ppConstant Enum { enumName = n, enumValue = v } =
 
 ppImplTypeSig :: Decl -> Doc
 ppImplTypeSig f@Function{} =
-    sigForall f <+> funcType <+> argList <+> parens (sigReturnType f)
+    sigForall f <+> funcType <+> argList <+> parens (implReturnType f)
   where
     args = funcArgs f
     funcType = "Fn" <> int (length args)
@@ -128,7 +129,7 @@ ppRunTypeSig :: Decl -> Doc
 ppRunTypeSig f@Function{ methodName = name } =
     text name <+> sigForall f <+> argList
   where
-    types = map (ppConvertType . argType) (funcArgs f) ++ [sigReturnType f]
+    types = map (ppConvertType . argType) (funcArgs f) ++ [runReturnType f]
     argList = hcat $ punctuate " -> " types
 
 ppFunc :: Decl -> Doc
@@ -138,10 +139,16 @@ ppRunFunc :: Decl -> Doc
 ppRunFunc f@Function{} = ppRunTypeSig f $+$ ppRunFuncBody f
 
 ppRunFuncBody :: Decl -> Doc
-ppRunFuncBody f@Function { methodName = name } =
-    text name <+> "=" <+>
+ppRunFuncBody f@Function { methodName = name, methodRetType = retType } =
+    text name <+> args <+> "=" <+>
+    (if isMaybe then "toMaybe $" else empty) <+>
     "runFn" <> int (length $ funcArgs f) <+>
-    implName f
+    implName f <+> args
+  where
+    args = ppPsArgs f
+    isMaybe = case retType of
+       c@Concrete{} -> typeIsMaybe c
+       _            -> False
 
 ppFuncImpl :: Decl -> Doc
 ppFuncImpl f@Function{} =
@@ -153,7 +160,7 @@ ppFuncImpl f@Function{} =
 
 ppFuncImplBody :: Decl -> Doc
 ppFuncImplBody f =
-    func <+> implName f <> parens (ppArgs funcArgs f) <+> "{" $+$
+    func <+> implName f <> parens (ppJsArgs funcArgs f) <+> "{" $+$
     nest 2 (ret <+> func <+> "() {") $+$
     nest 4 (ret <+> ppMethod f) $+$
     nest 2 "};" $+$
@@ -164,10 +171,13 @@ ppFuncImplBody f =
 
 ppMethod :: Decl -> Doc
 ppMethod f@Function{} =
-    prefixWebgl <> text (methodName f) <> parens (ppArgs methodArgs f) <> ";"
+    prefixWebgl <> text (methodName f) <> parens (ppJsArgs methodArgs f) <> ";"
 
-ppArgs :: (Decl -> [Arg]) -> Decl -> Doc
-ppArgs f = hcat . punctuate ", " . map (text . argName) . f
+ppJsArgs :: (Decl -> [Arg]) -> Decl -> Doc
+ppJsArgs f = hcat . punctuate ", " . map (text . argName) . f
+
+ppPsArgs :: Decl -> Doc
+ppPsArgs = hcat . punctuate " " . map (text . argName) . funcArgs
 
 ppTypeDecl :: Type -> Doc
 ppTypeDecl Concrete{ typeName = name } =
@@ -181,8 +191,16 @@ ppConvertType Concrete{ typeName = name, typeIsArray = isArray }
     | name == "ArrayBuffer" = toType "Float32Array"
     | otherwise             = toType name
   where
-    toType = if isArray then brackets . text else text
+    toType = wrapArray . text
+    wrapArray t = if isArray then brackets t else t
 ppConvertType _ = empty
+
+ppConvertMaybeType :: Type -> Doc
+ppConvertMaybeType t@Concrete{ typeIsMaybe = isMaybe } =
+    wrapMaybe $ ppConvertType t
+  where
+    wrapMaybe t = if isMaybe then parens ("Maybe" <+> t) else t
+ppConvertMaybeType _ = empty
 
 ppExportList :: [Decl] -> Doc
 ppExportList = vcat . addOpener . prePunct (", ") . map (text . methodName)
@@ -196,27 +214,31 @@ sigForall Function{ methodRetType = ret } =
       Generic -> ":: forall eff" <+> genericType <> "."
       _       -> ":: forall eff."
 
-sigReturnType :: Decl -> Doc
-sigReturnType Function{ methodRetType = ret } =
+runReturnType :: Decl -> Doc
+runReturnType Function{ methodRetType = ret } =
+    case ret of
+      t@Concrete{} -> effMonad <+> ppConvertMaybeType t
+      _            -> effMonad <+> genericType
+
+implReturnType :: Decl -> Doc
+implReturnType Function{ methodRetType = ret } =
     case ret of
       t@Concrete{} -> effMonad <+> ppConvertType t
       _            -> effMonad <+> genericType
-  where
-    effMonad = "Eff (canvas :: Canvas | eff)"
 
 -- helpers
 
 blank :: Doc
 blank = ""
 
+effMonad :: Doc
+effMonad = "Eff (canvas :: Canvas | eff)"
+
 genericType :: Doc
 genericType = char 'a'
 
 implName :: Decl -> Doc
 implName f@Function{} = text (methodName f) <> "Impl"
-
-int :: Int -> Doc
-int = integer . fromIntegral
 
 prefixWebgl :: Doc
 prefixWebgl = text (argName webglContext) <> "."

@@ -153,9 +153,6 @@ back = 1029
 frontAndBack :: GLenum
 frontAndBack = 1032
 
-texture2d :: GLenum
-texture2d = 3553
-
 cullFace :: GLenum
 cullFace = 2884
 
@@ -342,9 +339,6 @@ sampleCoverageValue = 32938
 sampleCoverageInvert :: GLenum
 sampleCoverageInvert = 32939
 
-numCompressedTextureFormats :: GLenum
-numCompressedTextureFormats = 34466
-
 compressedTextureFormats :: GLenum
 compressedTextureFormats = 34467
 
@@ -453,14 +447,8 @@ attachedShaders = 35717
 activeUniforms :: GLenum
 activeUniforms = 35718
 
-activeUniformMaxLength :: GLenum
-activeUniformMaxLength = 35719
-
 activeAttributes :: GLenum
 activeAttributes = 35721
-
-activeAttributeMaxLength :: GLenum
-activeAttributeMaxLength = 35722
 
 shadingLanguageVersion :: GLenum
 shadingLanguageVersion = 35724
@@ -551,6 +539,9 @@ textureWrapS = 10242
 
 textureWrapT :: GLenum
 textureWrapT = 10243
+
+texture2d :: GLenum
+texture2d = 3553
 
 texture :: GLenum
 texture = 5890
@@ -756,14 +747,14 @@ vertexAttribArrayPointer = 34373
 vertexAttribArrayBufferBinding :: GLenum
 vertexAttribArrayBufferBinding = 34975
 
+implementationColorReadType :: GLenum
+implementationColorReadType = 35738
+
+implementationColorReadFormat :: GLenum
+implementationColorReadFormat = 35739
+
 compileStatus :: GLenum
 compileStatus = 35713
-
-infoLogLength :: GLenum
-infoLogLength = 35716
-
-shaderSourceLength :: GLenum
-shaderSourceLength = 35720
 
 lowFloat :: GLenum
 lowFloat = 36336

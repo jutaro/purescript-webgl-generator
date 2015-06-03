@@ -79,6 +79,7 @@ partition a@Attribute{} idl = idl
     { attributes = a : attributes idl
     , types = attrType a : types idl
     }
+partition _ idl = idl
 
 cleanup :: IDL -> IDL
 cleanup idl = IDL
@@ -104,7 +105,8 @@ parseDecl = decl PP.<?> "expecting decl"
     decl = PP.try parseConst   PP.<|>
            PP.try parseComment PP.<|>
            PP.try parseMethod  PP.<|>
-           PP.try parseAttr
+           PP.try parseAttr    PP.<|>
+           PP.try parseTypedef
 
 parseConst :: Parse Decl
 parseConst = do
@@ -120,15 +122,21 @@ parseConst = do
       }
 
 parseComment :: Parse Decl
-parseComment = do
-    symbol' "/*"
-    comment <- PP.manyTill PP.anyChar $ symbol' "*/"
-    return Comment
-      { comment = comment
-      }
+parseComment = inlineComment PP.<|> blockComment
+  where
+    inlineComment = PP.try $ do
+        symbol' "//"
+        comment <- PP.manyTill PP.anyChar PP.newline
+        PP.optional whiteSpace'
+        return Comment { comment = comment }
+    blockComment = do
+        symbol' "/*"
+        comment <- PP.manyTill PP.anyChar $ symbol' "*/"
+        return Comment { comment = comment }
 
 parseMethod :: Parse Decl
 parseMethod = do
+    PP.optional $ symbol' "[WebGLHandlesContextLoss]"
     returnType <- parseType
     methodName <- identifier'
     args <- parens' . PP.sepBy parseArg $ symbol' ","
@@ -154,6 +162,13 @@ parseAttr = do
       , attrName       = name
       }
 
+parseTypedef :: Parse Decl
+parseTypedef = do
+    symbol' "typedef"
+    PP.manyTill PP.anyChar semi'
+    return Typedef
+
+
 parseType :: Parse Type
 parseType = typ PP.<?> "expecting type"
   where
@@ -164,6 +179,7 @@ parseType = typ PP.<?> "expecting type"
           if ident == "sequence"
           then angles' identifier' >>= return . Just
           else return Nothing
+        isMaybe <- PP.option False $ symbol' "?" >> return True
         return $
           if ident `elem` ["any", "object"]
           then Generic
@@ -171,6 +187,7 @@ parseType = typ PP.<?> "expecting type"
             { typeName     = ident
             , typeIsArray  = isArray
             , typeCondPara = condPara
+            , typeIsMaybe  = isMaybe
             }
 
 parseArg :: Parse Arg

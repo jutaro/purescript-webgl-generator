@@ -3250,3 +3250,13 @@ data WebGLUniformLocation :: *
 ``` purescript
 type WebGLContextAttributes = { failIfMajorPerformanceCaveat :: Boolean, preferLowPowerToHighPerformance :: Boolean, preserveDrawingBuffer :: Boolean, premultipliedAlpha :: Boolean, antialias :: Boolean, stencil :: Boolean, depth :: Boolean, alpha :: Boolean }
 ```
+
+
+
+## Module Graphics.WebGL.Raw.Util
+
+#### `toMaybe`
+
+``` purescript
+toMaybe :: forall a. a -> Maybe a
+```

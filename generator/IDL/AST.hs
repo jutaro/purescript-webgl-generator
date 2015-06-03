@@ -28,6 +28,7 @@ data Decl
       , attrType       :: Type
       , attrName       :: String
       }
+  | Typedef
   deriving Show
 
 instance Eq Decl where
@@ -43,6 +44,7 @@ data Type
     { typeName     :: String
     , typeIsArray  :: Bool
     , typeCondPara :: Maybe String
+    , typeIsMaybe  :: Bool
     }
   deriving Show
 
@@ -62,7 +64,7 @@ emptyIdl :: IDL
 emptyIdl = IDL [] [] [] [] []
 
 webglContext :: Arg
-webglContext = Arg (Concrete "WebGLContext" False Nothing) "webgl"
+webglContext = Arg (Concrete "WebGLContext" False Nothing False) "webgl"
 
 funcArgs :: Decl -> [Arg]
 funcArgs f = webglContext : methodArgs f

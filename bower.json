@@ -13,7 +13,8 @@
   ],
 
   "dependencies": {
-    "purescript-typedarray":            "0.3.*",
-    "purescript-arraybuffer-types":     "0.1.*"
+    "purescript-arraybuffer-types":     "0.1.*",
+    "purescript-maybe":                 "0.2.*",
+    "purescript-typedarray":            "0.3.*"
   }
 }

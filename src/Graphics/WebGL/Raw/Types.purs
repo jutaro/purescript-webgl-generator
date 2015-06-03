@@ -23,9 +23,8 @@ type GLuint      = Number
 type GLushort    = Number
 
 foreign import data ArrayBufferView :: *
-foreign import data HTMLImageElement :: *
-foreign import data HTMLVideoElement :: *
-foreign import data ImageData :: *
+foreign import data BufferDataSource :: *
+foreign import data TexImageSource :: *
 foreign import data WebGLActiveInfo :: *
 foreign import data WebGLBuffer :: *
 foreign import data WebGLContext :: *
@@ -33,6 +32,7 @@ foreign import data WebGLFramebuffer :: *
 foreign import data WebGLProgram :: *
 foreign import data WebGLRenderbuffer :: *
 foreign import data WebGLShader :: *
+foreign import data WebGLShaderPrecisionFormat :: *
 foreign import data WebGLTexture :: *
 foreign import data WebGLUniformLocation :: *
 
