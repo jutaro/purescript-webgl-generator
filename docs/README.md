@@ -6,931 +6,931 @@
 #### `getContextAttributes`
 
 ``` purescript
-getContextAttributes :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLContextAttributes
+getContextAttributes :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLContextAttributes
 ```
 
 
 #### `isContextLost`
 
 ``` purescript
-isContextLost :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) Boolean
+isContextLost :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) Boolean
 ```
 
 
 #### `getSupportedExtensions`
 
 ``` purescript
-getSupportedExtensions :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) [DOMString]
+getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) [DOMString]
 ```
 
 
 #### `getExtension`
 
 ``` purescript
-getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (webgl :: WebGL | eff) a
+getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `activeTexture`
 
 ``` purescript
-activeTexture :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+activeTexture :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `attachShader`
 
 ``` purescript
-attachShader :: forall eff. WebGLContext -> WebGLProgram -> WebGLShader -> Eff (webgl :: WebGL | eff) Unit
+attachShader :: forall eff. WebGLContext -> WebGLProgram -> WebGLShader -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bindAttribLocation`
 
 ``` purescript
-bindAttribLocation :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> DOMString -> Eff (webgl :: WebGL | eff) Unit
+bindAttribLocation :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> DOMString -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bindBuffer`
 
 ``` purescript
-bindBuffer :: forall eff. WebGLContext -> GLenum -> WebGLBuffer -> Eff (webgl :: WebGL | eff) Unit
+bindBuffer :: forall eff. WebGLContext -> GLenum -> WebGLBuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bindFramebuffer`
 
 ``` purescript
-bindFramebuffer :: forall eff. WebGLContext -> GLenum -> WebGLFramebuffer -> Eff (webgl :: WebGL | eff) Unit
+bindFramebuffer :: forall eff. WebGLContext -> GLenum -> WebGLFramebuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bindRenderbuffer`
 
 ``` purescript
-bindRenderbuffer :: forall eff. WebGLContext -> GLenum -> WebGLRenderbuffer -> Eff (webgl :: WebGL | eff) Unit
+bindRenderbuffer :: forall eff. WebGLContext -> GLenum -> WebGLRenderbuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bindTexture`
 
 ``` purescript
-bindTexture :: forall eff. WebGLContext -> GLenum -> WebGLTexture -> Eff (webgl :: WebGL | eff) Unit
+bindTexture :: forall eff. WebGLContext -> GLenum -> WebGLTexture -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `blendColor`
 
 ``` purescript
-blendColor :: forall eff. WebGLContext -> GLclampf -> GLclampf -> GLclampf -> GLclampf -> Eff (webgl :: WebGL | eff) Unit
+blendColor :: forall eff. WebGLContext -> GLclampf -> GLclampf -> GLclampf -> GLclampf -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `blendEquation`
 
 ``` purescript
-blendEquation :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+blendEquation :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `blendEquationSeparate`
 
 ``` purescript
-blendEquationSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+blendEquationSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `blendFunc`
 
 ``` purescript
-blendFunc :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+blendFunc :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `blendFuncSeparate`
 
 ``` purescript
-blendFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+blendFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bufferData`
 
 ``` purescript
-bufferData :: forall eff. WebGLContext -> GLenum -> Float32Array -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+bufferData :: forall eff. WebGLContext -> GLenum -> Float32Array -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bufferSubData`
 
 ``` purescript
-bufferSubData :: forall eff. WebGLContext -> GLenum -> GLintptr -> ArrayBufferView -> Eff (webgl :: WebGL | eff) Unit
+bufferSubData :: forall eff. WebGLContext -> GLenum -> GLintptr -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `checkFramebufferStatus`
 
 ``` purescript
-checkFramebufferStatus :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) GLenum
+checkFramebufferStatus :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) GLenum
 ```
 
 
 #### `clear`
 
 ``` purescript
-clear :: forall eff. WebGLContext -> GLbitfield -> Eff (webgl :: WebGL | eff) Unit
+clear :: forall eff. WebGLContext -> GLbitfield -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `clearColor`
 
 ``` purescript
-clearColor :: forall eff. WebGLContext -> GLclampf -> GLclampf -> GLclampf -> GLclampf -> Eff (webgl :: WebGL | eff) Unit
+clearColor :: forall eff. WebGLContext -> GLclampf -> GLclampf -> GLclampf -> GLclampf -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `clearDepth`
 
 ``` purescript
-clearDepth :: forall eff. WebGLContext -> GLclampf -> Eff (webgl :: WebGL | eff) Unit
+clearDepth :: forall eff. WebGLContext -> GLclampf -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `clearStencil`
 
 ``` purescript
-clearStencil :: forall eff. WebGLContext -> GLint -> Eff (webgl :: WebGL | eff) Unit
+clearStencil :: forall eff. WebGLContext -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `colorMask`
 
 ``` purescript
-colorMask :: forall eff. WebGLContext -> GLboolean -> GLboolean -> GLboolean -> GLboolean -> Eff (webgl :: WebGL | eff) Unit
+colorMask :: forall eff. WebGLContext -> GLboolean -> GLboolean -> GLboolean -> GLboolean -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `compileShader`
 
 ``` purescript
-compileShader :: forall eff. WebGLContext -> WebGLShader -> Eff (webgl :: WebGL | eff) Unit
+compileShader :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `copyTexImage2D`
 
 ``` purescript
-copyTexImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLint -> GLint -> GLsizei -> GLsizei -> GLint -> Eff (webgl :: WebGL | eff) Unit
+copyTexImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLint -> GLint -> GLsizei -> GLsizei -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `copyTexSubImage2D`
 
 ``` purescript
-copyTexSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (webgl :: WebGL | eff) Unit
+copyTexSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `createBuffer`
 
 ``` purescript
-createBuffer :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLBuffer
+createBuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLBuffer
 ```
 
 
 #### `createFramebuffer`
 
 ``` purescript
-createFramebuffer :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLFramebuffer
+createFramebuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLFramebuffer
 ```
 
 
 #### `createProgram`
 
 ``` purescript
-createProgram :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLProgram
+createProgram :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLProgram
 ```
 
 
 #### `createRenderbuffer`
 
 ``` purescript
-createRenderbuffer :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLRenderbuffer
+createRenderbuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLRenderbuffer
 ```
 
 
 #### `createShader`
 
 ``` purescript
-createShader :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) WebGLShader
+createShader :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) WebGLShader
 ```
 
 
 #### `createTexture`
 
 ``` purescript
-createTexture :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) WebGLTexture
+createTexture :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLTexture
 ```
 
 
 #### `cullFace`
 
 ``` purescript
-cullFace :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+cullFace :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteBuffer`
 
 ``` purescript
-deleteBuffer :: forall eff. WebGLContext -> WebGLBuffer -> Eff (webgl :: WebGL | eff) Unit
+deleteBuffer :: forall eff. WebGLContext -> WebGLBuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteFramebuffer`
 
 ``` purescript
-deleteFramebuffer :: forall eff. WebGLContext -> WebGLFramebuffer -> Eff (webgl :: WebGL | eff) Unit
+deleteFramebuffer :: forall eff. WebGLContext -> WebGLFramebuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteProgram`
 
 ``` purescript
-deleteProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) Unit
+deleteProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteRenderbuffer`
 
 ``` purescript
-deleteRenderbuffer :: forall eff. WebGLContext -> WebGLRenderbuffer -> Eff (webgl :: WebGL | eff) Unit
+deleteRenderbuffer :: forall eff. WebGLContext -> WebGLRenderbuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteShader`
 
 ``` purescript
-deleteShader :: forall eff. WebGLContext -> WebGLShader -> Eff (webgl :: WebGL | eff) Unit
+deleteShader :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `deleteTexture`
 
 ``` purescript
-deleteTexture :: forall eff. WebGLContext -> WebGLTexture -> Eff (webgl :: WebGL | eff) Unit
+deleteTexture :: forall eff. WebGLContext -> WebGLTexture -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `depthFunc`
 
 ``` purescript
-depthFunc :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+depthFunc :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `depthMask`
 
 ``` purescript
-depthMask :: forall eff. WebGLContext -> GLboolean -> Eff (webgl :: WebGL | eff) Unit
+depthMask :: forall eff. WebGLContext -> GLboolean -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `depthRange`
 
 ``` purescript
-depthRange :: forall eff. WebGLContext -> GLclampf -> GLclampf -> Eff (webgl :: WebGL | eff) Unit
+depthRange :: forall eff. WebGLContext -> GLclampf -> GLclampf -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `detachShader`
 
 ``` purescript
-detachShader :: forall eff. WebGLContext -> WebGLProgram -> WebGLShader -> Eff (webgl :: WebGL | eff) Unit
+detachShader :: forall eff. WebGLContext -> WebGLProgram -> WebGLShader -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `disable`
 
 ``` purescript
-disable :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+disable :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `disableVertexAttribArray`
 
 ``` purescript
-disableVertexAttribArray :: forall eff. WebGLContext -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+disableVertexAttribArray :: forall eff. WebGLContext -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `drawArrays`
 
 ``` purescript
-drawArrays :: forall eff. WebGLContext -> GLenum -> GLint -> GLsizei -> Eff (webgl :: WebGL | eff) Unit
+drawArrays :: forall eff. WebGLContext -> GLenum -> GLint -> GLsizei -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `drawElements`
 
 ``` purescript
-drawElements :: forall eff. WebGLContext -> GLenum -> GLsizei -> GLenum -> GLintptr -> Eff (webgl :: WebGL | eff) Unit
+drawElements :: forall eff. WebGLContext -> GLenum -> GLsizei -> GLenum -> GLintptr -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `enable`
 
 ``` purescript
-enable :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+enable :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `enableVertexAttribArray`
 
 ``` purescript
-enableVertexAttribArray :: forall eff. WebGLContext -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+enableVertexAttribArray :: forall eff. WebGLContext -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `finish`
 
 ``` purescript
-finish :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) Unit
+finish :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `flush`
 
 ``` purescript
-flush :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) Unit
+flush :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `framebufferRenderbuffer`
 
 ``` purescript
-framebufferRenderbuffer :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> WebGLRenderbuffer -> Eff (webgl :: WebGL | eff) Unit
+framebufferRenderbuffer :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> WebGLRenderbuffer -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `framebufferTexture2D`
 
 ``` purescript
-framebufferTexture2D :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> WebGLTexture -> GLint -> Eff (webgl :: WebGL | eff) Unit
+framebufferTexture2D :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> WebGLTexture -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `frontFace`
 
 ``` purescript
-frontFace :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+frontFace :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `generateMipmap`
 
 ``` purescript
-generateMipmap :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+generateMipmap :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `getActiveAttrib`
 
 ``` purescript
-getActiveAttrib :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (webgl :: WebGL | eff) WebGLActiveInfo
+getActiveAttrib :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) WebGLActiveInfo
 ```
 
 
 #### `getActiveUniform`
 
 ``` purescript
-getActiveUniform :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (webgl :: WebGL | eff) WebGLActiveInfo
+getActiveUniform :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) WebGLActiveInfo
 ```
 
 
 #### `getAttachedShaders`
 
 ``` purescript
-getAttachedShaders :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) [WebGLShader]
+getAttachedShaders :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) [WebGLShader]
 ```
 
 
 #### `getAttribLocation`
 
 ``` purescript
-getAttribLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (webgl :: WebGL | eff) GLint
+getAttribLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (canvas :: Canvas | eff) GLint
 ```
 
 
 #### `getParameter`
 
 ``` purescript
-getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) a
+getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getBufferParameter`
 
 ``` purescript
-getBufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) a
+getBufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getError`
 
 ``` purescript
-getError :: forall eff. WebGLContext -> Eff (webgl :: WebGL | eff) GLenum
+getError :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) GLenum
 ```
 
 
 #### `getFramebufferAttachmentParameter`
 
 ``` purescript
-getFramebufferAttachmentParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) a
+getFramebufferAttachmentParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getProgramParameter`
 
 ``` purescript
-getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (webgl :: WebGL | eff) a
+getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getProgramInfoLog`
 
 ``` purescript
-getProgramInfoLog :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) DOMString
+getProgramInfoLog :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) DOMString
 ```
 
 
 #### `getRenderbufferParameter`
 
 ``` purescript
-getRenderbufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) a
+getRenderbufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getShaderParameter`
 
 ``` purescript
-getShaderParameter :: forall eff a. WebGLContext -> WebGLShader -> GLenum -> Eff (webgl :: WebGL | eff) a
+getShaderParameter :: forall eff a. WebGLContext -> WebGLShader -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getShaderInfoLog`
 
 ``` purescript
-getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (webgl :: WebGL | eff) DOMString
+getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) DOMString
 ```
 
 
 #### `getShaderSource`
 
 ``` purescript
-getShaderSource :: forall eff. WebGLContext -> WebGLShader -> Eff (webgl :: WebGL | eff) DOMString
+getShaderSource :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) DOMString
 ```
 
 
 #### `getTexParameter`
 
 ``` purescript
-getTexParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) a
+getTexParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getUniform`
 
 ``` purescript
-getUniform :: forall eff a. WebGLContext -> WebGLProgram -> WebGLUniformLocation -> Eff (webgl :: WebGL | eff) a
+getUniform :: forall eff a. WebGLContext -> WebGLProgram -> WebGLUniformLocation -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getUniformLocation`
 
 ``` purescript
-getUniformLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (webgl :: WebGL | eff) WebGLUniformLocation
+getUniformLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (canvas :: Canvas | eff) WebGLUniformLocation
 ```
 
 
 #### `getVertexAttrib`
 
 ``` purescript
-getVertexAttrib :: forall eff a. WebGLContext -> GLuint -> GLenum -> Eff (webgl :: WebGL | eff) a
+getVertexAttrib :: forall eff a. WebGLContext -> GLuint -> GLenum -> Eff (canvas :: Canvas | eff) a
 ```
 
 
 #### `getVertexAttribOffset`
 
 ``` purescript
-getVertexAttribOffset :: forall eff. WebGLContext -> GLuint -> GLenum -> Eff (webgl :: WebGL | eff) GLsizeiptr
+getVertexAttribOffset :: forall eff. WebGLContext -> GLuint -> GLenum -> Eff (canvas :: Canvas | eff) GLsizeiptr
 ```
 
 
 #### `hint`
 
 ``` purescript
-hint :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+hint :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `isBuffer`
 
 ``` purescript
-isBuffer :: forall eff. WebGLContext -> WebGLBuffer -> Eff (webgl :: WebGL | eff) GLboolean
+isBuffer :: forall eff. WebGLContext -> WebGLBuffer -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isEnabled`
 
 ``` purescript
-isEnabled :: forall eff. WebGLContext -> GLenum -> Eff (webgl :: WebGL | eff) GLboolean
+isEnabled :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isFramebuffer`
 
 ``` purescript
-isFramebuffer :: forall eff. WebGLContext -> WebGLFramebuffer -> Eff (webgl :: WebGL | eff) GLboolean
+isFramebuffer :: forall eff. WebGLContext -> WebGLFramebuffer -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isProgram`
 
 ``` purescript
-isProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) GLboolean
+isProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isRenderbuffer`
 
 ``` purescript
-isRenderbuffer :: forall eff. WebGLContext -> WebGLRenderbuffer -> Eff (webgl :: WebGL | eff) GLboolean
+isRenderbuffer :: forall eff. WebGLContext -> WebGLRenderbuffer -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isShader`
 
 ``` purescript
-isShader :: forall eff. WebGLContext -> WebGLShader -> Eff (webgl :: WebGL | eff) GLboolean
+isShader :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `isTexture`
 
 ``` purescript
-isTexture :: forall eff. WebGLContext -> WebGLTexture -> Eff (webgl :: WebGL | eff) GLboolean
+isTexture :: forall eff. WebGLContext -> WebGLTexture -> Eff (canvas :: Canvas | eff) GLboolean
 ```
 
 
 #### `lineWidth`
 
 ``` purescript
-lineWidth :: forall eff. WebGLContext -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+lineWidth :: forall eff. WebGLContext -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `linkProgram`
 
 ``` purescript
-linkProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) Unit
+linkProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `pixelStorei`
 
 ``` purescript
-pixelStorei :: forall eff. WebGLContext -> GLenum -> GLint -> Eff (webgl :: WebGL | eff) Unit
+pixelStorei :: forall eff. WebGLContext -> GLenum -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `polygonOffset`
 
 ``` purescript
-polygonOffset :: forall eff. WebGLContext -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+polygonOffset :: forall eff. WebGLContext -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `readPixels`
 
 ``` purescript
-readPixels :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (webgl :: WebGL | eff) Unit
+readPixels :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `renderbufferStorage`
 
 ``` purescript
-renderbufferStorage :: forall eff. WebGLContext -> GLenum -> GLenum -> GLsizei -> GLsizei -> Eff (webgl :: WebGL | eff) Unit
+renderbufferStorage :: forall eff. WebGLContext -> GLenum -> GLenum -> GLsizei -> GLsizei -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `sampleCoverage`
 
 ``` purescript
-sampleCoverage :: forall eff. WebGLContext -> GLclampf -> GLboolean -> Eff (webgl :: WebGL | eff) Unit
+sampleCoverage :: forall eff. WebGLContext -> GLclampf -> GLboolean -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `scissor`
 
 ``` purescript
-scissor :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (webgl :: WebGL | eff) Unit
+scissor :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `shaderSource`
 
 ``` purescript
-shaderSource :: forall eff. WebGLContext -> WebGLShader -> DOMString -> Eff (webgl :: WebGL | eff) Unit
+shaderSource :: forall eff. WebGLContext -> WebGLShader -> DOMString -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilFunc`
 
 ``` purescript
-stencilFunc :: forall eff. WebGLContext -> GLenum -> GLint -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+stencilFunc :: forall eff. WebGLContext -> GLenum -> GLint -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilFuncSeparate`
 
 ``` purescript
-stencilFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLint -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+stencilFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLint -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilMask`
 
 ``` purescript
-stencilMask :: forall eff. WebGLContext -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+stencilMask :: forall eff. WebGLContext -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilMaskSeparate`
 
 ``` purescript
-stencilMaskSeparate :: forall eff. WebGLContext -> GLenum -> GLuint -> Eff (webgl :: WebGL | eff) Unit
+stencilMaskSeparate :: forall eff. WebGLContext -> GLenum -> GLuint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilOp`
 
 ``` purescript
-stencilOp :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+stencilOp :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `stencilOpSeparate`
 
 ``` purescript
-stencilOpSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> GLenum -> Eff (webgl :: WebGL | eff) Unit
+stencilOpSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `texImage2D`
 
 ``` purescript
-texImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLsizei -> GLsizei -> GLint -> GLenum -> GLenum -> ArrayBufferView -> Eff (webgl :: WebGL | eff) Unit
+texImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLsizei -> GLsizei -> GLint -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `texParameterf`
 
 ``` purescript
-texParameterf :: forall eff. WebGLContext -> GLenum -> GLenum -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+texParameterf :: forall eff. WebGLContext -> GLenum -> GLenum -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `texParameteri`
 
 ``` purescript
-texParameteri :: forall eff. WebGLContext -> GLenum -> GLenum -> GLint -> Eff (webgl :: WebGL | eff) Unit
+texParameteri :: forall eff. WebGLContext -> GLenum -> GLenum -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `texSubImage2D`
 
 ``` purescript
-texSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (webgl :: WebGL | eff) Unit
+texSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform1f`
 
 ``` purescript
-uniform1f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+uniform1f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform1fv`
 
 ``` purescript
-uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform1i`
 
 ``` purescript
-uniform1i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> Eff (webgl :: WebGL | eff) Unit
+uniform1i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform1iv`
 
 ``` purescript
-uniform1iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (webgl :: WebGL | eff) Unit
+uniform1iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform2f`
 
 ``` purescript
-uniform2f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+uniform2f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform2fv`
 
 ``` purescript
-uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform2i`
 
 ``` purescript
-uniform2i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> Eff (webgl :: WebGL | eff) Unit
+uniform2i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform2iv`
 
 ``` purescript
-uniform2iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (webgl :: WebGL | eff) Unit
+uniform2iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform3f`
 
 ``` purescript
-uniform3f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+uniform3f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform3fv`
 
 ``` purescript
-uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform3i`
 
 ``` purescript
-uniform3i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> GLint -> Eff (webgl :: WebGL | eff) Unit
+uniform3i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform3iv`
 
 ``` purescript
-uniform3iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (webgl :: WebGL | eff) Unit
+uniform3iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform4f`
 
 ``` purescript
-uniform4f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+uniform4f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfloat -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform4fv`
 
 ``` purescript
-uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform4i`
 
 ``` purescript
-uniform4i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> GLint -> GLint -> Eff (webgl :: WebGL | eff) Unit
+uniform4i :: forall eff. WebGLContext -> WebGLUniformLocation -> GLint -> GLint -> GLint -> GLint -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniform4iv`
 
 ``` purescript
-uniform4iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (webgl :: WebGL | eff) Unit
+uniform4iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniformMatrix2fv`
 
 ``` purescript
-uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniformMatrix3fv`
 
 ``` purescript
-uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniformMatrix4fv`
 
 ``` purescript
-uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `useProgram`
 
 ``` purescript
-useProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) Unit
+useProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `validateProgram`
 
 ``` purescript
-validateProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (webgl :: WebGL | eff) Unit
+validateProgram :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib1f`
 
 ``` purescript
-vertexAttrib1f :: forall eff. WebGLContext -> GLuint -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib1f :: forall eff. WebGLContext -> GLuint -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib1fv`
 
 ``` purescript
-vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib2f`
 
 ``` purescript
-vertexAttrib2f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib2f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib2fv`
 
 ``` purescript
-vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib3f`
 
 ``` purescript
-vertexAttrib3f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib3f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib3fv`
 
 ``` purescript
-vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib4f`
 
 ``` purescript
-vertexAttrib4f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GLfloat -> GLfloat -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib4f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GLfloat -> GLfloat -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttrib4fv`
 
 ``` purescript
-vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (webgl :: WebGL | eff) Unit
+vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `vertexAttribPointer`
 
 ``` purescript
-vertexAttribPointer :: forall eff. WebGLContext -> GLuint -> GLint -> GLenum -> GLboolean -> GLsizei -> GLintptr -> Eff (webgl :: WebGL | eff) Unit
+vertexAttribPointer :: forall eff. WebGLContext -> GLuint -> GLint -> GLenum -> GLboolean -> GLsizei -> GLintptr -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `viewport`
 
 ``` purescript
-viewport :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (webgl :: WebGL | eff) Unit
+viewport :: forall eff. WebGLContext -> GLint -> GLint -> GLsizei -> GLsizei -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -3042,13 +3042,6 @@ browserDefaultWebgl :: GLenum
 ## Module Graphics.WebGL.Raw.Types
 
 
-#### `WebGL`
-
-``` purescript
-data WebGL :: !
-```
-
-
 #### `DOMString`
 
 ``` purescript
@@ -3210,13 +3203,6 @@ data WebGLContext :: *
 ```
 
 
-#### `WebGLContextAttributes`
-
-``` purescript
-data WebGLContextAttributes :: *
-```
-
-
 #### `WebGLFramebuffer`
 
 ``` purescript
@@ -3256,4 +3242,11 @@ data WebGLTexture :: *
 
 ``` purescript
 data WebGLUniformLocation :: *
+```
+
+
+#### `WebGLContextAttributes`
+
+``` purescript
+type WebGLContextAttributes = { failIfMajorPerformanceCaveat :: Boolean, preferLowPowerToHighPerformance :: Boolean, preserveDrawingBuffer :: Boolean, premultipliedAlpha :: Boolean, antialias :: Boolean, stencil :: Boolean, depth :: Boolean, alpha :: Boolean }
 ```

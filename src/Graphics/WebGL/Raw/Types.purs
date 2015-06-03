@@ -29,10 +29,20 @@ foreign import data ImageData :: *
 foreign import data WebGLActiveInfo :: *
 foreign import data WebGLBuffer :: *
 foreign import data WebGLContext :: *
-foreign import data WebGLContextAttributes :: *
 foreign import data WebGLFramebuffer :: *
 foreign import data WebGLProgram :: *
 foreign import data WebGLRenderbuffer :: *
 foreign import data WebGLShader :: *
 foreign import data WebGLTexture :: *
 foreign import data WebGLUniformLocation :: *
+
+type WebGLContextAttributes =
+  { alpha                           :: Boolean
+  , depth                           :: Boolean
+  , stencil                         :: Boolean
+  , antialias                       :: Boolean
+  , premultipliedAlpha              :: Boolean
+  , preserveDrawingBuffer           :: Boolean
+  , preferLowPowerToHighPerformance :: Boolean
+  , failIfMajorPerformanceCaveat    :: Boolean
+  }

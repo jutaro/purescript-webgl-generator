@@ -45,6 +45,7 @@ excludedTypes =
     , "GLushort"
     , "HTMLCanvasElement"
     , "Int32Array"
+    , "WebGLContextAttributes"
     , "any"
     , "boolean"
     , "object"

@@ -19,7 +19,8 @@ typesFFI idl =
     generatedWarning $+$ blank $+$
     header           $+$ blank $+$
     typeDefs         $+$ blank $+$
-    typeDecls        $+$ blank
+    typeDecls        $+$ blank $+$
+    contextAttrs     $+$ blank
   where
     typeDecls = vcat . map ppTypeDecl . sort $ types idl
     header = vcat
@@ -89,6 +90,20 @@ typeDefs = vcat
     , "type GLubyte     = Number"
     , "type GLuint      = Number"
     , "type GLushort    = Number"
+    ]
+
+contextAttrs :: Doc
+contextAttrs = vcat
+    [ "type WebGLContextAttributes ="
+    , "  { alpha                           :: Boolean"
+    , "  , depth                           :: Boolean"
+    , "  , stencil                         :: Boolean"
+    , "  , antialias                       :: Boolean"
+    , "  , premultipliedAlpha              :: Boolean"
+    , "  , preserveDrawingBuffer           :: Boolean"
+    , "  , preferLowPowerToHighPerformance :: Boolean"
+    , "  , failIfMajorPerformanceCaveat    :: Boolean"
+    , "  }"
     ]
 
 -- component pretty-printers
