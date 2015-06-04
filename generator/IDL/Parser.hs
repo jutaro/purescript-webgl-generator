@@ -179,7 +179,7 @@ parseType = typ PP.<?> "expecting type"
           else Concrete
             { typeName     = name
             , typeIsArray  = isArray
-            , typeIsMaybe  = isMaybe
+            , typeIsMaybe' = isMaybe
             }
 
 parseArg :: Parse Arg

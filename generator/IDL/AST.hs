@@ -43,7 +43,7 @@ data Type
   | Concrete
     { typeName     :: String
     , typeIsArray  :: Bool
-    , typeIsMaybe  :: Bool
+    , typeIsMaybe' :: Bool
     }
   deriving Show
 
@@ -67,3 +67,7 @@ webglContext = Arg (Concrete "WebGLContext" False False) "webgl"
 
 funcArgs :: Decl -> [Arg]
 funcArgs f = webglContext : methodArgs f
+
+typeIsMaybe :: Type -> Bool
+typeIsMaybe t@Concrete{} = typeIsMaybe' t && not (typeIsArray t)
+typeIsMaybe _            = False
