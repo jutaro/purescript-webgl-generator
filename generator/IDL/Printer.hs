@@ -141,14 +141,11 @@ ppRunFunc f@Function{} = ppRunTypeSig f $+$ ppRunFuncBody f
 ppRunFuncBody :: Decl -> Doc
 ppRunFuncBody f@Function { methodName = name, methodRetType = retType } =
     text name <+> args <+> "=" <+>
-    (if isMaybe then "toMaybe $" else empty) <+>
+    (if ppAsMaybe retType then "toMaybe $" else empty) <+>
     "runFn" <> int (length $ funcArgs f) <+>
     implName f <+> args
   where
     args = ppPsArgs f
-    isMaybe = case retType of
-       c@Concrete{} -> typeIsMaybe c
-       _            -> False
 
 ppFuncImpl :: Decl -> Doc
 ppFuncImpl f@Function{} =
@@ -196,10 +193,9 @@ ppConvertType Concrete{ typeName = name, typeIsArray = isArray }
 ppConvertType _ = empty
 
 ppConvertMaybeType :: Type -> Doc
-ppConvertMaybeType t@Concrete{ typeIsMaybe = isMaybe } =
-    wrapMaybe $ ppConvertType t
+ppConvertMaybeType t@Concrete{} = wrapMaybe $ ppConvertType t
   where
-    wrapMaybe t = if isMaybe then parens ("Maybe" <+> t) else t
+    wrapMaybe typ = if ppAsMaybe t then parens ("Maybe" <+> typ) else typ
 ppConvertMaybeType _ = empty
 
 ppExportList :: [Decl] -> Doc
@@ -255,3 +251,7 @@ toCamelCase = text . foldr go ""
   where
     go '_' (l:ls) = toUpper l : ls
     go l ls       = toLower l : ls
+
+ppAsMaybe :: Type -> Bool
+ppAsMaybe t@Concrete{} = typeIsMaybe t && not (typeIsArray t)
+ppAsMaybe _            = False

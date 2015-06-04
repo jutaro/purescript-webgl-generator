@@ -176,10 +176,10 @@ foreign import getSupportedExtensionsImpl """
       return webgl.getSupportedExtensions();
     };
   }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) sequence)
+""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) [DOMString])
 
-getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe sequence)
-getSupportedExtensions webgl = toMaybe $ runFn1 getSupportedExtensionsImpl webgl
+getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) [DOMString]
+getSupportedExtensions webgl = runFn1 getSupportedExtensionsImpl webgl
 
 foreign import getExtensionImpl """
   function getExtensionImpl(webgl, name) {
@@ -814,10 +814,10 @@ foreign import getAttachedShadersImpl """
       return webgl.getAttachedShaders(program);
     };
   }
-""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) sequence)
+""" :: forall eff. Fn2 WebGLContext WebGLProgram (Eff (canvas :: Canvas | eff) [WebGLShader])
 
-getAttachedShaders :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe sequence)
-getAttachedShaders webgl program = toMaybe $ runFn2 getAttachedShadersImpl webgl program
+getAttachedShaders :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) [WebGLShader]
+getAttachedShaders webgl program = runFn2 getAttachedShadersImpl webgl program
 
 foreign import getAttribLocationImpl """
   function getAttribLocationImpl(webgl, program, name) {

@@ -43,7 +43,6 @@ data Type
   | Concrete
     { typeName     :: String
     , typeIsArray  :: Bool
-    , typeCondPara :: Maybe String
     , typeIsMaybe  :: Bool
     }
   deriving Show
@@ -64,7 +63,7 @@ emptyIdl :: IDL
 emptyIdl = IDL [] [] [] [] []
 
 webglContext :: Arg
-webglContext = Arg (Concrete "WebGLContext" False Nothing False) "webgl"
+webglContext = Arg (Concrete "WebGLContext" False False) "webgl"
 
 funcArgs :: Decl -> [Arg]
 funcArgs f = webglContext : methodArgs f

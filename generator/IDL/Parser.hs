@@ -57,10 +57,7 @@ lexer :: PP.GenTokenParser String u Identity
 lexer = PP.makeTokenParser PP.emptyDef
 
 parseIdl :: Parse IDL
-parseIdl =
-    parseDecls >>=
-    return . foldr partition emptyIdl >>=
-    return . cleanup
+parseIdl = parseDecls >>= return . cleanup . foldr partition emptyIdl . nub
 
 -- helpers
 
@@ -82,13 +79,7 @@ partition a@Attribute{} idl = idl
 partition _ idl = idl
 
 cleanup :: IDL -> IDL
-cleanup idl = IDL
-    { enums = nub $ enums idl
-    , comments = nub $ comments idl
-    , functions = nub $ functions idl
-    , attributes = nub $ attributes idl
-    , types = nub . filter onlyAllowedTypes $ types idl
-    }
+cleanup idl = idl { types = nub . filter onlyAllowedTypes $ types idl }
   where
     onlyAllowedTypes Concrete{ typeName = t } = t `notElem` excludedTypes
     onlyAllowedTypes _                        = False
@@ -172,21 +163,22 @@ parseTypedef = do
 parseType :: Parse Type
 parseType = typ PP.<?> "expecting type"
   where
+    arrayName = do
+        symbol' "sequence"
+        name <- angles' identifier'
+        return (name, True)
+    singleName = do
+        name <- identifier'
+        return (name, False)
     typ = do
-        ident <- identifier'
-        isArray <- PP.option False $ brackets' whiteSpace' >> return True
-        condPara <-
-          if ident == "sequence"
-          then angles' identifier' >>= return . Just
-          else return Nothing
+        (name, isArray) <- PP.try arrayName PP.<|> singleName
         isMaybe <- PP.option False $ symbol' "?" >> return True
         return $
-          if ident `elem` ["any", "object"]
+          if name `elem` ["any", "object"]
           then Generic
           else Concrete
-            { typeName     = ident
+            { typeName     = name
             , typeIsArray  = isArray
-            , typeCondPara = condPara
             , typeIsMaybe  = isMaybe
             }
 
