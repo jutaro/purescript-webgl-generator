@@ -6,7 +6,7 @@
 #### `getContextAttributes`
 
 ``` purescript
-getContextAttributes :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLContextAttributes
+getContextAttributes :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLContextAttributes)
 ```
 
 
@@ -27,7 +27,7 @@ getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | ef
 #### `getExtension`
 
 ``` purescript
-getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (canvas :: Canvas | eff) a
+getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
@@ -118,14 +118,14 @@ blendFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> G
 #### `bufferData`
 
 ``` purescript
-bufferData :: forall eff. WebGLContext -> GLenum -> Float32Array -> GLenum -> Eff (canvas :: Canvas | eff) Unit
+bufferData :: forall eff. WebGLContext -> GLenum -> GLsizeiptr -> GLenum -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `bufferSubData`
 
 ``` purescript
-bufferSubData :: forall eff. WebGLContext -> GLenum -> GLintptr -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
+bufferSubData :: forall eff. WebGLContext -> GLenum -> GLintptr -> BufferDataSource -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -178,6 +178,20 @@ compileShader :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canva
 ```
 
 
+#### `compressedTexImage2D`
+
+``` purescript
+compressedTexImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLsizei -> GLsizei -> GLint -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
+```
+
+
+#### `compressedTexSubImage2D`
+
+``` purescript
+compressedTexSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
+```
+
+
 #### `copyTexImage2D`
 
 ``` purescript
@@ -195,42 +209,42 @@ copyTexSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLi
 #### `createBuffer`
 
 ``` purescript
-createBuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLBuffer
+createBuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLBuffer)
 ```
 
 
 #### `createFramebuffer`
 
 ``` purescript
-createFramebuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLFramebuffer
+createFramebuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLFramebuffer)
 ```
 
 
 #### `createProgram`
 
 ``` purescript
-createProgram :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLProgram
+createProgram :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLProgram)
 ```
 
 
 #### `createRenderbuffer`
 
 ``` purescript
-createRenderbuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLRenderbuffer
+createRenderbuffer :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLRenderbuffer)
 ```
 
 
 #### `createShader`
 
 ``` purescript
-createShader :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) WebGLShader
+createShader :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe WebGLShader)
 ```
 
 
 #### `createTexture`
 
 ``` purescript
-createTexture :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) WebGLTexture
+createTexture :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLTexture)
 ```
 
 
@@ -398,14 +412,14 @@ generateMipmap :: forall eff. WebGLContext -> GLenum -> Eff (canvas :: Canvas | 
 #### `getActiveAttrib`
 
 ``` purescript
-getActiveAttrib :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) WebGLActiveInfo
+getActiveAttrib :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) (Maybe WebGLActiveInfo)
 ```
 
 
 #### `getActiveUniform`
 
 ``` purescript
-getActiveUniform :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) WebGLActiveInfo
+getActiveUniform :: forall eff. WebGLContext -> WebGLProgram -> GLuint -> Eff (canvas :: Canvas | eff) (Maybe WebGLActiveInfo)
 ```
 
 
@@ -423,17 +437,17 @@ getAttribLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Ef
 ```
 
 
-#### `getParameter`
-
-``` purescript
-getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) a
-```
-
-
 #### `getBufferParameter`
 
 ``` purescript
-getBufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
+getBufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
+```
+
+
+#### `getParameter`
+
+``` purescript
+getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
@@ -447,77 +461,84 @@ getError :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) GLenum
 #### `getFramebufferAttachmentParameter`
 
 ``` purescript
-getFramebufferAttachmentParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
+getFramebufferAttachmentParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
 #### `getProgramParameter`
 
 ``` purescript
-getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (canvas :: Canvas | eff) a
+getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
 #### `getProgramInfoLog`
 
 ``` purescript
-getProgramInfoLog :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) DOMString
+getProgramInfoLog :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
 ```
 
 
 #### `getRenderbufferParameter`
 
 ``` purescript
-getRenderbufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
+getRenderbufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
 #### `getShaderParameter`
 
 ``` purescript
-getShaderParameter :: forall eff a. WebGLContext -> WebGLShader -> GLenum -> Eff (canvas :: Canvas | eff) a
+getShaderParameter :: forall eff a. WebGLContext -> WebGLShader -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
+```
+
+
+#### `getShaderPrecisionFormat`
+
+``` purescript
+getShaderPrecisionFormat :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe WebGLShaderPrecisionFormat)
 ```
 
 
 #### `getShaderInfoLog`
 
 ``` purescript
-getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) DOMString
+getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
 ```
 
 
 #### `getShaderSource`
 
 ``` purescript
-getShaderSource :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) DOMString
+getShaderSource :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
 ```
 
 
 #### `getTexParameter`
 
 ``` purescript
-getTexParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) a
+getTexParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
 #### `getUniform`
 
 ``` purescript
-getUniform :: forall eff a. WebGLContext -> WebGLProgram -> WebGLUniformLocation -> Eff (canvas :: Canvas | eff) a
+getUniform :: forall eff a. WebGLContext -> WebGLProgram -> WebGLUniformLocation -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
 #### `getUniformLocation`
 
 ``` purescript
-getUniformLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (canvas :: Canvas | eff) WebGLUniformLocation
+getUniformLocation :: forall eff. WebGLContext -> WebGLProgram -> DOMString -> Eff (canvas :: Canvas | eff) (Maybe WebGLUniformLocation)
 ```
 
 
 #### `getVertexAttrib`
 
 ``` purescript
-getVertexAttrib :: forall eff a. WebGLContext -> GLuint -> GLenum -> Eff (canvas :: Canvas | eff) a
+getVertexAttrib :: forall eff a. WebGLContext -> GLuint -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 ```
 
 
@@ -727,7 +748,7 @@ uniform1f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> Eff 
 #### `uniform1fv`
 
 ``` purescript
-uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -755,7 +776,7 @@ uniform2f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfl
 #### `uniform2fv`
 
 ``` purescript
-uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -783,7 +804,7 @@ uniform3f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfl
 #### `uniform3fv`
 
 ``` purescript
-uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -811,7 +832,7 @@ uniform4f :: forall eff. WebGLContext -> WebGLUniformLocation -> GLfloat -> GLfl
 #### `uniform4fv`
 
 ``` purescript
-uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -832,21 +853,21 @@ uniform4iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> 
 #### `uniformMatrix2fv`
 
 ``` purescript
-uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniformMatrix3fv`
 
 ``` purescript
-uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
 #### `uniformMatrix4fv`
 
 ``` purescript
-uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -874,7 +895,7 @@ vertexAttrib1f :: forall eff. WebGLContext -> GLuint -> GLfloat -> Eff (canvas :
 #### `vertexAttrib1fv`
 
 ``` purescript
-vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -888,7 +909,7 @@ vertexAttrib2f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> Ef
 #### `vertexAttrib2fv`
 
 ``` purescript
-vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -902,7 +923,7 @@ vertexAttrib3f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GL
 #### `vertexAttrib3fv`
 
 ``` purescript
-vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -916,7 +937,7 @@ vertexAttrib4f :: forall eff. WebGLContext -> GLuint -> GLfloat -> GLfloat -> GL
 #### `vertexAttrib4fv`
 
 ``` purescript
-vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> FloatArray -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
 ```
 
 
@@ -1278,13 +1299,6 @@ back :: GLenum
 
 ``` purescript
 frontAndBack :: GLenum
-```
-
-
-#### `texture2d`
-
-``` purescript
-texture2d :: GLenum
 ```
 
 
@@ -1722,13 +1736,6 @@ sampleCoverageInvert :: GLenum
 ```
 
 
-#### `numCompressedTextureFormats`
-
-``` purescript
-numCompressedTextureFormats :: GLenum
-```
-
-
 #### `compressedTextureFormats`
 
 ``` purescript
@@ -1981,24 +1988,10 @@ activeUniforms :: GLenum
 ```
 
 
-#### `activeUniformMaxLength`
-
-``` purescript
-activeUniformMaxLength :: GLenum
-```
-
-
 #### `activeAttributes`
 
 ``` purescript
 activeAttributes :: GLenum
-```
-
-
-#### `activeAttributeMaxLength`
-
-``` purescript
-activeAttributeMaxLength :: GLenum
 ```
 
 
@@ -2209,6 +2202,13 @@ textureWrapS :: GLenum
 
 ``` purescript
 textureWrapT :: GLenum
+```
+
+
+#### `texture2d`
+
+``` purescript
+texture2d :: GLenum
 ```
 
 
@@ -2688,24 +2688,24 @@ vertexAttribArrayBufferBinding :: GLenum
 ```
 
 
+#### `implementationColorReadType`
+
+``` purescript
+implementationColorReadType :: GLenum
+```
+
+
+#### `implementationColorReadFormat`
+
+``` purescript
+implementationColorReadFormat :: GLenum
+```
+
+
 #### `compileStatus`
 
 ``` purescript
 compileStatus :: GLenum
-```
-
-
-#### `infoLogLength`
-
-``` purescript
-infoLogLength :: GLenum
-```
-
-
-#### `shaderSourceLength`
-
-``` purescript
-shaderSourceLength :: GLenum
 ```
 
 
@@ -3161,24 +3161,10 @@ data ArrayBufferView :: *
 ```
 
 
-#### `HTMLImageElement`
+#### `BufferDataSource`
 
 ``` purescript
-data HTMLImageElement :: *
-```
-
-
-#### `HTMLVideoElement`
-
-``` purescript
-data HTMLVideoElement :: *
-```
-
-
-#### `ImageData`
-
-``` purescript
-data ImageData :: *
+data BufferDataSource :: *
 ```
 
 
@@ -3231,6 +3217,13 @@ data WebGLShader :: *
 ```
 
 
+#### `WebGLShaderPrecisionFormat`
+
+``` purescript
+data WebGLShaderPrecisionFormat :: *
+```
+
+
 #### `WebGLTexture`
 
 ``` purescript
@@ -3259,4 +3252,11 @@ type WebGLContextAttributes = { failIfMajorPerformanceCaveat :: Boolean, preferL
 
 ``` purescript
 toMaybe :: forall a. a -> Maybe a
+```
+
+
+#### `nullAsEmpty`
+
+``` purescript
+nullAsEmpty :: forall a. [a] -> [a]
 ```

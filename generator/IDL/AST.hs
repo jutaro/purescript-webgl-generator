@@ -70,4 +70,4 @@ funcArgs f = webglContext : methodArgs f
 
 typeIsMaybe :: Type -> Bool
 typeIsMaybe t@Concrete{} = typeIsMaybe' t && not (typeIsArray t)
-typeIsMaybe _            = False
+typeIsMaybe _            = True
