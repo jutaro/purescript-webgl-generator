@@ -1,7 +1,7 @@
 {
   "name":         "purescript-webgl-raw",
   "description":  "a generated low-level PureScript wrapper of WebGL methods",
-  "version":      "0.2.0",
+  "version":      "0.3.0",
   "license":      "CPL-2",
 
   "repository": {
