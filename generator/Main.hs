@@ -1,5 +1,8 @@
 module Main (main) where
 
+import IDL.Parser (parseDecls)
+import IDL.Cleaner (declsToIdl)
+import IDL.Printer (enumsFFI, funcsFFI, typesFFI)
 import System.Environment (getArgs)
 import System.Exit (exitSuccess)
 import System.IO (writeFile)
@@ -10,8 +13,6 @@ import qualified Text.Parsec as PP (runParser)
 import qualified Text.Parsec.Error as PP
 
 import IDL.AST
-import IDL.Parser
-import IDL.Printer
 
 noIdlError :: String
 noIdlError = "WebGL generator requires input IDL file"
@@ -25,9 +26,9 @@ getFilepath _ = putStrLn noIdlError >> exitSuccess
 
 runParser :: String -> IO ()
 runParser body =
-    case PP.runParser parseIdl () "" body of
+    case PP.runParser parseDecls () "" body of
       Left err  -> mapM_ (putStrLn . PP.messageString) (PP.errorMessages err)
-      Right idl -> printFiles idl
+      Right decls -> printFiles $ declsToIdl decls
 
 printFiles :: IDL -> IO ()
 printFiles idl = do

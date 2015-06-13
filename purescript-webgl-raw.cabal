@@ -17,6 +17,7 @@ executable purescript-webgl-raw
   other-modules: IDL.AST IDL.Parser IDL.Printer
 
   build-depends:  base         == 4.*,
+                  containers   == 0.5.*,
                   parsec       == 3.1.*,
                   pretty       == 1.1.*,
                   transformers == 0.4.*

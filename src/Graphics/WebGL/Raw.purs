@@ -2,11 +2,7 @@
 -- instead modify the included IDL parser and PureScript generator.
 
 module Graphics.WebGL.Raw
-( getContextAttributes
-, isContextLost
-, getSupportedExtensions
-, getExtension
-, activeTexture
+( activeTexture
 , attachShader
 , bindAttribLocation
 , bindBuffer
@@ -19,6 +15,7 @@ module Graphics.WebGL.Raw
 , blendFunc
 , blendFuncSeparate
 , bufferData
+, bufferData_
 , bufferSubData
 , checkFramebufferStatus
 , clear
@@ -65,16 +62,19 @@ module Graphics.WebGL.Raw
 , getAttachedShaders
 , getAttribLocation
 , getBufferParameter
-, getParameter
+, getContextAttributes
 , getError
+, getExtension
 , getFramebufferAttachmentParameter
-, getProgramParameter
+, getParameter
 , getProgramInfoLog
+, getProgramParameter
 , getRenderbufferParameter
+, getShaderInfoLog
 , getShaderParameter
 , getShaderPrecisionFormat
-, getShaderInfoLog
 , getShaderSource
+, getSupportedExtensions
 , getTexParameter
 , getUniform
 , getUniformLocation
@@ -82,6 +82,7 @@ module Graphics.WebGL.Raw
 , getVertexAttribOffset
 , hint
 , isBuffer
+, isContextLost
 , isEnabled
 , isFramebuffer
 , isProgram
@@ -104,38 +105,55 @@ module Graphics.WebGL.Raw
 , stencilOp
 , stencilOpSeparate
 , texImage2D
+, texImage2D_
 , texParameterf
 , texParameteri
 , texSubImage2D
+, texSubImage2D_
 , uniform1f
 , uniform1fv
+, uniform1fv_
 , uniform1i
 , uniform1iv
+, uniform1iv_
 , uniform2f
 , uniform2fv
+, uniform2fv_
 , uniform2i
 , uniform2iv
+, uniform2iv_
 , uniform3f
 , uniform3fv
+, uniform3fv_
 , uniform3i
 , uniform3iv
+, uniform3iv_
 , uniform4f
 , uniform4fv
+, uniform4fv_
 , uniform4i
 , uniform4iv
+, uniform4iv_
 , uniformMatrix2fv
+, uniformMatrix2fv_
 , uniformMatrix3fv
+, uniformMatrix3fv_
 , uniformMatrix4fv
+, uniformMatrix4fv_
 , useProgram
 , validateProgram
 , vertexAttrib1f
 , vertexAttrib1fv
+, vertexAttrib1fv_
 , vertexAttrib2f
 , vertexAttrib2fv
+, vertexAttrib2fv_
 , vertexAttrib3f
 , vertexAttrib3fv
+, vertexAttrib3fv_
 , vertexAttrib4f
 , vertexAttrib4fv
+, vertexAttrib4fv_
 , vertexAttribPointer
 , viewport
 ) where
@@ -148,50 +166,6 @@ import Data.ArrayBuffer.Types
 import Data.Function
 import Graphics.WebGL.Raw.Types
 import Graphics.WebGL.Raw.Util
-
-foreign import getContextAttributesImpl """
-  function getContextAttributesImpl(webgl) {
-    return function () {
-      return webgl.getContextAttributes();
-    };
-  }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLContextAttributes)
-
-getContextAttributes :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLContextAttributes)
-getContextAttributes webgl = runFn1 getContextAttributesImpl webgl >>= toMaybe >>> return
-
-foreign import isContextLostImpl """
-  function isContextLostImpl(webgl) {
-    return function () {
-      return webgl.isContextLost();
-    };
-  }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) Boolean)
-
-isContextLost :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) Boolean
-isContextLost webgl = runFn1 isContextLostImpl webgl
-
-foreign import getSupportedExtensionsImpl """
-  function getSupportedExtensionsImpl(webgl) {
-    return function () {
-      return webgl.getSupportedExtensions();
-    };
-  }
-""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) [DOMString])
-
-getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) [DOMString]
-getSupportedExtensions webgl = runFn1 getSupportedExtensionsImpl webgl >>= nullAsEmpty >>> return
-
-foreign import getExtensionImpl """
-  function getExtensionImpl(webgl, name) {
-    return function () {
-      return webgl.getExtension(name);
-    };
-  }
-""" :: forall eff a. Fn2 WebGLContext DOMString (Eff (canvas :: Canvas | eff) a)
-
-getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (canvas :: Canvas | eff) (Maybe a)
-getExtension webgl name = runFn2 getExtensionImpl webgl name >>= toMaybe >>> return
 
 foreign import activeTextureImpl """
   function activeTextureImpl(webgl, texture) {
@@ -326,15 +300,26 @@ blendFuncSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> G
 blendFuncSeparate webgl srcRGB dstRGB srcAlpha dstAlpha = runFn5 blendFuncSeparateImpl webgl srcRGB dstRGB srcAlpha dstAlpha
 
 foreign import bufferDataImpl """
-  function bufferDataImpl(webgl, target, size, usage) {
+  function bufferDataImpl(webgl, target, data, usage) {
+    return function () {
+      return webgl.bufferData(target, data, usage);
+    };
+  }
+""" :: forall eff. Fn4 WebGLContext GLenum BufferDataSource GLenum (Eff (canvas :: Canvas | eff) Unit)
+
+bufferData :: forall eff. WebGLContext -> GLenum -> BufferDataSource -> GLenum -> Eff (canvas :: Canvas | eff) Unit
+bufferData webgl target data' usage = runFn4 bufferDataImpl webgl target data' usage
+
+foreign import bufferData_Impl """
+  function bufferData_Impl(webgl, target, size, usage) {
     return function () {
       return webgl.bufferData(target, size, usage);
     };
   }
 """ :: forall eff. Fn4 WebGLContext GLenum GLsizeiptr GLenum (Eff (canvas :: Canvas | eff) Unit)
 
-bufferData :: forall eff. WebGLContext -> GLenum -> GLsizeiptr -> GLenum -> Eff (canvas :: Canvas | eff) Unit
-bufferData webgl target size usage = runFn4 bufferDataImpl webgl target size usage
+bufferData_ :: forall eff. WebGLContext -> GLenum -> GLsizeiptr -> GLenum -> Eff (canvas :: Canvas | eff) Unit
+bufferData_ webgl target size usage = runFn4 bufferData_Impl webgl target size usage
 
 foreign import bufferSubDataImpl """
   function bufferSubDataImpl(webgl, target, offset, data) {
@@ -842,16 +827,16 @@ foreign import getBufferParameterImpl """
 getBufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 getBufferParameter webgl target pname = runFn3 getBufferParameterImpl webgl target pname >>= toMaybe >>> return
 
-foreign import getParameterImpl """
-  function getParameterImpl(webgl, pname) {
+foreign import getContextAttributesImpl """
+  function getContextAttributesImpl(webgl) {
     return function () {
-      return webgl.getParameter(pname);
+      return webgl.getContextAttributes();
     };
   }
-""" :: forall eff a. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) WebGLContextAttributes)
 
-getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
-getParameter webgl pname = runFn2 getParameterImpl webgl pname >>= toMaybe >>> return
+getContextAttributes :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) (Maybe WebGLContextAttributes)
+getContextAttributes webgl = runFn1 getContextAttributesImpl webgl >>= toMaybe >>> return
 
 foreign import getErrorImpl """
   function getErrorImpl(webgl) {
@@ -864,6 +849,17 @@ foreign import getErrorImpl """
 getError :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) GLenum
 getError webgl = runFn1 getErrorImpl webgl
 
+foreign import getExtensionImpl """
+  function getExtensionImpl(webgl, name) {
+    return function () {
+      return webgl.getExtension(name);
+    };
+  }
+""" :: forall eff a. Fn2 WebGLContext DOMString (Eff (canvas :: Canvas | eff) a)
+
+getExtension :: forall eff a. WebGLContext -> DOMString -> Eff (canvas :: Canvas | eff) (Maybe a)
+getExtension webgl name = runFn2 getExtensionImpl webgl name >>= toMaybe >>> return
+
 foreign import getFramebufferAttachmentParameterImpl """
   function getFramebufferAttachmentParameterImpl(webgl, target, attachment, pname) {
     return function () {
@@ -875,16 +871,16 @@ foreign import getFramebufferAttachmentParameterImpl """
 getFramebufferAttachmentParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 getFramebufferAttachmentParameter webgl target attachment pname = runFn4 getFramebufferAttachmentParameterImpl webgl target attachment pname >>= toMaybe >>> return
 
-foreign import getProgramParameterImpl """
-  function getProgramParameterImpl(webgl, program, pname) {
+foreign import getParameterImpl """
+  function getParameterImpl(webgl, pname) {
     return function () {
-      return webgl.getProgramParameter(program, pname);
+      return webgl.getParameter(pname);
     };
   }
-""" :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (canvas :: Canvas | eff) a)
+""" :: forall eff a. Fn2 WebGLContext GLenum (Eff (canvas :: Canvas | eff) a)
 
-getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
-getProgramParameter webgl program pname = runFn3 getProgramParameterImpl webgl program pname >>= toMaybe >>> return
+getParameter :: forall eff a. WebGLContext -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
+getParameter webgl pname = runFn2 getParameterImpl webgl pname >>= toMaybe >>> return
 
 foreign import getProgramInfoLogImpl """
   function getProgramInfoLogImpl(webgl, program) {
@@ -897,6 +893,17 @@ foreign import getProgramInfoLogImpl """
 getProgramInfoLog :: forall eff. WebGLContext -> WebGLProgram -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
 getProgramInfoLog webgl program = runFn2 getProgramInfoLogImpl webgl program >>= toMaybe >>> return
 
+foreign import getProgramParameterImpl """
+  function getProgramParameterImpl(webgl, program, pname) {
+    return function () {
+      return webgl.getProgramParameter(program, pname);
+    };
+  }
+""" :: forall eff a. Fn3 WebGLContext WebGLProgram GLenum (Eff (canvas :: Canvas | eff) a)
+
+getProgramParameter :: forall eff a. WebGLContext -> WebGLProgram -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
+getProgramParameter webgl program pname = runFn3 getProgramParameterImpl webgl program pname >>= toMaybe >>> return
+
 foreign import getRenderbufferParameterImpl """
   function getRenderbufferParameterImpl(webgl, target, pname) {
     return function () {
@@ -907,6 +914,17 @@ foreign import getRenderbufferParameterImpl """
 
 getRenderbufferParameter :: forall eff a. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe a)
 getRenderbufferParameter webgl target pname = runFn3 getRenderbufferParameterImpl webgl target pname >>= toMaybe >>> return
+
+foreign import getShaderInfoLogImpl """
+  function getShaderInfoLogImpl(webgl, shader) {
+    return function () {
+      return webgl.getShaderInfoLog(shader);
+    };
+  }
+""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) DOMString)
+
+getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
+getShaderInfoLog webgl shader = runFn2 getShaderInfoLogImpl webgl shader >>= toMaybe >>> return
 
 foreign import getShaderParameterImpl """
   function getShaderParameterImpl(webgl, shader, pname) {
@@ -930,17 +948,6 @@ foreign import getShaderPrecisionFormatImpl """
 getShaderPrecisionFormat :: forall eff. WebGLContext -> GLenum -> GLenum -> Eff (canvas :: Canvas | eff) (Maybe WebGLShaderPrecisionFormat)
 getShaderPrecisionFormat webgl shadertype precisiontype = runFn3 getShaderPrecisionFormatImpl webgl shadertype precisiontype >>= toMaybe >>> return
 
-foreign import getShaderInfoLogImpl """
-  function getShaderInfoLogImpl(webgl, shader) {
-    return function () {
-      return webgl.getShaderInfoLog(shader);
-    };
-  }
-""" :: forall eff. Fn2 WebGLContext WebGLShader (Eff (canvas :: Canvas | eff) DOMString)
-
-getShaderInfoLog :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
-getShaderInfoLog webgl shader = runFn2 getShaderInfoLogImpl webgl shader >>= toMaybe >>> return
-
 foreign import getShaderSourceImpl """
   function getShaderSourceImpl(webgl, shader) {
     return function () {
@@ -951,6 +958,17 @@ foreign import getShaderSourceImpl """
 
 getShaderSource :: forall eff. WebGLContext -> WebGLShader -> Eff (canvas :: Canvas | eff) (Maybe DOMString)
 getShaderSource webgl shader = runFn2 getShaderSourceImpl webgl shader >>= toMaybe >>> return
+
+foreign import getSupportedExtensionsImpl """
+  function getSupportedExtensionsImpl(webgl) {
+    return function () {
+      return webgl.getSupportedExtensions();
+    };
+  }
+""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) [DOMString])
+
+getSupportedExtensions :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) [DOMString]
+getSupportedExtensions webgl = runFn1 getSupportedExtensionsImpl webgl >>= nullAsEmpty >>> return
 
 foreign import getTexParameterImpl """
   function getTexParameterImpl(webgl, target, pname) {
@@ -1028,6 +1046,17 @@ foreign import isBufferImpl """
 
 isBuffer :: forall eff. WebGLContext -> WebGLBuffer -> Eff (canvas :: Canvas | eff) GLboolean
 isBuffer webgl buffer = runFn2 isBufferImpl webgl buffer
+
+foreign import isContextLostImpl """
+  function isContextLostImpl(webgl) {
+    return function () {
+      return webgl.isContextLost();
+    };
+  }
+""" :: forall eff. Fn1 WebGLContext (Eff (canvas :: Canvas | eff) Boolean)
+
+isContextLost :: forall eff. WebGLContext -> Eff (canvas :: Canvas | eff) Boolean
+isContextLost webgl = runFn1 isContextLostImpl webgl
 
 foreign import isEnabledImpl """
   function isEnabledImpl(webgl, cap) {
@@ -1261,15 +1290,26 @@ stencilOpSeparate :: forall eff. WebGLContext -> GLenum -> GLenum -> GLenum -> G
 stencilOpSeparate webgl face fail zfail zpass = runFn5 stencilOpSeparateImpl webgl face fail zfail zpass
 
 foreign import texImage2DImpl """
-  function texImage2DImpl(webgl, target, level, internalformat, width, height, border, format, type, pixels) {
+  function texImage2DImpl(webgl, target, level, internalformat, format, type, source) {
+    return function () {
+      return webgl.texImage2D(target, level, internalformat, format, type, source);
+    };
+  }
+""" :: forall eff. Fn7 WebGLContext GLenum GLint GLenum GLenum GLenum TexImageSource (Eff (canvas :: Canvas | eff) Unit)
+
+texImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLenum -> GLenum -> TexImageSource -> Eff (canvas :: Canvas | eff) Unit
+texImage2D webgl target level internalformat format type' source = runFn7 texImage2DImpl webgl target level internalformat format type' source
+
+foreign import texImage2D_Impl """
+  function texImage2D_Impl(webgl, target, level, internalformat, width, height, border, format, type, pixels) {
     return function () {
       return webgl.texImage2D(target, level, internalformat, width, height, border, format, type, pixels);
     };
   }
 """ :: forall eff. Fn10 WebGLContext GLenum GLint GLenum GLsizei GLsizei GLint GLenum GLenum ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
 
-texImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLsizei -> GLsizei -> GLint -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
-texImage2D webgl target level internalformat width height border format type' pixels = runFn10 texImage2DImpl webgl target level internalformat width height border format type' pixels
+texImage2D_ :: forall eff. WebGLContext -> GLenum -> GLint -> GLenum -> GLsizei -> GLsizei -> GLint -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
+texImage2D_ webgl target level internalformat width height border format type' pixels = runFn10 texImage2D_Impl webgl target level internalformat width height border format type' pixels
 
 foreign import texParameterfImpl """
   function texParameterfImpl(webgl, target, pname, param) {
@@ -1294,15 +1334,26 @@ texParameteri :: forall eff. WebGLContext -> GLenum -> GLenum -> GLint -> Eff (c
 texParameteri webgl target pname param = runFn4 texParameteriImpl webgl target pname param
 
 foreign import texSubImage2DImpl """
-  function texSubImage2DImpl(webgl, target, level, xoffset, yoffset, width, height, format, type, pixels) {
+  function texSubImage2DImpl(webgl, target, level, xoffset, yoffset, format, type, source) {
+    return function () {
+      return webgl.texSubImage2D(target, level, xoffset, yoffset, format, type, source);
+    };
+  }
+""" :: forall eff. Fn8 WebGLContext GLenum GLint GLint GLint GLenum GLenum TexImageSource (Eff (canvas :: Canvas | eff) Unit)
+
+texSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLenum -> GLenum -> TexImageSource -> Eff (canvas :: Canvas | eff) Unit
+texSubImage2D webgl target level xoffset yoffset format type' source = runFn8 texSubImage2DImpl webgl target level xoffset yoffset format type' source
+
+foreign import texSubImage2D_Impl """
+  function texSubImage2D_Impl(webgl, target, level, xoffset, yoffset, width, height, format, type, pixels) {
     return function () {
       return webgl.texSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
     };
   }
 """ :: forall eff. Fn10 WebGLContext GLenum GLint GLint GLint GLsizei GLsizei GLenum GLenum ArrayBufferView (Eff (canvas :: Canvas | eff) Unit)
 
-texSubImage2D :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
-texSubImage2D webgl target level xoffset yoffset width height format type' pixels = runFn10 texSubImage2DImpl webgl target level xoffset yoffset width height format type' pixels
+texSubImage2D_ :: forall eff. WebGLContext -> GLenum -> GLint -> GLint -> GLint -> GLsizei -> GLsizei -> GLenum -> GLenum -> ArrayBufferView -> Eff (canvas :: Canvas | eff) Unit
+texSubImage2D_ webgl target level xoffset yoffset width height format type' pixels = runFn10 texSubImage2D_Impl webgl target level xoffset yoffset width height format type' pixels
 
 foreign import uniform1fImpl """
   function uniform1fImpl(webgl, location, x) {
@@ -1321,10 +1372,21 @@ foreign import uniform1fvImpl """
       return webgl.uniform1fv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform1fv webgl location v = runFn3 uniform1fvImpl webgl location v
+
+foreign import uniform1fv_Impl """
+  function uniform1fv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform1fv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform1fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform1fv webgl location v = runFn3 uniform1fvImpl webgl location v
+uniform1fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform1fv_ webgl location v = runFn3 uniform1fv_Impl webgl location v
 
 foreign import uniform1iImpl """
   function uniform1iImpl(webgl, location, x) {
@@ -1343,10 +1405,21 @@ foreign import uniform1ivImpl """
       return webgl.uniform1iv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform1iv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform1iv webgl location v = runFn3 uniform1ivImpl webgl location v
+
+foreign import uniform1iv_Impl """
+  function uniform1iv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform1iv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform1iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform1iv webgl location v = runFn3 uniform1ivImpl webgl location v
+uniform1iv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform1iv_ webgl location v = runFn3 uniform1iv_Impl webgl location v
 
 foreign import uniform2fImpl """
   function uniform2fImpl(webgl, location, x, y) {
@@ -1365,10 +1438,21 @@ foreign import uniform2fvImpl """
       return webgl.uniform2fv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform2fv webgl location v = runFn3 uniform2fvImpl webgl location v
+
+foreign import uniform2fv_Impl """
+  function uniform2fv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform2fv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform2fv webgl location v = runFn3 uniform2fvImpl webgl location v
+uniform2fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform2fv_ webgl location v = runFn3 uniform2fv_Impl webgl location v
 
 foreign import uniform2iImpl """
   function uniform2iImpl(webgl, location, x, y) {
@@ -1387,10 +1471,21 @@ foreign import uniform2ivImpl """
       return webgl.uniform2iv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform2iv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform2iv webgl location v = runFn3 uniform2ivImpl webgl location v
+
+foreign import uniform2iv_Impl """
+  function uniform2iv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform2iv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform2iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform2iv webgl location v = runFn3 uniform2ivImpl webgl location v
+uniform2iv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform2iv_ webgl location v = runFn3 uniform2iv_Impl webgl location v
 
 foreign import uniform3fImpl """
   function uniform3fImpl(webgl, location, x, y, z) {
@@ -1409,10 +1504,21 @@ foreign import uniform3fvImpl """
       return webgl.uniform3fv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform3fv webgl location v = runFn3 uniform3fvImpl webgl location v
+
+foreign import uniform3fv_Impl """
+  function uniform3fv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform3fv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform3fv webgl location v = runFn3 uniform3fvImpl webgl location v
+uniform3fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform3fv_ webgl location v = runFn3 uniform3fv_Impl webgl location v
 
 foreign import uniform3iImpl """
   function uniform3iImpl(webgl, location, x, y, z) {
@@ -1431,10 +1537,21 @@ foreign import uniform3ivImpl """
       return webgl.uniform3iv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform3iv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform3iv webgl location v = runFn3 uniform3ivImpl webgl location v
+
+foreign import uniform3iv_Impl """
+  function uniform3iv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform3iv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform3iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform3iv webgl location v = runFn3 uniform3ivImpl webgl location v
+uniform3iv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform3iv_ webgl location v = runFn3 uniform3iv_Impl webgl location v
 
 foreign import uniform4fImpl """
   function uniform4fImpl(webgl, location, x, y, z, w) {
@@ -1453,10 +1570,21 @@ foreign import uniform4fvImpl """
       return webgl.uniform4fv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform4fv webgl location v = runFn3 uniform4fvImpl webgl location v
+
+foreign import uniform4fv_Impl """
+  function uniform4fv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform4fv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform4fv webgl location v = runFn3 uniform4fvImpl webgl location v
+uniform4fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform4fv_ webgl location v = runFn3 uniform4fv_Impl webgl location v
 
 foreign import uniform4iImpl """
   function uniform4iImpl(webgl, location, x, y, z, w) {
@@ -1475,10 +1603,21 @@ foreign import uniform4ivImpl """
       return webgl.uniform4iv(location, v);
     };
   }
+""" :: forall eff. Fn3 WebGLContext WebGLUniformLocation [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniform4iv :: forall eff. WebGLContext -> WebGLUniformLocation -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniform4iv webgl location v = runFn3 uniform4ivImpl webgl location v
+
+foreign import uniform4iv_Impl """
+  function uniform4iv_Impl(webgl, location, v) {
+    return function () {
+      return webgl.uniform4iv(location, v);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext WebGLUniformLocation Int32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniform4iv :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
-uniform4iv webgl location v = runFn3 uniform4ivImpl webgl location v
+uniform4iv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> Int32Array -> Eff (canvas :: Canvas | eff) Unit
+uniform4iv_ webgl location v = runFn3 uniform4iv_Impl webgl location v
 
 foreign import uniformMatrix2fvImpl """
   function uniformMatrix2fvImpl(webgl, location, transpose, value) {
@@ -1486,10 +1625,21 @@ foreign import uniformMatrix2fvImpl """
       return webgl.uniformMatrix2fv(location, transpose, value);
     };
   }
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix2fv webgl location transpose value = runFn4 uniformMatrix2fvImpl webgl location transpose value
+
+foreign import uniformMatrix2fv_Impl """
+  function uniformMatrix2fv_Impl(webgl, location, transpose, value) {
+    return function () {
+      return webgl.uniformMatrix2fv(location, transpose, value);
+    };
+  }
 """ :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniformMatrix2fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniformMatrix2fv webgl location transpose value = runFn4 uniformMatrix2fvImpl webgl location transpose value
+uniformMatrix2fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix2fv_ webgl location transpose value = runFn4 uniformMatrix2fv_Impl webgl location transpose value
 
 foreign import uniformMatrix3fvImpl """
   function uniformMatrix3fvImpl(webgl, location, transpose, value) {
@@ -1497,10 +1647,21 @@ foreign import uniformMatrix3fvImpl """
       return webgl.uniformMatrix3fv(location, transpose, value);
     };
   }
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix3fv webgl location transpose value = runFn4 uniformMatrix3fvImpl webgl location transpose value
+
+foreign import uniformMatrix3fv_Impl """
+  function uniformMatrix3fv_Impl(webgl, location, transpose, value) {
+    return function () {
+      return webgl.uniformMatrix3fv(location, transpose, value);
+    };
+  }
 """ :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniformMatrix3fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniformMatrix3fv webgl location transpose value = runFn4 uniformMatrix3fvImpl webgl location transpose value
+uniformMatrix3fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix3fv_ webgl location transpose value = runFn4 uniformMatrix3fv_Impl webgl location transpose value
 
 foreign import uniformMatrix4fvImpl """
   function uniformMatrix4fvImpl(webgl, location, transpose, value) {
@@ -1508,10 +1669,21 @@ foreign import uniformMatrix4fvImpl """
       return webgl.uniformMatrix4fv(location, transpose, value);
     };
   }
+""" :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix4fv webgl location transpose value = runFn4 uniformMatrix4fvImpl webgl location transpose value
+
+foreign import uniformMatrix4fv_Impl """
+  function uniformMatrix4fv_Impl(webgl, location, transpose, value) {
+    return function () {
+      return webgl.uniformMatrix4fv(location, transpose, value);
+    };
+  }
 """ :: forall eff. Fn4 WebGLContext WebGLUniformLocation GLboolean Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-uniformMatrix4fv :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-uniformMatrix4fv webgl location transpose value = runFn4 uniformMatrix4fvImpl webgl location transpose value
+uniformMatrix4fv_ :: forall eff. WebGLContext -> WebGLUniformLocation -> GLboolean -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+uniformMatrix4fv_ webgl location transpose value = runFn4 uniformMatrix4fv_Impl webgl location transpose value
 
 foreign import useProgramImpl """
   function useProgramImpl(webgl, program) {
@@ -1552,10 +1724,21 @@ foreign import vertexAttrib1fvImpl """
       return webgl.vertexAttrib1fv(indx, values);
     };
   }
+""" :: forall eff. Fn3 WebGLContext GLuint [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib1fv webgl indx values = runFn3 vertexAttrib1fvImpl webgl indx values
+
+foreign import vertexAttrib1fv_Impl """
+  function vertexAttrib1fv_Impl(webgl, indx, values) {
+    return function () {
+      return webgl.vertexAttrib1fv(indx, values);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext GLuint Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-vertexAttrib1fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-vertexAttrib1fv webgl indx values = runFn3 vertexAttrib1fvImpl webgl indx values
+vertexAttrib1fv_ :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib1fv_ webgl indx values = runFn3 vertexAttrib1fv_Impl webgl indx values
 
 foreign import vertexAttrib2fImpl """
   function vertexAttrib2fImpl(webgl, indx, x, y) {
@@ -1574,10 +1757,21 @@ foreign import vertexAttrib2fvImpl """
       return webgl.vertexAttrib2fv(indx, values);
     };
   }
+""" :: forall eff. Fn3 WebGLContext GLuint [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib2fv webgl indx values = runFn3 vertexAttrib2fvImpl webgl indx values
+
+foreign import vertexAttrib2fv_Impl """
+  function vertexAttrib2fv_Impl(webgl, indx, values) {
+    return function () {
+      return webgl.vertexAttrib2fv(indx, values);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext GLuint Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-vertexAttrib2fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-vertexAttrib2fv webgl indx values = runFn3 vertexAttrib2fvImpl webgl indx values
+vertexAttrib2fv_ :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib2fv_ webgl indx values = runFn3 vertexAttrib2fv_Impl webgl indx values
 
 foreign import vertexAttrib3fImpl """
   function vertexAttrib3fImpl(webgl, indx, x, y, z) {
@@ -1596,10 +1790,21 @@ foreign import vertexAttrib3fvImpl """
       return webgl.vertexAttrib3fv(indx, values);
     };
   }
+""" :: forall eff. Fn3 WebGLContext GLuint [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib3fv webgl indx values = runFn3 vertexAttrib3fvImpl webgl indx values
+
+foreign import vertexAttrib3fv_Impl """
+  function vertexAttrib3fv_Impl(webgl, indx, values) {
+    return function () {
+      return webgl.vertexAttrib3fv(indx, values);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext GLuint Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-vertexAttrib3fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-vertexAttrib3fv webgl indx values = runFn3 vertexAttrib3fvImpl webgl indx values
+vertexAttrib3fv_ :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib3fv_ webgl indx values = runFn3 vertexAttrib3fv_Impl webgl indx values
 
 foreign import vertexAttrib4fImpl """
   function vertexAttrib4fImpl(webgl, indx, x, y, z, w) {
@@ -1618,10 +1823,21 @@ foreign import vertexAttrib4fvImpl """
       return webgl.vertexAttrib4fv(indx, values);
     };
   }
+""" :: forall eff. Fn3 WebGLContext GLuint [GLfloat] (Eff (canvas :: Canvas | eff) Unit)
+
+vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> [GLfloat] -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib4fv webgl indx values = runFn3 vertexAttrib4fvImpl webgl indx values
+
+foreign import vertexAttrib4fv_Impl """
+  function vertexAttrib4fv_Impl(webgl, indx, values) {
+    return function () {
+      return webgl.vertexAttrib4fv(indx, values);
+    };
+  }
 """ :: forall eff. Fn3 WebGLContext GLuint Float32Array (Eff (canvas :: Canvas | eff) Unit)
 
-vertexAttrib4fv :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
-vertexAttrib4fv webgl indx values = runFn3 vertexAttrib4fvImpl webgl indx values
+vertexAttrib4fv_ :: forall eff. WebGLContext -> GLuint -> Float32Array -> Eff (canvas :: Canvas | eff) Unit
+vertexAttrib4fv_ webgl indx values = runFn3 vertexAttrib4fv_Impl webgl indx values
 
 foreign import vertexAttribPointerImpl """
   function vertexAttribPointerImpl(webgl, indx, size, type, normalized, stride, offset) {

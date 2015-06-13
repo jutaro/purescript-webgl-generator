@@ -7,8 +7,8 @@ module IDL.Printer
 ) where
 
 import Data.Char (toLower, toUpper)
-import Data.List (sort)
 import Data.Maybe (isNothing)
+import IDL.Cleaner (getEnums, getFuncs, getTypes)
 import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
   hcat, int, integer, nest, parens, punctuate, text, vcat)
 
@@ -22,7 +22,7 @@ typesFFI idl =
     typeDecls        $+$ blank $+$
     contextAttrs     $+$ blank
   where
-    typeDecls = vcat . map ppTypeDecl . sort $ types idl
+    typeDecls = vcat . map ppTypeDecl $ getTypes idl
     header = vcat
       [ "module Graphics.WebGL.Raw.Types where"
       , ""
@@ -35,7 +35,7 @@ enumsFFI idl =
     header           $+$ blank $+$
     constants        $+$ blank
   where
-    constants = vcat . map ppConstant $ enums idl
+    constants = vcat . map ppConstant $ getEnums idl
     header = vcat
       [ "module Graphics.WebGL.Raw.Enums where"
       , ""
@@ -50,10 +50,11 @@ funcsFFI idl =
     imports          $+$ blank $+$
     methods          $+$ blank
   where
-    methods = vcat . map ppFunc $ functions idl
+    functions = getFuncs idl
+    methods = vcat $ map ppFunc functions
     moduleDef = vcat
       [ "module Graphics.WebGL.Raw"
-      , ppExportList (functions idl) $+$ ") where"
+      , ppExportList functions $+$ ") where"
       ]
     imports = vcat
       [ "import Data.Maybe (Maybe ())"
@@ -160,16 +161,16 @@ ppFuncImplBody :: Decl -> Doc
 ppFuncImplBody f =
     func <+> implName f <> parens (ppJsArgs funcArgs f) <+> "{" $+$
     nest 2 (ret <+> func <+> "() {") $+$
-    nest 4 (ret <+> ppMethod f) $+$
+    nest 4 (ret <+> ppActual f) $+$
     nest 2 "};" $+$
     "}"
   where
     func = "function"
     ret  = "return"
 
-ppMethod :: Decl -> Doc
-ppMethod f@Function{} =
-    prefixWebgl <> text (methodName f) <> parens (ppJsArgs methodArgs f) <> ";"
+ppActual :: Decl -> Doc
+ppActual f@Function{} =
+    prefixWebgl <> text (actualName f) <> parens (ppJsArgs methodArgs f) <> ";"
 
 ppJsArgs :: (Decl -> [Arg]) -> Decl -> Doc
 ppJsArgs f = hcat . punctuate ", " . map (text . argName) . f
@@ -190,6 +191,7 @@ ppConvertType Concrete{ typeName = name, typeIsArray = isArray }
     | name == "void"        = toType "Unit"
     | name == "boolean"     = toType "Boolean"
     | name == "ArrayBuffer" = toType "Float32Array"
+    | name == "long"        = toType "GLfloat"
     | otherwise             = toType name
   where
     toType = wrapArray . text

@@ -24,6 +24,7 @@ type GLushort    = Number
 
 foreign import data ArrayBufferView :: *
 foreign import data BufferDataSource :: *
+foreign import data TexImageSource :: *
 foreign import data WebGLActiveInfo :: *
 foreign import data WebGLBuffer :: *
 foreign import data WebGLContext :: *
