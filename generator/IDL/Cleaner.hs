@@ -16,6 +16,7 @@ import IDL.AST
 excludedTypes :: [String]
 excludedTypes =
     [ "ArrayBuffer"
+    , "BufferDataSource"
     , "DOMString"
     , "Float32Array"
     , "FloatArray"

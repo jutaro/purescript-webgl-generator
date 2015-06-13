@@ -3175,6 +3175,13 @@ type DOMString = String
 ```
 
 
+#### `BufferDataSource`
+
+``` purescript
+type BufferDataSource = Float32Array
+```
+
+
 #### `FloatArray`
 
 ``` purescript
@@ -3284,13 +3291,6 @@ type GLushort = Number
 
 ``` purescript
 data ArrayBufferView :: *
-```
-
-
-#### `BufferDataSource`
-
-``` purescript
-data BufferDataSource :: *
 ```
 
 

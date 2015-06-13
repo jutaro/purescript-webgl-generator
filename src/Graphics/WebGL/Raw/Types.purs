@@ -5,25 +5,25 @@ module Graphics.WebGL.Raw.Types where
 
 import Data.ArrayBuffer.Types
 
-type DOMString   = String
-type FloatArray  = Float32Array
-type GLbitfield  = Number
-type GLboolean   = Boolean
-type GLbyte      = Number
-type GLclampf    = Number
-type GLenum      = Number
-type GLfloat     = Number
-type GLint       = Number
-type GLintptr    = Number
-type GLshort     = Number
-type GLsizei     = Number
-type GLsizeiptr  = Number
-type GLubyte     = Number
-type GLuint      = Number
-type GLushort    = Number
+type DOMString        = String
+type BufferDataSource = Float32Array
+type FloatArray       = Float32Array
+type GLbitfield       = Number
+type GLboolean        = Boolean
+type GLbyte           = Number
+type GLclampf         = Number
+type GLenum           = Number
+type GLfloat          = Number
+type GLint            = Number
+type GLintptr         = Number
+type GLshort          = Number
+type GLsizei          = Number
+type GLsizeiptr       = Number
+type GLubyte          = Number
+type GLuint           = Number
+type GLushort         = Number
 
 foreign import data ArrayBufferView :: *
-foreign import data BufferDataSource :: *
 foreign import data TexImageSource :: *
 foreign import data WebGLActiveInfo :: *
 foreign import data WebGLBuffer :: *
