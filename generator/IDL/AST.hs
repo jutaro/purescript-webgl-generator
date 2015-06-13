@@ -11,12 +11,6 @@ data Type
     }
   deriving Show
 
-instance Eq Type where
-  x == y = typeName x == typeName y
-
-instance Ord Type where
-  compare x y = compare (typeName x) (typeName y)
-
 data Arg = Arg
     { argType :: Type
     , argName :: String
