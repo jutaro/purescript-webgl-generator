@@ -1,0 +1,16 @@
+{
+  "name":         "purescript-webgl-raw",
+  "description":  "a generated low-level PureScript wrapper of WebGL methods",
+  "version":      "0.3.0",
+  "license":      "CPL-2",
+
+  "repository": {
+    "type": "git",
+    "url":  "https://github.com/Jonplussed/purescript-webgl-raw"
+  },
+
+  "dependencies": {
+    "grunt":                "^0.4.5",
+    "grunt-purescript":     "^0.6.0"
+  }
+}

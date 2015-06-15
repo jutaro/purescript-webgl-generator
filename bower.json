@@ -1,0 +1,20 @@
+{
+  "name":         "purescript-webgl-raw",
+  "description":  "a generated low-level PureScript wrapper of WebGL methods",
+  "version":      "0.3.0",
+  "license":      "GPL-2",
+
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "dist",
+    "generator"
+  ],
+
+  "dependencies": {
+    "purescript-arraybuffer-types":     "0.1.*",
+    "purescript-maybe":                 "0.2.*",
+    "purescript-typedarray":            "0.3.*"
+  }
+}
