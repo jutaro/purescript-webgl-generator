@@ -191,11 +191,13 @@ ppConvertType Concrete{ typeName = name, typeIsArray = isArray }
     | name == "void"        = toType "Unit"
     | name == "boolean"     = toType "Boolean"
     | name == "ArrayBuffer" = toType "Float32Array"
-    | name == "long"        = toType "GLfloat"
+    | name == "long"        = toType "Int"
     | otherwise             = toType name
   where
     toType = wrapArray . text
-    wrapArray t = if isArray then brackets t else t
+    wrapArray t = if isArray
+                  then parens $ "Array" <+> t
+                  else t
 ppConvertType _ = genericType
 
 ppConvertMaybeType :: Type -> Doc
