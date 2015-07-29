@@ -9,7 +9,7 @@ module IDL.Printer
 import Data.Char (toLower, toUpper)
 import Data.Maybe (isNothing)
 import IDL.Cleaner (getEnums, getFuncs, getTypes)
-import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), brackets, char, empty,
+import Text.PrettyPrint (Doc, ($+$), ($$), (<>), (<+>), char, empty,
   hcat, int, integer, nest, parens, punctuate, text, vcat)
 
 import IDL.AST
@@ -39,8 +39,7 @@ enumsFFI idl =
     header = vcat
       [ "module Graphics.WebGL.Raw.Enums where"
       , ""
-      , "import Graphics.WebGL.Raw.Types"
-      , "import qualified Prelude as Pre"
+      , "import Graphics.WebGL.Raw.Types (GLenum ())"
       ]
 
 funcsFFI :: IDL -> Doc
@@ -80,20 +79,20 @@ typeDefs = vcat
     [ "type DOMString        = String"
     , "type BufferDataSource = Float32Array"
     , "type FloatArray       = Float32Array"
-    , "type GLbitfield       = Number"
+    , "type GLbitfield       = Int"
     , "type GLboolean        = Boolean"
-    , "type GLbyte           = Number"
+    , "type GLbyte           = Int"
     , "type GLclampf         = Number"
-    , "type GLenum           = Number"
+    , "type GLenum           = Int"
     , "type GLfloat          = Number"
-    , "type GLint            = Number"
-    , "type GLintptr         = Number"
-    , "type GLshort          = Number"
-    , "type GLsizei          = Number"
-    , "type GLsizeiptr       = Number"
-    , "type GLubyte          = Number"
-    , "type GLuint           = Number"
-    , "type GLushort         = Number"
+    , "type GLint            = Int"
+    , "type GLintptr         = Int"
+    , "type GLshort          = Int"
+    , "type GLsizei          = Int"
+    , "type GLsizeiptr       = Int"
+    , "type GLubyte          = Int"
+    , "type GLuint           = Int"
+    , "type GLushort         = Int"
     ]
 
 contextAttrs :: Doc

@@ -3,8 +3,7 @@
 
 module Graphics.WebGL.Raw.Enums where
 
-import Graphics.WebGL.Raw.Types
-import qualified Prelude as Pre
+import Graphics.WebGL.Raw.Types (GLenum ())
 
 activeAttributes :: GLenum
 activeAttributes = 35721

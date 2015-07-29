@@ -8,20 +8,20 @@ import Data.ArrayBuffer.Types
 type DOMString        = String
 type BufferDataSource = Float32Array
 type FloatArray       = Float32Array
-type GLbitfield       = Number
+type GLbitfield       = Int
 type GLboolean        = Boolean
-type GLbyte           = Number
+type GLbyte           = Int
 type GLclampf         = Number
-type GLenum           = Number
+type GLenum           = Int
 type GLfloat          = Number
-type GLint            = Number
-type GLintptr         = Number
-type GLshort          = Number
-type GLsizei          = Number
-type GLsizeiptr       = Number
-type GLubyte          = Number
-type GLuint           = Number
-type GLushort         = Number
+type GLint            = Int
+type GLintptr         = Int
+type GLshort          = Int
+type GLsizei          = Int
+type GLsizeiptr       = Int
+type GLubyte          = Int
+type GLuint           = Int
+type GLushort         = Int
 
 foreign import data ArrayBufferView :: *
 foreign import data TexImageSource :: *
