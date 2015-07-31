@@ -60,12 +60,19 @@ importsFFI idl =
   where
     header = vcat
       [ "module Graphics.WebGL.Raw"
+      , expList
+      , ") where"
       , ""
+      , "import Control.Monad.Eff"
+      , "import Data.ArrayBuffer.Types"
       , "import Data.Function"
       , "import Data.Maybe"
+      , "import Graphics.Canvas"
       , "import Graphics.WebGL.Raw.Types"
+      , "import Graphics.WebGL.Raw.Util"
       , "import Prelude"
       ]
+    expList = ppExportList $ getFuncs idl
     funcs = vcat . map ppImport $ getFuncs idl
 
 -- predefined text
