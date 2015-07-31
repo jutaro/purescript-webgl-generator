@@ -13,8 +13,11 @@
   ],
 
   "dependencies": {
-    "purescript-arraybuffer-types":     "0.1.*",
-    "purescript-maybe":                 "0.2.*",
-    "purescript-typedarray":            "0.3.*"
+    "purescript-canvas": "0.3.*",
+    "purescript-eff": "0.1.*",
+    "purescript-functions": "0.1.*",
+    "purescript-arraybuffer-types": "0.2.*",
+    "purescript-maybe": "0.3.*",
+    "purescript-typedarray": "0.4.*"
   }
 }
