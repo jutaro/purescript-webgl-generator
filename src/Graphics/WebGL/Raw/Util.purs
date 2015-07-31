@@ -11,4 +11,4 @@ foreign import toMaybeImpl :: forall a. Fn3 (Maybe a) (a -> Maybe a) a (Maybe a)
 toMaybe :: forall a. a -> Maybe a
 toMaybe x = runFn3 toMaybeImpl Nothing Just x
 
-foreign import nullAsEmpty :: forall a. [a] -> [a]
+foreign import nullAsEmpty :: forall a. Array a -> Array a
