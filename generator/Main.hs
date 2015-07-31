@@ -2,7 +2,7 @@ module Main (main) where
 
 import IDL.Parser (parseDecls)
 import IDL.Cleaner (declsToIdl)
-import IDL.Printer (enumsFFI, funcsFFI, typesFFI)
+import IDL.Printer (typesFFI, enumsFFI, exportsFFI, importsFFI)
 import System.Environment (getArgs)
 import System.Exit (exitSuccess)
 import System.IO (writeFile)
@@ -32,6 +32,7 @@ runParser body =
 
 printFiles :: IDL -> IO ()
 printFiles idl = do
-    writeFile "src/Graphics/WebGL/Raw/Types.purs" . render $ typesFFI idl
-    writeFile "src/Graphics/WebGL/Raw/Enums.purs" . render $ enumsFFI idl
-    writeFile "src/Graphics/WebGL/Raw.purs"       . render $ funcsFFI idl
+    writeFile "src/Graphics/WebGL/Raw/Types.purs" . render $ typesFFI   idl
+    writeFile "src/Graphics/WebGL/Raw/Enums.purs" . render $ enumsFFI   idl
+    writeFile "src/Graphics/WebGL/Raw.js"         . render $ exportsFFI idl
+    writeFile "src/Graphics/WebGL/Raw.purs"       . render $ importsFFI idl
